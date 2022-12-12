@@ -39,13 +39,18 @@ export default function Home() {
   const { account, connectWallet } = useWeb3Context();
   const [handlesList, setHandlesList] = useState<any>([]);
   const [indicators, setIndicators] = useState<any>({});
-  const [currentProfile, setCurrentProfile] = useState('KNN3 Network');
+  const [currentProfile, setCurrentProfile] = useState({
+    handle: "",
+    profileId: ""
+  });
   const [activeTag, setActiveTag] = useState(0);
 
   const getLensHandle = async () => {
     const testAccount = "0xcde3725b25d6d9bc78cf0941cc15fd9710c764b9";
     const res: any = await api.get(`/lens/handles/${testAccount}`);
+    console.log(res.data)
     setHandlesList(res.data);
+    setCurrentProfile(res.data[0]);
   };
 
   const getIndicators = async (profileId: string) => {
@@ -61,11 +66,10 @@ export default function Home() {
   }, [account]);
 
   useEffect(() => {
-    if (!handlesList || handlesList.length === 0) {
-      return;
+    if (currentProfile.profileId) {
+      getIndicators(currentProfile.profileId);
     }
-    getIndicators(handlesList[0].profileId);
-  }, [handlesList]);
+  }, [currentProfile]);
 
   return (
     <div className="toscore">
@@ -121,25 +125,30 @@ export default function Home() {
             </div>
           </div>
           <div>
+
             <div className="base-detail-top">
               <div>
                 <div>
                   <Dropdown
                     overlay={
                       <Menu>
-                        <div className="drop-menu" onClick={() => setCurrentProfile('lens profile')}>lens profile</div>
+                        {
+                          handlesList.map((t: any, i: number) => (
+                            <div className="drop-menu" key={i} onClick={() => setCurrentProfile(t)}>{t.handle}</div>
+                          ))
+                        }
                       </Menu>
                     }
                   >
                     <a onClick={(e) => e.preventDefault()}>
                       <Space className="space">
-                        {currentProfile}
+                        KNN3 Network
                         <DownOutlined />
                       </Space>
                     </a>
                   </Dropdown>
                 </div>
-                <div>@knn3network.lens</div>
+                <div>@{currentProfile.handle}</div>
               </div>
               <div>Follow</div>
             </div>
