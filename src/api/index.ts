@@ -7,7 +7,6 @@ const api = axios.create({
 });
 
 api.interceptors.response.use((res) => {
-  console.log("res");
   if (res.data.code === 200) {
     return res.data;
   } else {
@@ -15,3 +14,5 @@ api.interceptors.response.use((res) => {
     return null;
   }
 });
+
+export default api;

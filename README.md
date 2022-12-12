@@ -27,3 +27,6 @@ Your app is ready to be deployed!
 ### `npm run eject`
 
 ## Learn More
+
+[API](https://lens-api.knn3.xyz/api#/)
+[figma](https://share.lanhuapp.com/#/invite?sid=lX6O8cMa)
