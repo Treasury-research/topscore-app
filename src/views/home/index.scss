@@ -249,7 +249,9 @@
     .base-detail-top {
       overflow: hidden;
       margin-bottom: 20px;
-
+      .space{
+        color: rgba(255, 255, 255, .9);
+      }
       >div:nth-child(1) {
         float: left;
 
@@ -295,7 +297,11 @@
 
       &-info {
         display: flex;
-
+        .g5{
+          width: 14px;
+          height: 14px;
+          margin-right: 5px;
+        }
         >div {
           flex: 1;
           text-align: center;
@@ -422,4 +428,9 @@
     }
 
   }
+}
+.drop-menu{
+  cursor: pointer;
+  width: 100%;
+  text-indent: 10px;
 }

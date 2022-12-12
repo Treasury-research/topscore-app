@@ -11,15 +11,20 @@ import LabelEng from "./../../static/img/eng.png";
 import LabelCollect from "./../../static/img/collect.png";
 import Icon1 from "./../../static/img/s1.png";
 import Icon2 from "./../../static/img/s2.png";
+import IconG1 from "./../../static/img/g1.png";
+import IconG2 from "./../../static/img/g2.png";
+import IconG3 from "./../../static/img/g3.png";
+import IconG4 from "./../../static/img/g4.png";
+import IconG5 from "./../../static/img/g5.png";
 import { copyToClipboard } from "../../lib/tool";
 import {
   TwitterOutlined,
-  MessageOutlined,
-  HddOutlined,
-  HeartOutlined,
-  SwapOutlined,
+  DownOutlined,
+  SmileOutlined
 } from "@ant-design/icons";
 import Radar from "./components/Radar";
+import type { MenuProps } from 'antd';
+import { Dropdown, Space, Menu } from 'antd';
 
 const tags = [
   "Influence",
@@ -34,7 +39,7 @@ export default function Home() {
   const { account, connectWallet } = useWeb3Context();
   const [handlesList, setHandlesList] = useState<any>([]);
   const [indicators, setIndicators] = useState<any>({});
-
+  const [currentProfile, setCurrentProfile] = useState('KNN3 Network');
   const [activeTag, setActiveTag] = useState(0);
 
   const getLensHandle = async () => {
@@ -118,7 +123,22 @@ export default function Home() {
           <div>
             <div className="base-detail-top">
               <div>
-                <div>KNN3 Network</div>
+                <div>
+                  <Dropdown
+                    overlay={
+                      <Menu>
+                        <div className="drop-menu" onClick={() => setCurrentProfile('lens profile')}>lens profile</div>
+                      </Menu>
+                    }
+                  >
+                    <a onClick={(e) => e.preventDefault()}>
+                      <Space className="space">
+                        {currentProfile}
+                        <DownOutlined />
+                      </Space>
+                    </a>
+                  </Dropdown>
+                </div>
                 <div>@knn3network.lens</div>
               </div>
               <div>Follow</div>
@@ -161,7 +181,7 @@ export default function Home() {
                     <div>Collections</div>
                   </div>
                   <div>
-                    <div>0</div>
+                    <div><img className="g5" src={IconG5} alt="" /><span>0</span></div>
                     <div>Spent</div>
                   </div>
                 </div>
@@ -171,7 +191,7 @@ export default function Home() {
                     <div>Collectors</div>
                   </div>
                   <div>
-                    <div>0</div>
+                    <div><img className="g5" src={IconG5} alt="" /><span>0</span></div>
                     <div>Earned</div>
                   </div>
                 </div>
@@ -436,25 +456,25 @@ export default function Home() {
                 <div className="pro-data">
                   <div>
                     <span>
-                      <MessageOutlined />
+                      <img src={IconG1} alt="" />
                     </span>
                     <span>45</span>
                   </div>
                   <div>
                     <span>
-                      <SwapOutlined />
+                      <img src={IconG2} alt="" />
                     </span>
                     <span>45</span>
                   </div>
                   <div>
                     <span>
-                      <HddOutlined />
+                      <img src={IconG3} alt="" />
                     </span>
                     <span>45</span>
                   </div>
                   <div>
                     <span>
-                      <HeartOutlined />
+                      <img src={IconG4} alt="" />
                     </span>
                     <span>45</span>
                   </div>
@@ -482,25 +502,25 @@ export default function Home() {
                 <div className="pro-data">
                   <div>
                     <span>
-                      <MessageOutlined />
+                      <img src={IconG1} alt="" />
                     </span>
                     <span>45</span>
                   </div>
                   <div>
                     <span>
-                      <SwapOutlined />
+                      <img src={IconG2} alt="" />
                     </span>
                     <span>45</span>
                   </div>
                   <div>
                     <span>
-                      <HddOutlined />
+                      <img src={IconG3} alt="" />
                     </span>
                     <span>45</span>
                   </div>
                   <div>
                     <span>
-                      <HeartOutlined />
+                      <img src={IconG4} alt="" />
                     </span>
                     <span>45</span>
                   </div>
