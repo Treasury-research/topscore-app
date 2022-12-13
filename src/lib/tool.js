@@ -37,3 +37,14 @@ export const switchChain = async (chainId) => {
     params: [{ chainId: `0x${chainId.toString(16)}` }],
   });
 };
+
+export const formatIPFS = (val) => {
+  if (!val) {
+    return val;
+  }
+  if (val.indexOf("ipfs://") > -1) {
+    return val.replace("ipfs://", "https://lens.infura-ipfs.io/ipfs/");
+  } else {
+    return val;
+  }
+};

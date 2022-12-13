@@ -3,7 +3,7 @@ import "./index.scss";
 import { ResponseType } from "axios";
 import api from "../../api";
 import BN from "bignumber.js";
-import { shortenAddr } from "../../lib/tool";
+import { formatIPFS, shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
 import IconRank from "./../../static/img/rank.png";
 import IconCopy from "./../../static/img/copy.png";
@@ -564,108 +564,133 @@ export default function Home() {
               )}
             </div>
           </div>
-          <div>
-            <div className="title">Featured Publication</div>
-            <div className="des">what is rank and score blah blah blah</div>
-            <div className="item">
-              <div className="con">
-                <div className="type">Post</div>
-                <div className="label">
-                  <img src={LabelEng} alt="" />
-                  <img src={LabelWarn} alt="" />
-                </div>
-                <div className="head">
-                  <div>K</div>
-                  <div>
-                    <div>
-                      KNN3 Network
-                      <span className="date-des">2 days ago</span>
+          {pub && Object.keys(pub).length > 0 && (
+            <div>
+              <div className="title">Featured Publication</div>
+              <div className="des">what is rank and score blah blah blah</div>
+              <div className="item">
+                {pub.engagement && (
+                  <div className="con">
+                    <div className="type">Post</div>
+                    <div className="label">
+                      <img src={LabelEng} alt="" />
+                      <img src={LabelWarn} alt="" />
                     </div>
-                    <div>
-                      <span>@knn3network.lens</span>
+                    <div className="head">
+                      <div>K</div>
+                      <div>
+                        <div>
+                          KNN3 Network
+                          <span className="date-des">2 days ago</span>
+                        </div>
+                        <div>
+                          <span>@knn3network.lens</span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div className="msg">GM and CRAZY THURSDA</div>
-                <div className="msg-img">
-                  <img src={Icon1} alt="" />
-                  <img src={Icon2} alt="" />
-                </div>
-                <div className="pro-data">
-                  <div>
-                    <span>
-                      <img src={IconG1} alt="" />
-                    </span>
-                    <span>45</span>
-                  </div>
-                  <div>
-                    <span>
-                      <img src={IconG2} alt="" />
-                    </span>
-                    <span>45</span>
-                  </div>
-                  <div>
-                    <span>
-                      <img src={IconG3} alt="" />
-                    </span>
-                    <span>45</span>
-                  </div>
-                  <div>
-                    <span>
-                      <img src={IconG4} alt="" />
-                    </span>
-                    <span>45</span>
-                  </div>
-                </div>
-              </div>
+                    <div className="msg">
+                      {pub.engagement.publication.metadata.content}
+                    </div>
+                    {pub.engagement.publication.metadata.image && (
+                      <div className="msg-img">
+                        <img
+                          src={formatIPFS(
+                            pub.engagement.publication.metadata.image
+                          )}
+                        />
+                      </div>
+                    )}
 
-              <div className="con">
-                <div className="type">Comment</div>
-                <div className="label">
-                  <img src={LabelCollect} alt="" />
-                </div>
-                <div className="head">
-                  <div>K</div>
-                  <div>
-                    <div>
-                      KNN3 Network
-                      <span className="date-des">2 days ago</span>
+                    <div className="pro-data">
+                      <div>
+                        <span>
+                          <img src={IconG1} alt="" />
+                        </span>
+                        <span>{pub.engagement.commentCount}</span>
+                      </div>
+                      <div>
+                        <span>
+                          <img src={IconG2} alt="" />
+                        </span>
+                        <span>45</span>
+                      </div>
+                      <div>
+                        <span>
+                          <img src={IconG3} alt="" />
+                        </span>
+                        <span>45</span>
+                      </div>
+                      <div>
+                        <span>
+                          <img src={IconG4} alt="" />
+                        </span>
+                        <span>45</span>
+                      </div>
                     </div>
-                    <div>
-                      <span>@knn3network.lens</span>
+                  </div>
+                )}
+
+                {pub.collect && (
+                  <div className="con">
+                    <div className="type">Comment</div>
+                    <div className="label">
+                      <img src={LabelCollect} alt="" />
+                    </div>
+                    <div className="head">
+                      <div>K</div>
+                      <div>
+                        <div>
+                          KNN3 Network
+                          <span className="date-des">2 days ago</span>
+                        </div>
+                        <div>
+                          <span>@knn3network.lens</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="msg">
+                      {pub.collect.publication.metadata.content}
+                    </div>
+                    {pub.collect.publication.metadata.image && (
+                      <div className="msg-img">
+                        <img
+                          src={formatIPFS(
+                            pub.collect.publication.metadata.image
+                          )}
+                        />
+                      </div>
+                    )}
+                    <div className="pro-data">
+                      <div>
+                        <span>
+                          <img src={IconG1} alt="" />
+                        </span>
+                        <span>45</span>
+                      </div>
+                      <div>
+                        <span>
+                          <img src={IconG2} alt="" />
+                        </span>
+                        <span>45</span>
+                      </div>
+                      <div>
+                        <span>
+                          <img src={IconG3} alt="" />
+                        </span>
+                        <span>45</span>
+                      </div>
+                      <div>
+                        <span>
+                          <img src={IconG4} alt="" />
+                        </span>
+                        <span>45</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="msg">Ok, sure</div>
-                <div className="pro-data">
-                  <div>
-                    <span>
-                      <img src={IconG1} alt="" />
-                    </span>
-                    <span>45</span>
-                  </div>
-                  <div>
-                    <span>
-                      <img src={IconG2} alt="" />
-                    </span>
-                    <span>45</span>
-                  </div>
-                  <div>
-                    <span>
-                      <img src={IconG3} alt="" />
-                    </span>
-                    <span>45</span>
-                  </div>
-                  <div>
-                    <span>
-                      <img src={IconG4} alt="" />
-                    </span>
-                    <span>45</span>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
