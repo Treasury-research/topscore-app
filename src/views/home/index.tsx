@@ -24,16 +24,15 @@ import {
   SmileOutlined,
 } from "@ant-design/icons";
 import Radar from "./components/Radar";
-import type { MenuProps } from "antd";
 import { Dropdown, Space, Menu } from "antd";
 
 const tags = [
   "Influence",
   "Campaign",
-  "Creation",
-  "Curation",
-  "Collection",
   "Engagement",
+  "Creation",
+  "Collection",
+  "Curation",
 ];
 
 const NumTrend = ({ current, previous }: any) => {
@@ -128,16 +127,16 @@ export default function Home() {
         getCampaign(profileId);
         break;
       case 2:
+        getEngagement(profileId);
+        break;
+      case 3:
         getCreation(profileId);
         break;
-      case 3:
-        getCuration(profileId);
-        break;
-      case 3:
+      case 4:
         getCollection(profileId);
         break;
-      case 3:
-        getEngagement(profileId);
+      case 5:
+        getCuration(profileId);
         break;
     }
   }, [activeHandle, activeTag, handlesList]);
@@ -358,6 +357,7 @@ export default function Home() {
                     </div>
                     <div>
                       <span>Comment (by)</span>
+                      {/** TODO */}
                       <span>{indicators.comment}</span>
                       <NumTrend current={indicators.comment} previous={campaign.lastWeekCommentBy} />
                     </div>
@@ -375,6 +375,7 @@ export default function Home() {
                     </div>
                     <div>
                       <span>Mirror (by)</span>
+                      {/** TODO */}
                       <span>{indicators.mirror}</span>
                       <NumTrend current={indicators.mirror} previous={campaign.lastWeekMirrorBy} />
                     </div>
@@ -395,8 +396,8 @@ export default function Home() {
                     </div>
                     <div>
                       <span>Comment (to)</span>
-                      <span>1,132</span>
-                      <span className="red">+62</span>
+                      <span>{indicators.comment}</span>
+                      <NumTrend current={indicators.comment} previous={engagement.lastWeekComment} />
                     </div>
                   </div>
                   <div className="rank-info">
@@ -407,8 +408,8 @@ export default function Home() {
                     </div>
                     <div>
                       <span>Mirror (to)</span>
-                      <span>32</span>
-                      <span className="green">-2</span>
+                      <span>{indicators.mirror}</span>
+                      <NumTrend current={indicators.mirror} previous={engagement.lastWeekMirror} />
                     </div>
                   </div>
                 </div>
@@ -439,8 +440,8 @@ export default function Home() {
                     </div>
                     <div>
                       <span>Collectors</span>
-                      <span>32</span>
-                      <span className="green">-2</span>
+                      <span>{indicators.collectBy}</span>
+                      <NumTrend current={indicators.collectBy} previous={creation.lastWeekCollectBy} />
                     </div>
                   </div>
                 </div>
@@ -458,9 +459,9 @@ export default function Home() {
                       <span className="red">↑1</span>
                     </div>
                     <div>
-                      <span>Collectins</span>
-                      <span>1,132</span>
-                      <span className="red">+62</span>
+                      <span>Collections</span>
+                      <span>{indicators.collect}</span>
+                      <NumTrend current={indicators.collect} previous={collection.lastWeekCollect} />
                     </div>
                   </div>
                   <div className="rank-info">
@@ -491,8 +492,9 @@ export default function Home() {
                     </div>
                     <div>
                       <span>Mirror (to)</span>
-                      <span>130</span>
-                      <span className="red">+32</span>
+                      {/** TODO */}
+                      <span>{indicators.mirror}</span>
+                      <NumTrend current={indicators.mirror} previous={curation.lastWeekMirror} />
                     </div>
                     <div>
                       <span>Sales (paid)</span>
