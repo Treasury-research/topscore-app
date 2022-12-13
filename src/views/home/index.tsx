@@ -18,11 +18,7 @@ import IconG3 from "./../../static/img/g3.png";
 import IconG4 from "./../../static/img/g4.png";
 import IconG5 from "./../../static/img/g5.png";
 import { copyToClipboard } from "../../lib/tool";
-import {
-  TwitterOutlined,
-  DownOutlined,
-  SmileOutlined,
-} from "@ant-design/icons";
+import { TwitterOutlined, DownOutlined } from "@ant-design/icons";
 import Radar from "./components/Radar";
 import { Dropdown, Space, Menu } from "antd";
 
@@ -36,9 +32,11 @@ const tags = [
 ];
 
 const NumTrend = ({ current, previous }: any) => {
+  if (!current || !previous) {
+    return <span>-</span>;
+  }
   const isLarger = new BN(current).isGreaterThanOrEqualTo(previous);
   const absoluteValue = new BN(current).minus(previous).absoluteValue();
-
   const renderValue = `${isLarger ? "+" : "-"}${absoluteValue}`;
   return <span className={isLarger ? "green" : "red"}>{renderValue}</span>;
 };
@@ -56,6 +54,7 @@ export default function Home() {
   const [currentProfile, setCurrentProfile] = useState<any>({});
   const [activeTag, setActiveTag] = useState(0);
   const [activeHandle, setActiveHandle] = useState<number>(0);
+  const [pub, setPub] = useState<any>({});
 
   const getLensHandle = async () => {
     const testAccount = "0xcde3725b25d6d9bc78cf0941cc15fd9710c764b9";
@@ -99,6 +98,11 @@ export default function Home() {
     setEngagement(res.data);
   };
 
+  const getPub = async (profileId: string) => {
+    const res: any = await api.get(`/lens/topPub/${profileId}`);
+    setPub(res.data);
+  };
+
   useEffect(() => {
     if (!account) {
       return;
@@ -116,8 +120,6 @@ export default function Home() {
     const profileId = profile.profileId;
 
     setCurrentProfile(profile);
-
-    getIndicators(profile.profileId);
 
     switch (activeTag) {
       case 0:
@@ -140,6 +142,18 @@ export default function Home() {
         break;
     }
   }, [activeHandle, activeTag, handlesList]);
+
+  useEffect(() => {
+    const { profileId } = currentProfile;
+
+    if (!profileId) {
+      return;
+    }
+    console.log("get it");
+    getIndicators(profileId);
+
+    getPub(profileId);
+  }, [currentProfile]);
 
   return (
     <div className="toscore">
@@ -353,13 +367,19 @@ export default function Home() {
                     <div>
                       <span>Post</span>
                       <span>{indicators.post}</span>
-                      <NumTrend current={indicators.post} previous={campaign.lastWeekPost} />
+                      <NumTrend
+                        current={indicators.post}
+                        previous={campaign.lastWeekPost}
+                      />
                     </div>
                     <div>
                       <span>Comment (by)</span>
                       {/** TODO */}
                       <span>{indicators.comment}</span>
-                      <NumTrend current={indicators.comment} previous={campaign.lastWeekCommentBy} />
+                      <NumTrend
+                        current={indicators.comment}
+                        previous={campaign.lastWeekCommentBy}
+                      />
                     </div>
                   </div>
                   <div className="rank-info">
@@ -371,13 +391,19 @@ export default function Home() {
                     <div>
                       <span>Comment (to)</span>
                       <span>{indicators.comment}</span>
-                      <NumTrend current={indicators.comment} previous={campaign.lastWeekComment} />
+                      <NumTrend
+                        current={indicators.comment}
+                        previous={campaign.lastWeekComment}
+                      />
                     </div>
                     <div>
                       <span>Mirror (by)</span>
                       {/** TODO */}
                       <span>{indicators.mirror}</span>
-                      <NumTrend current={indicators.mirror} previous={campaign.lastWeekMirrorBy} />
+                      <NumTrend
+                        current={indicators.mirror}
+                        previous={campaign.lastWeekMirrorBy}
+                      />
                     </div>
                   </div>
                 </div>
@@ -397,7 +423,10 @@ export default function Home() {
                     <div>
                       <span>Comment (to)</span>
                       <span>{indicators.comment}</span>
-                      <NumTrend current={indicators.comment} previous={engagement.lastWeekComment} />
+                      <NumTrend
+                        current={indicators.comment}
+                        previous={engagement.lastWeekComment}
+                      />
                     </div>
                   </div>
                   <div className="rank-info">
@@ -409,7 +438,10 @@ export default function Home() {
                     <div>
                       <span>Mirror (to)</span>
                       <span>{indicators.mirror}</span>
-                      <NumTrend current={indicators.mirror} previous={engagement.lastWeekMirror} />
+                      <NumTrend
+                        current={indicators.mirror}
+                        previous={engagement.lastWeekMirror}
+                      />
                     </div>
                   </div>
                 </div>
@@ -441,7 +473,10 @@ export default function Home() {
                     <div>
                       <span>Collectors</span>
                       <span>{indicators.collectBy}</span>
-                      <NumTrend current={indicators.collectBy} previous={creation.lastWeekCollectBy} />
+                      <NumTrend
+                        current={indicators.collectBy}
+                        previous={creation.lastWeekCollectBy}
+                      />
                     </div>
                   </div>
                 </div>
@@ -461,7 +496,10 @@ export default function Home() {
                     <div>
                       <span>Collections</span>
                       <span>{indicators.collect}</span>
-                      <NumTrend current={indicators.collect} previous={collection.lastWeekCollect} />
+                      <NumTrend
+                        current={indicators.collect}
+                        previous={collection.lastWeekCollect}
+                      />
                     </div>
                   </div>
                   <div className="rank-info">
@@ -494,7 +532,10 @@ export default function Home() {
                       <span>Mirror (to)</span>
                       {/** TODO */}
                       <span>{indicators.mirror}</span>
-                      <NumTrend current={indicators.mirror} previous={curation.lastWeekMirror} />
+                      <NumTrend
+                        current={indicators.mirror}
+                        previous={curation.lastWeekMirror}
+                      />
                     </div>
                     <div>
                       <span>Sales (paid)</span>
