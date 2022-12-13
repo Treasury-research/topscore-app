@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./index.scss";
 import { ResponseType } from "axios";
 import api from "../../api";
+import BN from "bignumber.js";
 import { shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
 import IconRank from "./../../static/img/rank.png";
@@ -20,11 +21,11 @@ import { copyToClipboard } from "../../lib/tool";
 import {
   TwitterOutlined,
   DownOutlined,
-  SmileOutlined
+  SmileOutlined,
 } from "@ant-design/icons";
 import Radar from "./components/Radar";
-import type { MenuProps } from 'antd';
-import { Dropdown, Space, Menu } from 'antd';
+import type { MenuProps } from "antd";
+import { Dropdown, Space, Menu } from "antd";
 
 const tags = [
   "Influence",
@@ -35,27 +36,68 @@ const tags = [
   "Engagement",
 ];
 
+const NumTrend = ({ current, previous }: any) => {
+  const isLarger = new BN(current).isGreaterThanOrEqualTo(previous);
+  const absoluteValue = new BN(current).minus(previous).absoluteValue();
+
+  const renderValue = `${isLarger ? "+" : "-"}${absoluteValue}`;
+  return <span className={isLarger ? "green" : "red"}>{renderValue}</span>;
+};
+
 export default function Home() {
   const { account, connectWallet } = useWeb3Context();
   const [handlesList, setHandlesList] = useState<any>([]);
   const [indicators, setIndicators] = useState<any>({});
-  const [currentProfile, setCurrentProfile] = useState({
-    handle: "",
-    profileId: ""
-  });
+  const [influence, setInfluence] = useState<any>({});
+  const [campaign, setCampaign] = useState<any>({});
+  const [creation, setCreation] = useState<any>({});
+  const [curation, setCuration] = useState<any>({});
+  const [collection, setCollection] = useState<any>({});
+  const [engagement, setEngagement] = useState<any>({});
+  const [currentProfile, setCurrentProfile] = useState<any>({});
   const [activeTag, setActiveTag] = useState(0);
+  const [activeHandle, setActiveHandle] = useState<number>(0);
 
   const getLensHandle = async () => {
     const testAccount = "0xcde3725b25d6d9bc78cf0941cc15fd9710c764b9";
     const res: any = await api.get(`/lens/handles/${testAccount}`);
-    console.log(res.data)
     setHandlesList(res.data);
-    setCurrentProfile(res.data[0]);
+    // setCurrentProfile(res.data[0]);
   };
 
   const getIndicators = async (profileId: string) => {
     const res: any = await api.get(`/lens/indicators/${profileId}`);
     setIndicators(res.data);
+  };
+
+  const getInfluence = async (profileId: string) => {
+    const res: any = await api.get(`/lens/influence/${profileId}`);
+    setInfluence(res.data);
+  };
+
+  const getCampaign = async (profileId: string) => {
+    const res: any = await api.get(`/lens/campaign/${profileId}`);
+    setCampaign(res.data);
+  };
+
+  const getCreation = async (profileId: string) => {
+    const res: any = await api.get(`/lens/creation/${profileId}`);
+    setCreation(res.data);
+  };
+
+  const getCuration = async (profileId: string) => {
+    const res: any = await api.get(`/lens/curation/${profileId}`);
+    setCuration(res.data);
+  };
+
+  const getCollection = async (profileId: string) => {
+    const res: any = await api.get(`/lens/collection/${profileId}`);
+    setCollection(res.data);
+  };
+
+  const getEngagement = async (profileId: string) => {
+    const res: any = await api.get(`/lens/engagement/${profileId}`);
+    setEngagement(res.data);
   };
 
   useEffect(() => {
@@ -66,10 +108,39 @@ export default function Home() {
   }, [account]);
 
   useEffect(() => {
-    if (currentProfile.profileId) {
-      getIndicators(currentProfile.profileId);
+    if (!handlesList || handlesList.length === 0) {
+      return;
     }
-  }, [currentProfile]);
+
+    const profile = handlesList[activeHandle];
+
+    const profileId = profile.profileId;
+
+    setCurrentProfile(profile);
+
+    getIndicators(profile.profileId);
+
+    switch (activeTag) {
+      case 0:
+        getInfluence(profileId);
+        break;
+      case 1:
+        getCampaign(profileId);
+        break;
+      case 2:
+        getCreation(profileId);
+        break;
+      case 3:
+        getCuration(profileId);
+        break;
+      case 3:
+        getCollection(profileId);
+        break;
+      case 3:
+        getEngagement(profileId);
+        break;
+    }
+  }, [activeHandle, activeTag, handlesList]);
 
   return (
     <div className="toscore">
@@ -125,24 +196,27 @@ export default function Home() {
             </div>
           </div>
           <div>
-
             <div className="base-detail-top">
               <div>
                 <div>
                   <Dropdown
                     overlay={
                       <Menu>
-                        {
-                          handlesList.map((t: any, i: number) => (
-                            <div className="drop-menu" key={i} onClick={() => setCurrentProfile(t)}>{t.handle}</div>
-                          ))
-                        }
+                        {handlesList.map((t: any, i: number) => (
+                          <div
+                            className="drop-menu"
+                            key={i}
+                            onClick={() => setActiveHandle(i)}
+                          >
+                            {t.handle}
+                          </div>
+                        ))}
                       </Menu>
                     }
                   >
                     <a onClick={(e) => e.preventDefault()}>
                       <Space className="space">
-                        KNN3 Network
+                        {currentProfile.name}
                         <DownOutlined />
                       </Space>
                     </a>
@@ -190,7 +264,10 @@ export default function Home() {
                     <div>Collections</div>
                   </div>
                   <div>
-                    <div><img className="g5" src={IconG5} alt="" /><span>0</span></div>
+                    <div>
+                      <img className="g5" src={IconG5} alt="" />
+                      <span>0</span>
+                    </div>
                     <div>Spent</div>
                   </div>
                 </div>
@@ -200,7 +277,10 @@ export default function Home() {
                     <div>Collectors</div>
                   </div>
                   <div>
-                    <div><img className="g5" src={IconG5} alt="" /><span>0</span></div>
+                    <div>
+                      <img className="g5" src={IconG5} alt="" />
+                      <span>0</span>
+                    </div>
                     <div>Earned</div>
                   </div>
                 </div>
@@ -235,8 +315,11 @@ export default function Home() {
                     </div>
                     <div>
                       <span>Following</span>
-                      <span>1,132</span>
-                      <span className="red">+62</span>
+                      <span>{indicators.following}</span>
+                      <NumTrend
+                        current={indicators.following}
+                        previous={influence.lastWeekFollowing}
+                      />
                     </div>
                   </div>
                   <div className="rank-info">
@@ -247,8 +330,11 @@ export default function Home() {
                     </div>
                     <div>
                       <span>Followers</span>
-                      <span>32</span>
-                      <span className="green">-2</span>
+                      <span>{indicators.follower}</span>
+                      <NumTrend
+                        current={indicators.follower}
+                        previous={influence.lastWeekFollower}
+                      />
                     </div>
                   </div>
                 </div>
@@ -267,13 +353,13 @@ export default function Home() {
                     </div>
                     <div>
                       <span>Post</span>
-                      <span>130</span>
-                      <span className="red">+32</span>
+                      <span>{indicators.post}</span>
+                      <NumTrend current={indicators.post} previous={campaign.lastWeekPost} />
                     </div>
                     <div>
                       <span>Comment (by)</span>
-                      <span>320</span>
-                      <span className="red">+20</span>
+                      <span>{indicators.comment}</span>
+                      <NumTrend current={indicators.comment} previous={campaign.lastWeekCommentBy} />
                     </div>
                   </div>
                   <div className="rank-info">
@@ -284,13 +370,13 @@ export default function Home() {
                     </div>
                     <div>
                       <span>Comment (to)</span>
-                      <span>320</span>
-                      <span className="red">+20</span>
+                      <span>{indicators.comment}</span>
+                      <NumTrend current={indicators.comment} previous={campaign.lastWeekComment} />
                     </div>
                     <div>
                       <span>Mirror (by)</span>
-                      <span>32</span>
-                      <span className="green">+15</span>
+                      <span>{indicators.mirror}</span>
+                      <NumTrend current={indicators.mirror} previous={campaign.lastWeekMirrorBy} />
                     </div>
                   </div>
                 </div>
