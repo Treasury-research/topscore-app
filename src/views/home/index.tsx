@@ -6,19 +6,16 @@ import BN from "bignumber.js";
 import { formatIPFS, shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
 import IconRank from "./../../static/img/rank.png";
-import IconCopy from "./../../static/img/copy.png";
-import LabelWarn from "./../../static/img/warn.png";
-import LabelEng from "./../../static/img/eng.png";
-import LabelCollect from "./../../static/img/collect.png";
-import Icon1 from "./../../static/img/s1.png";
-import Icon2 from "./../../static/img/s2.png";
-import IconG1 from "./../../static/img/g1.png";
-import IconG2 from "./../../static/img/g2.png";
-import IconG3 from "./../../static/img/g3.png";
-import IconG4 from "./../../static/img/g4.png";
+import LabelWarn from "./../../static/img/warn.svg";
+import LabelEng from "./../../static/img/eng.svg";
+import LabelCollect from "./../../static/img/collect.svg";
+import IconG1 from "./../../static/img/g1.svg";
+import IconG2 from "./../../static/img/g2.svg";
+import IconG3 from "./../../static/img/g3.svg";
+import IconG4 from "./../../static/img/g4.svg";
 import IconG5 from "./../../static/img/g5.png";
 import { copyToClipboard } from "../../lib/tool";
-import { TwitterOutlined, DownOutlined } from "@ant-design/icons";
+import { TwitterOutlined, DownOutlined, CopyOutlined } from "@ant-design/icons";
 import Radar from "./components/Radar";
 import { Dropdown, Space, Menu } from "antd";
 
@@ -180,12 +177,13 @@ export default function Home() {
               <div>
                 {shortenAddr(account)}
                 <span>
-                  <img
+                  {/* <img
                     alt=""
                     src={IconCopy}
                     onClick={() => copyToClipboard(account)}
                     className="copyIcon"
-                  />
+                  /> */}
+                  <CopyOutlined className="copyIcon" onClick={() => copyToClipboard(account)}/>
                 </span>
               </div>
               <div>

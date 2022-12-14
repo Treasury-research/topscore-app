@@ -160,13 +160,23 @@
             overflow: hidden;
             margin-top: 30px;
 
+            img {
+              height: 26px;
+              width: 26px;
+            }
+
             >div {
               float: left;
               margin-right: 40px;
+              height: 28px;
+              line-height: 28px;
+              /* overflow: hidden; */
+              display: inline-flex;
 
               >span:nth-child(1) {
                 margin-right: 4px;
                 color: rgba(255, 255, 255, .5);
+                display: inline-block;
               }
             }
           }
@@ -210,14 +220,15 @@
 
         .twitter {
           display: inline-block;
-          height: 16px;
-          width: 16px;
-          line-height: 16px;
+          height: 20px;
+          width: 20px;
+          line-height: 20px;
           text-align: center;
           background: #FFFFFF;
           color: rgb(91, 176, 212);
           border-radius: 50%;
           margin-right: 4px;
+          font-size: 16px;
         }
       }
 
@@ -249,9 +260,11 @@
     .base-detail-top {
       overflow: hidden;
       margin-bottom: 20px;
-      .space{
+
+      .space {
         color: rgba(255, 255, 255, .9);
       }
+
       >div:nth-child(1) {
         float: left;
 
@@ -297,11 +310,13 @@
 
       &-info {
         display: flex;
-        .g5{
+
+        .g5 {
           width: 14px;
           height: 14px;
           margin-right: 5px;
         }
+
         >div {
           flex: 1;
           text-align: center;
@@ -425,12 +440,15 @@
       width: 12px;
       margin-left: 4px;
       cursor: pointer;
+      color: rgba(255, 255, 255, .5);
     }
 
   }
 }
-.drop-menu{
+
+.drop-menu {
   cursor: pointer;
   width: 100%;
-  text-indent: 10px;
+  padding: 4px 10px;
+
 }
