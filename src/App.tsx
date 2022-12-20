@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { Web3ContextProvider } from "./context/Web3Context";
 import Home from "./views/home";
+import Main from "./views/main";
 import "./App.css";
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
         <Router>
           <Switch>
             <Route path="/home" component={Home} />
-            <Redirect to="/home" />
+            <Route path="/main" component={Main} />
+            <Redirect to="/main" />
           </Switch>
         </Router>
       </Web3ContextProvider>

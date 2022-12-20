@@ -1,5 +1,11 @@
 @import '~antd/dist/antd.css';
 
+@font-face {
+    font-family: "Exan";
+    font-weight: 500;
+    src: url("./accests/font/EXAN/Exan-Regular.ttf");
+}
+
 html,
 body,
 div,
