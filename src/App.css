@@ -1,9 +1,21 @@
 @import '~antd/dist/antd.css';
 
 @font-face {
-    font-family: "Exan";
-    font-weight: 500;
-    src: url("./accests/font/EXAN/Exan-Regular.ttf");
+	font-family: "Exan";
+	font-weight: 500;
+	src: url("./accests/font/EXAN/Exan-Regular.ttf");
+}
+
+@font-face {
+	font-family: "Jura";
+	font-weight: 500;
+	src: url("./accests/font/JURA/Jura-Bold.ttf");
+}
+
+@font-face {
+	font-family: "Eur";
+	font-weight: 500;
+	src: url("./accests/font/EUR/EurostileBold.ttf");
 }
 
 html,
@@ -199,4 +211,53 @@ body {
 #root {
 	height: 100%;
 	width: 100%;
+}
+
+.ant-drawer-content-wrapper {
+	width: 440px !important;
+	height: 600px;
+	top: 100px !important;
+}
+
+.ant-drawer-content {
+	background: #262626 !important;
+}
+
+.ant-pagination-item-link {
+	color: #fff !important;
+}
+
+.ant-pagination-simple-pager input {
+	background: rgba(255, 255, 255, 0.1) !important;
+	color: #fff;
+	border: none !important;
+}
+
+.ant-pagination-simple-pager {
+	color: #fff;
+}
+
+.claimModal .ant-modal-footer {
+	display: none;
+}
+.claimModal .ant-modal-body {
+	padding: 80px 50px 40px 50px;
+	background: #1E1E1E;;
+}
+.claimModal .ant-modal-close{
+	height: 40px;
+    width: 40px;
+    background: #fff;
+    line-height: 40px;
+    top: 16px;
+    text-align: center;
+    right: 16px;
+	background: rgba(255,255,255,0.1);
+}
+.claimModal .ant-modal-close .ant-modal-close-x{
+	width: 40px;
+    height: 40px;
+	line-height: 40px;
+	color: #fff;
+	font-size: 24px;
 }

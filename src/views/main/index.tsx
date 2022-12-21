@@ -13,16 +13,58 @@ import IconG1 from "./../../static/img/g1.svg";
 import IconG2 from "./../../static/img/g2.svg";
 import IconG3 from "./../../static/img/g3.svg";
 import IconG4 from "./../../static/img/g4.svg";
-import IconG5 from "./../../static/img/g5.png";
 import IconS2 from "./../../static/img/s2.png";
+import imgRadarSmall from "./../../static/img/radar-small.png";
 import { copyToClipboard } from "../../lib/tool";
-import { TwitterOutlined, DownOutlined, CopyOutlined } from "@ant-design/icons";
+import { TwitterOutlined, DownOutlined, CopyOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Radar from "./components/Radar";
-import { Dropdown, Space, Menu } from "antd";
+import { Dropdown, Space, Menu, Drawer, Pagination, Modal } from "antd";
 
-
+const typeList = ['Influence', 'Campaign', 'Creation', 'Curation', 'Collection', 'Engagement'];
+const rankList = [{
+  name: 'Lens Protocol',
+  score: '201'
+},
+{
+  name: 'KNN3 Network',
+  score: '150'
+},
+{
+  name: 'Stani',
+  score: '130'
+},
+{
+  name: 'Stani',
+  score: '130'
+},
+{
+  name: 'Stani',
+  score: '130'
+},
+{
+  name: 'Stani',
+  score: '130'
+}]
 export default function Main() {
+  const [showList, setShowList] = useState(false);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const onClose = () => {
+    setShowList(false);
+  };
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="toscore">
@@ -31,7 +73,7 @@ export default function Main() {
           <div className="topscore-head-main-btn">Profile</div>
           <div className="topscore-head-main-btn">CharacteristicDEX</div>
         </div>
-        <div className="topscore-head-wallet-btn">Collect</div>
+        <div className="topscore-head-wallet-btn">Connect</div>
       </div>
       <div className="toscore-content">
         <div className="toscore-main">
@@ -67,12 +109,12 @@ export default function Main() {
                 <div>@knn3network.lens</div>
               </div>
             </div>
-            <div className="topscore-head-wallet-btn">Share & Claim</div>
+            <div className="topscore-head-wallet-btn" onClick={() => setIsModalOpen(true)}>Share & Claim</div>
           </div>
 
           <div className="top-rador">
             <div>
-              <Radar id="top-rador" width={"100%"} height={"100%"} />
+              <Radar id="top-rador" width={"100%"} height={"100%"} showList={() => setShowList(true)} />
             </div>
 
             <div className="top-rador-info">
@@ -125,6 +167,49 @@ export default function Main() {
 
               </div>
             </div>
+            <Drawer title="" placement="right" onClose={onClose} open={showList} closable={false}>
+              <div className="drawer">
+                <div className="rightOut" onClick={() => { setShowList(false) }}><RightOutlined /></div>
+                <Dropdown
+                  overlay={
+                    <Menu>
+                      {
+                        typeList.map((t, i) =>
+                          <div
+                            className="drop-menu"
+                            key={i}
+                          >
+                            {t}
+                          </div>
+                        )
+                      }
+
+                    </Menu>
+                  }
+                >
+                  <a onClick={(e) => e.preventDefault()}>
+                    <Space className="space ">
+                      <span className="list-type">Overall</span>
+                      <DownOutlined />
+                    </Space>
+                  </a>
+                </Dropdown>
+                {
+                  rankList.map((t, i) =>
+                    <div className="rank-item" key={i}>
+                      <span>{i + 1}</span>
+                      <span>k</span>
+                      <span>{t.name}</span>
+                      <span><img src={imgRadarSmall} alt="" /></span>
+                      <span>Score: {t.score}</span>
+                    </div>
+                  )
+                }
+                <div className="pagination">
+                  <Pagination simple total={50} />
+                </div>
+              </div>
+            </Drawer>
           </div>
           <div className="btn-group-1">
             <div>
@@ -163,54 +248,65 @@ export default function Main() {
             </div>
           </div>
           <div className="con">
-              <div className="head">
-                <div>K</div>
+            <div className="head">
+              <div>K</div>
+              <div>
                 <div>
-                  <div>
-                    KNN3 Network
-                  </div>
-                  <div>
-                    <span>@knn3network.lens</span>
-                  </div>
-                </div>
-              </div>
-              <div className="msg">
-                ewrwerwerwerwerwerewr
-              </div>
-                <div className="msg-img">
-                  <img
-                    src={IconS2}
-                  />
-                </div>
-              <div className="pro-data">
-                <div>
-                  <span>
-                    <img src={IconG1} alt="" />
-                  </span>
-                  <span>45</span>
+                  KNN3 Network
                 </div>
                 <div>
-                  <span style={{color:'red'}}>
-                    <img src={IconG2} alt="" style={{color:'red'}}/>
-                  </span>
-                  <span>45</span>
-                </div>
-                <div>
-                  <span>
-                    <img src={IconG3} alt="" />
-                  </span>
-                  <span>45</span>
-                </div>
-                <div>
-                  <span>
-                    <img src={IconG4} alt="" />
-                  </span>
-                  <span>45</span>
+                  <span>@knn3network.lens</span>
                 </div>
               </div>
             </div>
+            <div className="msg">
+              ewrwerwerwerwerwerewr
+            </div>
+            <div className="msg-img">
+              <img
+                src={IconS2}
+              />
+            </div>
+            <div className="pro-data">
+              <div>
+                <span>
+                  <img src={IconG1} alt="" />
+                </span>
+                <span>45</span>
+              </div>
+              <div>
+                <span style={{ color: 'red' }}>
+                  <img src={IconG2} alt="" style={{ color: 'red' }} />
+                </span>
+                <span>45</span>
+              </div>
+              <div>
+                <span>
+                  <img src={IconG3} alt="" />
+                </span>
+                <span>45</span>
+              </div>
+              <div>
+                <span>
+                  <img src={IconG4} alt="" />
+                </span>
+                <span>45</span>
+              </div>
+            </div>
+          </div>
         </div>
+        <div className="leftOut" onClick={() => { setShowList(true) }}><LeftOutlined /></div>
       </div>
+      <Modal className="claimModal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={400}>
+        <div className="claim-img"></div>
+        <div className="claim-bottom">
+          <div>Claim</div>
+          <div>
+            <div></div>
+            <div><TwitterOutlined /></div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

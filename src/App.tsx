@@ -8,6 +8,7 @@ import {
 import { Web3ContextProvider } from "./context/Web3Context";
 import Home from "./views/home";
 import Main from "./views/main";
+import Rsrv from "./views/rsrv";
 import "./App.css";
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/main" component={Main} />
-            <Redirect to="/main" />
+            <Route path="/rsrv" component={Rsrv} />
+            <Redirect to="/rsrv" />
           </Switch>
         </Router>
       </Web3ContextProvider>
