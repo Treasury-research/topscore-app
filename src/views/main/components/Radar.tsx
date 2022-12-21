@@ -2,24 +2,22 @@ import { useEffect } from 'react';
 import * as echarts from 'echarts';
 import radorImg from './../../../static/img/radar.png'
 
-const dataBJ = [
-    [98, 80, 99, 70, 79, 80],
-];
+// const dataBJ = [
+//     [98, 80, 99, 70, 79, 80],
+// ];
 
 const ChartLine = (props: any) => {
-    const { optionsData = null, id = 'default-id', width = '100%', height = '100%' } = props;
+    const { optionsData = null, id = 'default-id', width = '100%', height = '100%',data } = props;
+    console.log(data)
+    let dataBJ = data.map((t:any) => {
+        t.max = 100;
+        return t.value
+    })
     useEffect(() => {
         const option = {
             tooltip: {
                 trigger: 'axis',
                 show: true
-            },
-            legend: {
-                data: ['Influence', 'Campaign', 'Creation', 'Curation', 'Collection', 'Engagement'],
-                textStyle: {
-                    color: '#FEFFFE',
-                    fontSize: 20
-                }
             },
             radar: {
                 axisName: {
@@ -29,15 +27,7 @@ const ChartLine = (props: any) => {
                     padding: [10, 10, 4, 10],
                     clickable: true,
                 },
-                indicator: [
-                    { name: 'Influence', max: 100 },
-                    { name: 'Campaign', max: 100 },
-                    { name: 'Creation', max: 100 },
-                    { name: 'Curation', max: 100 },
-                    { name: 'Collection', max: 100 },
-                    { name: 'Engagement', max: 100 },
-
-                ],
+                indicator: data,
                 shape: 'circle',
                 splitNumber: 4,
                 name: {
@@ -79,7 +69,7 @@ const ChartLine = (props: any) => {
                 tooltip: {
                     trigger: 'item'
                 },
-                data: dataBJ,
+                data: [dataBJ],
                 symbol: 'circle',
                 symbolSize: 0,
                 // itemStyle: {

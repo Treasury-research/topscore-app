@@ -50,6 +50,30 @@ export default function Main() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [rador1, setRador1] = useState([
+    { name: 'Influence', value: 90 },
+    { name: 'Campaign', value: 80 },
+    { name: 'Creation', value: 70 },
+    { name: 'Curation', value: 60 },
+    { name: 'Collection', value: 80 },
+    { name: 'Engagement', value: 90 }]);
+
+  const [rador2, setRador2] = useState([
+    { name: '', value: 90 },
+    { name: '', value: 80 },
+    { name: '', value: 70 },
+    { name: 'Curation', value: 60 },
+    { name: '', value: 80 },
+    { name: '', value: 90 }]);
+
+  const [rador3, setRador3] = useState([
+    { name: '', value: 90 },
+    { name: '', value: 80 },
+    { name: '', value: 70 },
+    { name: '', value: 60 },
+    { name: 'Campaign', value: 80 },
+    { name: 'Engagement', value: 90 }]);
+
   const onClose = () => {
     setShowList(false);
   };
@@ -114,7 +138,7 @@ export default function Main() {
 
           <div className="top-rador">
             <div>
-              <Radar id="top-rador" width={"100%"} height={"100%"} showList={() => setShowList(true)} />
+              <Radar data={rador1} id="top-rador" width={"100%"} height={"100%"} showList={() => setShowList(true)} />
             </div>
 
             <div className="top-rador-info">
@@ -219,7 +243,7 @@ export default function Main() {
           </div>
           <div className="influence_curation">
             <div className="left-rador">
-              <Radar id="top-rador_1" width={"100%"} height={"100%"} />
+              <Radar data={rador2} id="top-rador_1" width={"100%"} height={"100%"} />
             </div>
             <div className="right-text">
               <p>YOUR 2022 LENS-PRINT</p>
@@ -244,7 +268,7 @@ export default function Main() {
               <p>YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF CONTENT.</p>
             </div>
             <div className="right-rador">
-              <Radar id="top-rador_2" width={"100%"} height={"100%"} />
+              <Radar data={rador3} id="top-rador_2" width={"100%"} height={"100%"} />
             </div>
           </div>
           <div className="con">
