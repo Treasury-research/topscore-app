@@ -21,6 +21,7 @@ import Radar from "./components/Radar";
 import { Dropdown, Space, Menu, Drawer, Pagination, Modal } from "antd";
 
 const typeList = ['Influence', 'Campaign', 'Creation', 'Curation', 'Collection', 'Engagement'];
+
 const rankList = [{
   name: 'Lens Protocol',
   score: '201'
@@ -45,6 +46,7 @@ const rankList = [{
   name: 'Stani',
   score: '130'
 }]
+
 export default function Main() {
   const [showList, setShowList] = useState(false);
 
@@ -212,7 +214,7 @@ export default function Main() {
                   }
                 >
                   <a onClick={(e) => e.preventDefault()}>
-                    <Space className="space ">
+                    <Space className="space overall">
                       <span className="list-type">Overall</span>
                       <DownOutlined />
                     </Space>

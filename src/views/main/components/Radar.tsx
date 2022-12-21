@@ -7,9 +7,9 @@ import radorImg from './../../../static/img/radar.png'
 // ];
 
 const ChartLine = (props: any) => {
-    const { optionsData = null, id = 'default-id', width = '100%', height = '100%',data } = props;
+    const { optionsData = null, id = 'default-id', width = '100%', height = '100%', data } = props;
     console.log(data)
-    let dataBJ = data.map((t:any) => {
+    let dataBJ = data.map((t: any) => {
         t.max = 100;
         return t.value
     })
@@ -102,10 +102,9 @@ const ChartLine = (props: any) => {
         const HTMLElement = document.getElementById(id) as HTMLElement;
         const chart = echarts.init(HTMLElement);
         chart.on('click', function (param) {
-            if(param.targetType == "axisName"){
-                console.log(props)
+            if (param.targetType == "axisName") {
+                props.showList()
             }
-            props.showList()
         })
         chart.setOption(option);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -117,7 +116,6 @@ const ChartLine = (props: any) => {
             </div>
             <img src={radorImg} alt="" style={{ position: "absolute", zIndex: '9', height: "80%", left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }} />
         </div>
-
     );
 };
 
