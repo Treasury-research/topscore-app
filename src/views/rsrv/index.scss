@@ -72,15 +72,16 @@
         z-index: 99;
       }
 
-      .appint-gif-1{
+      .appint-gif-1 {
         height: 300px;
         width: 300px;
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         z-index: 100;
-        img{
+
+        img {
           cursor: pointer;
         }
       }
@@ -261,7 +262,7 @@
     font-size: 20px;
   }
 
-  .overall{
+  .overall {
     margin-bottom: 20px;
   }
 
@@ -311,17 +312,21 @@
     width: fit-content;
   }
 
-  .des-1 {
+  .des-1,
+  .des-2,
+  .des-3,
+  .des-4 {
     font-family: "EurExtend";
     font-size: 80px;
     font-weight: 600;
+    color: rgba(255, 255, 255, .8);
+  }
+
+  .des-1 {
     margin-left: 100px;
   }
 
   .des-2 {
-    font-family: "EurExtend";
-    font-size: 80px;
-    font-weight: 600;
     position: absolute;
     left: 40px;
     top: 300px;
@@ -329,9 +334,6 @@
   }
 
   .des-3 {
-    font-family: "EurExtend";
-    font-size: 80px;
-    font-weight: 600;
     position: absolute;
     right: 0;
     top: 40%;
@@ -339,9 +341,6 @@
   }
 
   .des-4 {
-    font-family: "EurExtend";
-    font-size: 80px;
-    font-weight: 600;
     color: #fff;
     text-align: right;
     margin-right: 160px;
@@ -352,20 +351,51 @@
     width: 100%;
     overflow: hidden;
     text-indent: 100px;
+
     >div {
       float: left;
       margin-right: 100px;
     }
-    >div:nth-child(1){
+
+    >div:nth-child(1) {
       text-indent: 100px;
-      img{
+
+      img {
         height: 60px;
       }
     }
-    >div:nth-child(2){
-      img{
+
+    >div:nth-child(2) {
+      img {
         height: 40px;
       }
     }
+  }
+}
+
+.modal-bg {
+  top: 260px !important;
+
+  .ant-modal-content {
+    background: url("./../../static/img/draw-bg.png") no-repeat center center;
+    background-size: cover;
+    width: 100%;
+    color: #FFFFFF;
+    height: 316px;
+    width: 473px;
+  }
+
+  .ant-modal-close-x {
+    background: rgba(255, 51, 0, 0.3);
+    font-size: 26px;
+    color: rgba(255, 255, 255, .8);
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+  }
+
+  .ant-modal-close {
+    right: 30px;
+    top: 30px;
   }
 }

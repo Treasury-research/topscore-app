@@ -41,7 +41,7 @@ const rankList = [{
 export default function Main() {
   const {account, connectWallet} = useWeb3Context();
   const [showList, setShowList] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(false);
   const [isHoverRadar, setIsHoverRadar] = useState(false);
 
   const onClose = () => {
@@ -124,7 +124,7 @@ export default function Main() {
               {
                 isHoverRadar && 
                 <div onMouseLeave={() => setIsHoverRadar(false)}>
-                  <img src={RadarHover} alt="" />
+                  <img src={RadarHover} alt="" onClick={() => setIsOpen(true)}/>
                 </div>
               }
             </div>
@@ -170,6 +170,15 @@ export default function Main() {
                 </div>
               </div>
             </Drawer>
+            <Modal
+              title=""
+              open={isOpen}
+              footer={null}
+              onCancel={() => setIsOpen(false)}
+              width={473}
+              className="modal-bg"
+            >
+            </Modal>
           </div>
         </div>
         <div className="leftOut" onClick={() => { setShowList(true) }}><LeftOutlined /></div>
