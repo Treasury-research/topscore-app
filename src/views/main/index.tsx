@@ -35,7 +35,7 @@ const typeList = [
   "Engagement",
 ];
 
-const rankList = [
+const rankListDefault = [
   {
     name: "Lens Protocol",
     score: "201",
@@ -67,14 +67,15 @@ export default function Main() {
   const [showList, setShowList] = useState(false);
   const [handlesList, setHandlesList] = useState<any>([]);
   const [userInfo, setUserInfo] = useState<any>({});
+  const [rankList, setRankList] = useState<[]>([]);
+  const [rankTotal, setRankTotal] = useState<number>(0);
+  const [rankPageNo, setRankPageNo] = useState<number>(1);
+  const [rankType, setRankType] = useState<string>('influence');
   const [influence, setInfluence] = useState<any>({});
-  const [campaign, setCampaign] = useState<any>({});
-  const [creation, setCreation] = useState<any>({});
   const [curation, setCuration] = useState<any>({});
   const [collection, setCollection] = useState<any>({});
-  const [engagement, setEngagement] = useState<any>({});
   const [currentProfile, setCurrentProfile] = useState<any>({});
-  const [activeTag, setActiveTag] = useState(0);
+  // const [activeTag, setActiveTag] = useState(0);
   const [activeHandleIndex, setActiveHandleIndex] = useState<number>(0);
   const [pub, setPub] = useState<any>({});
 
@@ -123,6 +124,18 @@ export default function Main() {
     setIsModalOpen(false);
   };
 
+  const getRankList = async () => {
+    const limit = 6
+    const res:any = await api.get(`/lens/${rankType}/rank/list`, {
+      params: {
+        limit,
+        offset: (rankPageNo - 1) * limit
+      }
+    });
+    setRankTotal(res.data.total);
+    setRankList(res.data.data);
+  }
+
   const getLensHandle = async () => {
     const testAccount = "0xcde3725b25d6d9bc78cf0941cc15fd9710c764b9";
     const res: any = await api.get(`/lens/handles/${testAccount}`);
@@ -142,16 +155,6 @@ export default function Main() {
     setInfluence(res.data);
   };
 
-  const getCampaign = async (profileId: string) => {
-    const res: any = await api.get(`/lens/campaign/${profileId}`);
-    setCampaign(res.data);
-  };
-
-  const getCreation = async (profileId: string) => {
-    const res: any = await api.get(`/lens/creation/${profileId}`);
-    setCreation(res.data);
-  };
-
   const getCuration = async (profileId: string) => {
     const res: any = await api.get(`/lens/curation/${profileId}`);
     setCuration(res.data);
@@ -160,11 +163,6 @@ export default function Main() {
   const getCollection = async (profileId: string) => {
     const res: any = await api.get(`/lens/collection/${profileId}`);
     setCollection(res.data);
-  };
-
-  const getEngagement = async (profileId: string) => {
-    const res: any = await api.get(`/lens/engagement/${profileId}`);
-    setEngagement(res.data);
   };
 
   const getPub = async (profileId: string) => {
@@ -176,15 +174,23 @@ export default function Main() {
     const res = await Promise.all([
       getIndicators(profileId),
       getInfluence(profileId),
-      getCampaign(profileId),
-      getEngagement(profileId),
-      getCreation(profileId),
       getCollection(profileId),
       getCuration(profileId),
       getPub(profileId)
     ]);
-    console.log("aaaa", res);
+    getRankList();
   };
+
+  const onRankChange= (val: number) => {
+    setRankPageNo(val)
+  }
+
+  useEffect(()=>{
+    if(!rankType || !rankPageNo){
+      return
+    }
+    getRankList();
+  }, [rankPageNo, rankType])
 
   useEffect(() => {
     if (!account) {
@@ -200,11 +206,8 @@ export default function Main() {
 
     const profile = handlesList[activeHandleIndex];
 
-    // const profileId = profile.profileId;
-
     setCurrentProfile(profile);
 
-    // getUserInfo(profileId);
   }, [activeHandleIndex, handlesList]);
 
   useEffect(() => {
@@ -380,19 +383,19 @@ export default function Main() {
                     </Space>
                   </a>
                 </Dropdown>
-                {rankList.map((t, i) => (
+                {rankList.map((t:any, i) => (
                   <div className="rank-item" key={i}>
-                    <span>{i + 1}</span>
+                    <span>{t.rank}</span>
                     <span>k</span>
-                    <span>{t.name}</span>
+                    <span>{t.profileId}</span>
                     <span>
                       <img src={imgRadarSmall} alt="" />
                     </span>
-                    <span>Score: {t.score}</span>
+                    <span>Score: {new BN(t.score).toFixed(2)}</span>
                   </div>
                 ))}
                 <div className="pagination">
-                  <Pagination simple total={50} />
+                  <Pagination simple current={rankPageNo} pageSize={6} onChange={onRankChange} total={rankTotal} />
                 </div>
               </div>
             </Drawer>
