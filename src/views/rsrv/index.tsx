@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./index.scss";
 import { ResponseType } from "axios";
 import api from "../../api";
+import { shortenAddr } from "../../lib/tool";
+import useWeb3Context from "../../hooks/useWeb3Context";
 import BotText from "./../../static/img/botText.gif";
 import imgRadarSmall from "./../../static/img/radar-small.png";
 import { DownOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
@@ -34,6 +36,7 @@ const rankList = [{
   score: '???'
 }]
 export default function Main() {
+  const {account, connectWallet} = useWeb3Context();
   const [showList, setShowList] = useState(false);
 
   const [isHoverRadar, setIsHoverRadar] = useState(false);
@@ -46,6 +49,13 @@ export default function Main() {
     <div className="rsrv">
       <div className="rsrv-head">
         <div className="rsrv-head-wallet-btn">Connect</div>
+        <div>
+          <div className="topscore-head-main-btn">?????</div>
+          <div className="topscore-head-main-btn">?????</div>
+        </div>
+        {account ? <div className="topscore-head-wallet-btn">{shortenAddr(account)}</div> : 
+        <div onClick={()=>connectWallet} className="topscore-head-wallet-btn">Connect</div>}
+
       </div>
       <div className="des-1">2022 Wrapped</div>
       <div className="des-2">Your</div>
