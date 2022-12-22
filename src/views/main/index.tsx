@@ -67,7 +67,6 @@ export default function Main() {
   const [showList, setShowList] = useState(false);
   const [handlesList, setHandlesList] = useState<any>([]);
   const [userInfo, setUserInfo] = useState<any>({});
-  const [indicators, setIndicators] = useState<any>({});
   const [influence, setInfluence] = useState<any>({});
   const [campaign, setCampaign] = useState<any>({});
   const [creation, setCreation] = useState<any>({});
@@ -132,7 +131,10 @@ export default function Main() {
 
   const getIndicators = async (profileId: string) => {
     const res: any = await api.get(`/lens/indicators/${profileId}`);
-    setIndicators(res.data);
+    setUserInfo((prev:any) => ({
+      ...prev,
+      ...res.data
+    }))
   };
 
   const getInfluence = async (profileId: string) => {
@@ -172,15 +174,14 @@ export default function Main() {
 
   const getUserInfo = async (profileId: string) => {
     const res = await Promise.all([
-    getIndicators(profileId),
+      getIndicators(profileId),
       getInfluence(profileId),
       getCampaign(profileId),
       getEngagement(profileId),
       getCreation(profileId),
       getCollection(profileId),
       getCuration(profileId),
-    getPub(profileId)
-
+      getPub(profileId)
     ]);
     console.log("aaaa", res);
   };
@@ -259,13 +260,13 @@ export default function Main() {
                   >
                     <a onClick={(e) => e.preventDefault()}>
                       <Space className="space">
-                        {currentProfile.name}
+                        {currentProfile.name || currentProfile.handle}
                         <DownOutlined />
                       </Space>
                     </a>
                   </Dropdown>
                 </div>
-                <div>@{currentProfile.profile}</div>
+                <div>@{currentProfile.handle}</div>
               </div>
             </div>
             <div
@@ -302,11 +303,11 @@ export default function Main() {
                   </div>
                   <div>
                     <div>
-                      <p>620</p>
+                      <p>{new BN(userInfo.following).toFormat()}</p>
                       <p>Following</p>
                     </div>
                     <div>
-                      <p>12,912</p>
+                      <p>{new BN(userInfo.follower).toFormat()}</p>
                       <p>Followers</p>
                     </div>
                   </div>
@@ -314,30 +315,30 @@ export default function Main() {
                 <div>
                   <div>
                     <div>
-                      <p>32</p>
+                      <p>{new BN(userInfo.collect).toFormat()}</p>
                       <p>Collections</p>
                     </div>
                     <div>
-                      <p>24</p>
+                      <p>{new BN(userInfo.collectBy).toFormat()}</p>
                       <p>Collected</p>
                     </div>
                   </div>
                   <div>
                     <div>
-                      <p>2603</p>
+                      <p>{new BN(userInfo.publication).toFormat()}</p>
                       <p>Publications</p>
                     </div>
                     <div className="diff-sty-info">
                       <p>
-                        <span>2,912</span>
+                        <span>{new BN(userInfo.post).toFormat()}</span>
                         <span>Posts</span>
                       </p>
                       <p>
-                        <span>3,601</span>
+                        <span>{new BN(userInfo.comment).toFormat()}</span>
                         <span>Comments</span>
                       </p>
                       <p>
-                        <span>910</span>
+                        <span>{new BN(userInfo.mirror).toFormat()}</span>
                         <span>Mirrors</span>
                       </p>
                     </div>
