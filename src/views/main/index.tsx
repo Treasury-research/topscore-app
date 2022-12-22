@@ -16,65 +16,97 @@ import IconG4 from "./../../static/img/g4.svg";
 import IconS2 from "./../../static/img/s2.png";
 import imgRadarSmall from "./../../static/img/radar-small.png";
 import { copyToClipboard } from "../../lib/tool";
-import { TwitterOutlined, DownOutlined, CopyOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
+import {
+  TwitterOutlined,
+  DownOutlined,
+  CopyOutlined,
+  LeftOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
 import Radar from "./components/Radar";
 import { Dropdown, Space, Menu, Drawer, Pagination, Modal } from "antd";
 
-const typeList = ['Influence', 'Campaign', 'Creation', 'Curation', 'Collection', 'Engagement'];
+const typeList = [
+  "Influence",
+  "Campaign",
+  "Creation",
+  "Curation",
+  "Collection",
+  "Engagement",
+];
 
-const rankList = [{
-  name: 'Lens Protocol',
-  score: '201'
-},
-{
-  name: 'KNN3 Network',
-  score: '150'
-},
-{
-  name: 'Stani',
-  score: '130'
-},
-{
-  name: 'Stani',
-  score: '130'
-},
-{
-  name: 'Stani',
-  score: '130'
-},
-{
-  name: 'Stani',
-  score: '130'
-}]
+const rankList = [
+  {
+    name: "Lens Protocol",
+    score: "201",
+  },
+  {
+    name: "KNN3 Network",
+    score: "150",
+  },
+  {
+    name: "Stani",
+    score: "130",
+  },
+  {
+    name: "Stani",
+    score: "130",
+  },
+  {
+    name: "Stani",
+    score: "130",
+  },
+  {
+    name: "Stani",
+    score: "130",
+  },
+];
 
 export default function Main() {
+  const { account, connectWallet } = useWeb3Context();
   const [showList, setShowList] = useState(false);
+  const [handlesList, setHandlesList] = useState<any>([]);
+  const [userInfo, setUserInfo] = useState<any>({});
+  const [indicators, setIndicators] = useState<any>({});
+  const [influence, setInfluence] = useState<any>({});
+  const [campaign, setCampaign] = useState<any>({});
+  const [creation, setCreation] = useState<any>({});
+  const [curation, setCuration] = useState<any>({});
+  const [collection, setCollection] = useState<any>({});
+  const [engagement, setEngagement] = useState<any>({});
+  const [currentProfile, setCurrentProfile] = useState<any>({});
+  const [activeTag, setActiveTag] = useState(0);
+  const [activeHandleIndex, setActiveHandleIndex] = useState<number>(0);
+  const [pub, setPub] = useState<any>({});
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [rador1, setRador1] = useState([
-    { name: 'Influence', value: 90 },
-    { name: 'Campaign', value: 80 },
-    { name: 'Creation', value: 70 },
-    { name: 'Curation', value: 60 },
-    { name: 'Collection', value: 80 },
-    { name: 'Engagement', value: 90 }]);
+    { name: "Influence", value: 90 },
+    { name: "Campaign", value: 80 },
+    { name: "Creation", value: 70 },
+    { name: "Curation", value: 60 },
+    { name: "Collection", value: 80 },
+    { name: "Engagement", value: 90 },
+  ]);
 
   const [rador2, setRador2] = useState([
-    { name: '', value: 90 },
-    { name: '', value: 80 },
-    { name: '', value: 70 },
-    { name: 'Curation', value: 60 },
-    { name: '', value: 80 },
-    { name: '', value: 90 }]);
+    { name: "", value: 90 },
+    { name: "", value: 80 },
+    { name: "", value: 70 },
+    { name: "Curation", value: 60 },
+    { name: "", value: 80 },
+    { name: "", value: 90 },
+  ]);
 
   const [rador3, setRador3] = useState([
-    { name: '', value: 90 },
-    { name: '', value: 80 },
-    { name: '', value: 70 },
-    { name: '', value: 60 },
-    { name: 'Campaign', value: 80 },
-    { name: 'Engagement', value: 90 }]);
+    { name: "", value: 90 },
+    { name: "", value: 80 },
+    { name: "", value: 70 },
+    { name: "", value: 60 },
+    { name: "Campaign", value: 80 },
+    { name: "Engagement", value: 90 },
+  ]);
 
   const onClose = () => {
     setShowList(false);
@@ -92,6 +124,99 @@ export default function Main() {
     setIsModalOpen(false);
   };
 
+  const getLensHandle = async () => {
+    const testAccount = "0xcde3725b25d6d9bc78cf0941cc15fd9710c764b9";
+    const res: any = await api.get(`/lens/handles/${testAccount}`);
+    setHandlesList(res.data);
+  };
+
+  const getIndicators = async (profileId: string) => {
+    const res: any = await api.get(`/lens/indicators/${profileId}`);
+    setIndicators(res.data);
+  };
+
+  const getInfluence = async (profileId: string) => {
+    const res: any = await api.get(`/lens/influence/${profileId}`);
+    setInfluence(res.data);
+  };
+
+  const getCampaign = async (profileId: string) => {
+    const res: any = await api.get(`/lens/campaign/${profileId}`);
+    setCampaign(res.data);
+  };
+
+  const getCreation = async (profileId: string) => {
+    const res: any = await api.get(`/lens/creation/${profileId}`);
+    setCreation(res.data);
+  };
+
+  const getCuration = async (profileId: string) => {
+    const res: any = await api.get(`/lens/curation/${profileId}`);
+    setCuration(res.data);
+  };
+
+  const getCollection = async (profileId: string) => {
+    const res: any = await api.get(`/lens/collection/${profileId}`);
+    setCollection(res.data);
+  };
+
+  const getEngagement = async (profileId: string) => {
+    const res: any = await api.get(`/lens/engagement/${profileId}`);
+    setEngagement(res.data);
+  };
+
+  const getPub = async (profileId: string) => {
+    const res: any = await api.get(`/lens/topPub/${profileId}`);
+    setPub(res.data);
+  };
+
+  const getUserInfo = async (profileId: string) => {
+    const res = await Promise.all([
+    getIndicators(profileId),
+      getInfluence(profileId),
+      getCampaign(profileId),
+      getEngagement(profileId),
+      getCreation(profileId),
+      getCollection(profileId),
+      getCuration(profileId),
+    getPub(profileId)
+
+    ]);
+    console.log("aaaa", res);
+  };
+
+  useEffect(() => {
+    if (!account) {
+      return;
+    }
+    getLensHandle();
+  }, [account]);
+
+  useEffect(() => {
+    if (!handlesList || handlesList.length === 0) {
+      return;
+    }
+
+    const profile = handlesList[activeHandleIndex];
+
+    // const profileId = profile.profileId;
+
+    setCurrentProfile(profile);
+
+    // getUserInfo(profileId);
+  }, [activeHandleIndex, handlesList]);
+
+  useEffect(() => {
+    const { profileId } = currentProfile;
+
+    if (!profileId) {
+      return;
+    }
+
+    getUserInfo(profileId);
+
+  }, [currentProfile]);
+
   return (
     <div className="toscore">
       <div className="toscore-head">
@@ -99,7 +224,16 @@ export default function Main() {
           <div className="topscore-head-main-btn">Profile</div>
           <div className="topscore-head-main-btn">CharacteristicDEX</div>
         </div>
-        <div className="topscore-head-wallet-btn">Connect</div>
+        {account ? (
+          <div className="topscore-head-wallet-btn">{shortenAddr(account)}</div>
+        ) : (
+          <div
+            onClick={() => connectWallet}
+            className="topscore-head-wallet-btn"
+          >
+            Connect
+          </div>
+        )}
       </div>
       <div className="toscore-content">
         <div className="toscore-main">
@@ -111,36 +245,46 @@ export default function Main() {
                   <Dropdown
                     overlay={
                       <Menu>
-                        <div
-                          className="drop-menu"
-                        >
-                          123
-                        </div>
-                        <div
-                          className="drop-menu"
-                        >
-                          456
-                        </div>
+                        {handlesList.map((t: any, i: number) => (
+                          <div
+                            className="drop-menu"
+                            key={i}
+                            onClick={() => setActiveHandleIndex(i)}
+                          >
+                            {t.handle}
+                          </div>
+                        ))}
                       </Menu>
                     }
                   >
                     <a onClick={(e) => e.preventDefault()}>
                       <Space className="space">
-                        KNN3 Network
+                        {currentProfile.name}
                         <DownOutlined />
                       </Space>
                     </a>
                   </Dropdown>
                 </div>
-                <div>@knn3network.lens</div>
+                <div>@{currentProfile.profile}</div>
               </div>
             </div>
-            <div className="topscore-head-wallet-btn" onClick={() => setIsModalOpen(true)}>Share & Claim</div>
+            <div
+              className="topscore-head-wallet-btn"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Share & Claim
+            </div>
           </div>
 
           <div className="top-rador">
             <div>
-              <Radar data={rador1} id="top-rador" width={"100%"} height={"100%"} showList={() => setShowList(true)} />
+              <Radar
+                data={rador1}
+                id="top-rador"
+                width={"100%"}
+                height={"100%"}
+                showList={() => setShowList(true)}
+              />
             </div>
 
             <div className="top-rador-info">
@@ -184,32 +328,47 @@ export default function Main() {
                       <p>Publications</p>
                     </div>
                     <div className="diff-sty-info">
-                      <p><span>2,912</span><span>Posts</span></p>
-                      <p><span>3,601</span><span>Comments</span></p>
-                      <p><span>910</span><span>Mirrors</span></p>
+                      <p>
+                        <span>2,912</span>
+                        <span>Posts</span>
+                      </p>
+                      <p>
+                        <span>3,601</span>
+                        <span>Comments</span>
+                      </p>
+                      <p>
+                        <span>910</span>
+                        <span>Mirrors</span>
+                      </p>
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
-            <Drawer title="" placement="right" onClose={onClose} open={showList} closable={false}>
+            <Drawer
+              title=""
+              placement="right"
+              onClose={onClose}
+              open={showList}
+              closable={false}
+            >
               <div className="drawer">
-                <div className="rightOut" onClick={() => { setShowList(false) }}><RightOutlined /></div>
+                <div
+                  className="rightOut"
+                  onClick={() => {
+                    setShowList(false);
+                  }}
+                >
+                  <RightOutlined />
+                </div>
                 <Dropdown
                   overlay={
                     <Menu>
-                      {
-                        typeList.map((t, i) =>
-                          <div
-                            className="drop-menu"
-                            key={i}
-                          >
-                            {t}
-                          </div>
-                        )
-                      }
-
+                      {typeList.map((t, i) => (
+                        <div className="drop-menu" key={i}>
+                          {t}
+                        </div>
+                      ))}
                     </Menu>
                   }
                 >
@@ -220,17 +379,17 @@ export default function Main() {
                     </Space>
                   </a>
                 </Dropdown>
-                {
-                  rankList.map((t, i) =>
-                    <div className="rank-item" key={i}>
-                      <span>{i + 1}</span>
-                      <span>k</span>
-                      <span>{t.name}</span>
-                      <span><img src={imgRadarSmall} alt="" /></span>
-                      <span>Score: {t.score}</span>
-                    </div>
-                  )
-                }
+                {rankList.map((t, i) => (
+                  <div className="rank-item" key={i}>
+                    <span>{i + 1}</span>
+                    <span>k</span>
+                    <span>{t.name}</span>
+                    <span>
+                      <img src={imgRadarSmall} alt="" />
+                    </span>
+                    <span>Score: {t.score}</span>
+                  </div>
+                ))}
                 <div className="pagination">
                   <Pagination simple total={50} />
                 </div>
@@ -245,14 +404,32 @@ export default function Main() {
           </div>
           <div className="influence_curation">
             <div className="left-rador">
-              <Radar data={rador2} id="top-rador_1" width={"100%"} height={"100%"} />
+              <Radar
+                data={rador2}
+                id="top-rador_1"
+                width={"100%"}
+                height={"100%"}
+              />
             </div>
             <div className="right-text">
               <p>YOUR 2022 LENS-PRINT</p>
-              <p>YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF CONTENT.YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF CONTENT.</p>
-              <p>YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF CONTENT.</p>
-              <p>YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF CONTENT.</p>
-              <p>YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF CONTENT.</p>
+              <p>
+                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
+                CONTENT.YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
+                CONTENT.
+              </p>
+              <p>
+                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
+                CONTENT.
+              </p>
+              <p>
+                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
+                CONTENT.
+              </p>
+              <p>
+                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
+                CONTENT.
+              </p>
             </div>
           </div>
           <div className="btn-group-2">
@@ -264,34 +441,46 @@ export default function Main() {
           <div className="collect_pablication">
             <div className="left-text">
               <p>YOUR 2022 LENS-PRINT</p>
-              <p>YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF CONTENT.YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF CONTENT.</p>
-              <p>YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF CONTENT.</p>
-              <p>YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF CONTENT.</p>
-              <p>YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF CONTENT.</p>
+              <p>
+                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
+                CONTENT.YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
+                CONTENT.
+              </p>
+              <p>
+                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
+                CONTENT.
+              </p>
+              <p>
+                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
+                CONTENT.
+              </p>
+              <p>
+                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
+                CONTENT.
+              </p>
             </div>
             <div className="right-rador">
-              <Radar data={rador3} id="top-rador_2" width={"100%"} height={"100%"} />
+              <Radar
+                data={rador3}
+                id="top-rador_2"
+                width={"100%"}
+                height={"100%"}
+              />
             </div>
           </div>
           <div className="con">
             <div className="head">
               <div>K</div>
               <div>
-                <div>
-                  KNN3 Network
-                </div>
+                <div>KNN3 Network</div>
                 <div>
                   <span>@knn3network.lens</span>
                 </div>
               </div>
             </div>
-            <div className="msg">
-              ewrwerwerwerwerwerewr
-            </div>
+            <div className="msg">ewrwerwerwerwerwerewr</div>
             <div className="msg-img">
-              <img
-                src={IconS2}
-              />
+              <img src={IconS2} />
             </div>
             <div className="pro-data">
               <div>
@@ -301,8 +490,8 @@ export default function Main() {
                 <span>45</span>
               </div>
               <div>
-                <span style={{ color: 'red' }}>
-                  <img src={IconG2} alt="" style={{ color: 'red' }} />
+                <span style={{ color: "red" }}>
+                  <img src={IconG2} alt="" style={{ color: "red" }} />
                 </span>
                 <span>45</span>
               </div>
@@ -321,15 +510,30 @@ export default function Main() {
             </div>
           </div>
         </div>
-        <div className="leftOut" onClick={() => { setShowList(true) }}><LeftOutlined /></div>
+        <div
+          className="leftOut"
+          onClick={() => {
+            setShowList(true);
+          }}
+        >
+          <LeftOutlined />
+        </div>
       </div>
-      <Modal className="claimModal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={400}>
+      <Modal
+        className="claimModal"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={400}
+      >
         <div className="claim-img"></div>
         <div className="claim-bottom">
           <div>Claim</div>
           <div>
             <div></div>
-            <div><TwitterOutlined /></div>
+            <div>
+              <TwitterOutlined />
+            </div>
           </div>
         </div>
       </Modal>
