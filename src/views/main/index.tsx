@@ -9,31 +9,45 @@ import {
   TwitterOutlined,
   DownOutlined,
   LeftOutlined,
+  RightOutlined
 } from "@ant-design/icons";
-import { Dropdown, Space, Menu, Modal } from "antd";
+import { Dropdown, Space, Menu, Modal, Drawer, Pagination } from "antd";
 import Radar from "./components/Radar";
 import RankList from "./components/RankList";
 import Comment from "./components/comment";
 import IconG5 from "./../../static/img/g5.svg";
-import IconTwitter from "./../../static/img/twitter.svg";
+import imgRadarSmall from "./../../static/img/radar-small.png";
 import S2 from "./../../static/img/s2.png";
 
 const tag1 = ["Influence", "Curation"];
 
 const tag2 = ["Collection", "Publication"];
 
+const defaultPageLimit = 6;
+
+const typeList = [
+  "Overall",
+  "Influence",
+  "Campaign",
+  "Creation",
+  "Curation",
+  "Collection",
+  "Engagement",
+];
+
 export default function Main() {
   const { account, connectWallet } = useWeb3Context();
   const [showList, setShowList] = useState(false);
   const [handlesList, setHandlesList] = useState<any>([]);
   const [userInfo, setUserInfo] = useState<any>({});
-  const [indicators, setIndicators] = useState<any>({});
+  const [rankList, setRankList] = useState<[]>([]);
+  const [rankTotal, setRankTotal] = useState<number>(0);
+  const [rankPageNo, setRankPageNo] = useState<number>(1);
+  const [rankType, setRankType] = useState<string>('influence');
+  const [rankLoading, setRankLoading] = useState<boolean>(false);
   const [influence, setInfluence] = useState<any>({});
-  const [campaign, setCampaign] = useState<any>({});
-  const [creation, setCreation] = useState<any>({});
   const [curation, setCuration] = useState<any>({});
   const [collection, setCollection] = useState<any>({});
-  const [engagement, setEngagement] = useState<any>({});
   const [currentProfile, setCurrentProfile] = useState<any>({});
   const [activeHandleIndex, setActiveHandleIndex] = useState<number>(0);
   const [pub, setPub] = useState<any>({});
@@ -85,6 +99,19 @@ export default function Main() {
     setIsModalOpen(false);
   };
 
+  const getRankList = async () => {
+    setRankLoading(true);
+    const res:any = await api.get(`/lens/${rankType}/rank/list`, {
+      params: {
+        limit: defaultPageLimit,
+        offset: (rankPageNo - 1) * defaultPageLimit
+      }
+    });
+    setRankLoading(false);
+    setRankTotal(res.data.total);
+    setRankList(res.data.data);
+  }
+
   const getLensHandle = async () => {
     const testAccount = "0xcde3725b25d6d9bc78cf0941cc15fd9710c764b9";
     const res: any = await api.get(`/lens/handles/${testAccount}`);
@@ -93,22 +120,15 @@ export default function Main() {
 
   const getIndicators = async (profileId: string) => {
     const res: any = await api.get(`/lens/indicators/${profileId}`);
-    setIndicators(res.data);
+    setUserInfo((prev:any) => ({
+      ...prev,
+      ...res.data
+    }))
   };
 
   const getInfluence = async (profileId: string) => {
     const res: any = await api.get(`/lens/influence/${profileId}`);
     setInfluence(res.data);
-  };
-
-  const getCampaign = async (profileId: string) => {
-    const res: any = await api.get(`/lens/campaign/${profileId}`);
-    setCampaign(res.data);
-  };
-
-  const getCreation = async (profileId: string) => {
-    const res: any = await api.get(`/lens/creation/${profileId}`);
-    setCreation(res.data);
   };
 
   const getCuration = async (profileId: string) => {
@@ -121,11 +141,6 @@ export default function Main() {
     setCollection(res.data);
   };
 
-  const getEngagement = async (profileId: string) => {
-    const res: any = await api.get(`/lens/engagement/${profileId}`);
-    setEngagement(res.data);
-  };
-
   const getPub = async (profileId: string) => {
     const res: any = await api.get(`/lens/topPub/${profileId}`);
     setPub(res.data);
@@ -135,21 +150,28 @@ export default function Main() {
     const res = await Promise.all([
       getIndicators(profileId),
       getInfluence(profileId),
-      getCampaign(profileId),
-      getEngagement(profileId),
-      getCreation(profileId),
       getCollection(profileId),
       getCuration(profileId),
       getPub(profileId)
-
     ]);
-    console.log("aaaa", res);
+    getRankList();
   };
 
   const showRank = (name: string) => {
     setCheckRadarName(name);
     setShowList(true);
   }
+
+  const onRankChange= (val: number) => {
+    setRankPageNo(val)
+  }
+
+  useEffect(()=>{
+    if(!rankType || !rankPageNo){
+      return
+    }
+    getRankList();
+  }, [rankPageNo, rankType])
 
   useEffect(() => {
     if (!account) {
@@ -165,11 +187,8 @@ export default function Main() {
 
     const profile = handlesList[activeHandleIndex];
 
-    // const profileId = profile.profileId;
-
     setCurrentProfile(profile);
 
-    // getUserInfo(profileId);
   }, [activeHandleIndex, handlesList]);
 
   useEffect(() => {
@@ -225,13 +244,13 @@ export default function Main() {
                   >
                     <a onClick={(e) => e.preventDefault()}>
                       <Space className="space">
-                        {currentProfile.name}
+                        {currentProfile.name || currentProfile.handle}
                         <DownOutlined />
                       </Space>
                     </a>
                   </Dropdown>
                 </div>
-                <div>@{currentProfile.profile}</div>
+                <div>@{currentProfile.handle}</div>
               </div>
             </div>
             <div
@@ -268,11 +287,11 @@ export default function Main() {
                   </div>
                   <div>
                     <div>
-                      <p>620</p>
+                      <p>{new BN(userInfo.following).toFormat()}</p>
                       <p>Following</p>
                     </div>
                     <div>
-                      <p>12,912</p>
+                      <p>{new BN(userInfo.follower).toFormat()}</p>
                       <p>Followers</p>
                     </div>
                   </div>
@@ -280,30 +299,30 @@ export default function Main() {
                 <div>
                   <div>
                     <div>
-                      <p>32</p>
+                      <p>{new BN(userInfo.collect).toFormat()}</p>
                       <p>Collections</p>
                     </div>
                     <div>
-                      <p>24</p>
+                      <p>{new BN(userInfo.collectBy).toFormat()}</p>
                       <p>Collected</p>
                     </div>
                   </div>
                   <div>
                     <div>
-                      <p>2603</p>
+                      <p>{new BN(userInfo.publication).toFormat()}</p>
                       <p>Publications</p>
                     </div>
                     <div className="diff-sty-info">
                       <p>
-                        <span>2,912</span>
+                        <span>{new BN(userInfo.post).toFormat()}</span>
                         <span>Posts</span>
                       </p>
                       <p>
-                        <span>3,601</span>
+                        <span>{new BN(userInfo.comment).toFormat()}</span>
                         <span>Comments</span>
                       </p>
                       <p>
-                        <span>910</span>
+                        <span>{new BN(userInfo.mirror).toFormat()}</span>
                         <span>Mirrors</span>
                       </p>
                     </div>
@@ -311,7 +330,56 @@ export default function Main() {
                 </div>
               </div>
             </div>
-
+            <Drawer
+              title=""
+              placement="right"
+              onClose={onClose}
+              open={showList}
+              closable={false}
+            >
+              <div className="drawer">
+                <div
+                  className="rightOut"
+                  onClick={() => {
+                    setShowList(false);
+                  }}
+                >
+                  <RightOutlined />
+                </div>
+                <Dropdown
+                  overlay={
+                    <Menu>
+                      {typeList.map((t, i) => (
+                        <div className="drop-menu" key={i}>
+                          {t}
+                        </div>
+                      ))}
+                    </Menu>
+                  }
+                >
+                  <a onClick={(e) => e.preventDefault()}>
+                    <Space className="space overall">
+                      <span className="list-type">Overall</span>
+                      <DownOutlined />
+                    </Space>
+                  </a>
+                </Dropdown>
+                {rankList.map((t:any, i) => (
+                  <div className="rank-item" key={i}>
+                    <span>{t.rank}</span>
+                    <span>k</span>
+                    <span>{t.profileId}</span>
+                    <span>
+                      <img src={imgRadarSmall} alt="" />
+                    </span>
+                    <span>Score: {new BN(t.score).toFixed(2)}</span>
+                  </div>
+                ))}
+                <div className="pagination">
+                  <Pagination simple current={rankPageNo} pageSize={defaultPageLimit} onChange={onRankChange} total={rankTotal} />
+                </div>
+              </div>
+            </Drawer>
           </div>
           <div className="btn-group-1">
             <div>
@@ -461,11 +529,11 @@ export default function Main() {
           </div>
         </div>
       </Modal>
-      <RankList
+      {/* <RankList
         close={() => setShowList(false)}
         isShow={showList}
         activeName={checkRadarName}
-      />
+      /> */}
     </div>
   );
 }
