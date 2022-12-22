@@ -13,7 +13,6 @@ import {
 } from "@ant-design/icons";
 import { Dropdown, Space, Menu, Modal, Drawer, Pagination } from "antd";
 import Radar from "./components/Radar";
-import RankList from "./components/RankList";
 import Comment from "./components/comment";
 import IconG5 from "./../../static/img/g5.svg";
 import imgRadarSmall from "./../../static/img/radar-small.png";
@@ -55,6 +54,7 @@ export default function Main() {
   const [activeTag2, setActiveTag2] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [checkRadarName, setCheckRadarName] = useState<string>('');
+  const [activeHandleIdx, setActiveHandleIdx] = useState<number>(0);
 
   const [rador1, setRador1] = useState([
     { name: "Influence", value: 90 },
@@ -158,7 +158,7 @@ export default function Main() {
   };
 
   const showRank = (name: string) => {
-    setCheckRadarName(name);
+    setActiveHandleIdx(typeList.indexOf(name))
     setShowList(true);
   }
 
@@ -350,7 +350,7 @@ export default function Main() {
                   overlay={
                     <Menu>
                       {typeList.map((t, i) => (
-                        <div className="drop-menu" key={i}>
+                        <div className="drop-menu" key={i} onClick={() => setActiveHandleIdx(i)}>
                           {t}
                         </div>
                       ))}
@@ -359,7 +359,7 @@ export default function Main() {
                 >
                   <a onClick={(e) => e.preventDefault()}>
                     <Space className="space overall">
-                      <span className="list-type">Overall</span>
+                      <span className="list-type">{typeList[activeHandleIdx]}</span>
                       <DownOutlined />
                     </Space>
                   </a>
