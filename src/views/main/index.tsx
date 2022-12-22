@@ -5,62 +5,22 @@ import api from "../../api";
 import BN from "bignumber.js";
 import { formatIPFS, shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
-import IconRank from "./../../static/img/rank.png";
-import LabelWarn from "./../../static/img/warn.svg";
-import LabelEng from "./../../static/img/eng.svg";
-import LabelCollect from "./../../static/img/collect.svg";
-import IconG1 from "./../../static/img/g1.svg";
-import IconG2 from "./../../static/img/g2.svg";
-import IconG3 from "./../../static/img/g3.svg";
-import IconG4 from "./../../static/img/g4.svg";
-import IconS2 from "./../../static/img/s2.png";
-import imgRadarSmall from "./../../static/img/radar-small.png";
-import { copyToClipboard } from "../../lib/tool";
 import {
   TwitterOutlined,
   DownOutlined,
-  CopyOutlined,
   LeftOutlined,
-  RightOutlined,
 } from "@ant-design/icons";
+import { Dropdown, Space, Menu, Modal } from "antd";
 import Radar from "./components/Radar";
-import { Dropdown, Space, Menu, Drawer, Pagination, Modal } from "antd";
+import RankList from "./components/RankList";
+import Comment from "./components/comment";
+import IconG5 from "./../../static/img/g5.svg";
+import IconTwitter from "./../../static/img/twitter.svg";
+import S2 from "./../../static/img/s2.png";
 
-const typeList = [
-  "Influence",
-  "Campaign",
-  "Creation",
-  "Curation",
-  "Collection",
-  "Engagement",
-];
+const tag1 = ["Influence", "Curation"];
 
-const rankList = [
-  {
-    name: "Lens Protocol",
-    score: "201",
-  },
-  {
-    name: "KNN3 Network",
-    score: "150",
-  },
-  {
-    name: "Stani",
-    score: "130",
-  },
-  {
-    name: "Stani",
-    score: "130",
-  },
-  {
-    name: "Stani",
-    score: "130",
-  },
-  {
-    name: "Stani",
-    score: "130",
-  },
-];
+const tag2 = ["Collection", "Publication"];
 
 export default function Main() {
   const { account, connectWallet } = useWeb3Context();
@@ -75,11 +35,12 @@ export default function Main() {
   const [collection, setCollection] = useState<any>({});
   const [engagement, setEngagement] = useState<any>({});
   const [currentProfile, setCurrentProfile] = useState<any>({});
-  const [activeTag, setActiveTag] = useState(0);
   const [activeHandleIndex, setActiveHandleIndex] = useState<number>(0);
   const [pub, setPub] = useState<any>({});
-
+  const [activeTag1, setActiveTag1] = useState<number>(0);
+  const [activeTag2, setActiveTag2] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [checkRadarName, setCheckRadarName] = useState<string>('');
 
   const [rador1, setRador1] = useState([
     { name: "Influence", value: 90 },
@@ -172,18 +133,23 @@ export default function Main() {
 
   const getUserInfo = async (profileId: string) => {
     const res = await Promise.all([
-    getIndicators(profileId),
+      getIndicators(profileId),
       getInfluence(profileId),
       getCampaign(profileId),
       getEngagement(profileId),
       getCreation(profileId),
       getCollection(profileId),
       getCuration(profileId),
-    getPub(profileId)
+      getPub(profileId)
 
     ]);
     console.log("aaaa", res);
   };
+
+  const showRank = (name: string) => {
+    setCheckRadarName(name);
+    setShowList(true);
+  }
 
   useEffect(() => {
     if (!account) {
@@ -283,7 +249,7 @@ export default function Main() {
                 id="top-rador"
                 width={"100%"}
                 height={"100%"}
-                showList={() => setShowList(true)}
+                showList={(name: string) => showRank(name)}
               />
             </div>
 
@@ -345,61 +311,16 @@ export default function Main() {
                 </div>
               </div>
             </div>
-            <Drawer
-              title=""
-              placement="right"
-              onClose={onClose}
-              open={showList}
-              closable={false}
-            >
-              <div className="drawer">
-                <div
-                  className="rightOut"
-                  onClick={() => {
-                    setShowList(false);
-                  }}
-                >
-                  <RightOutlined />
-                </div>
-                <Dropdown
-                  overlay={
-                    <Menu>
-                      {typeList.map((t, i) => (
-                        <div className="drop-menu" key={i}>
-                          {t}
-                        </div>
-                      ))}
-                    </Menu>
-                  }
-                >
-                  <a onClick={(e) => e.preventDefault()}>
-                    <Space className="space overall">
-                      <span className="list-type">Overall</span>
-                      <DownOutlined />
-                    </Space>
-                  </a>
-                </Dropdown>
-                {rankList.map((t, i) => (
-                  <div className="rank-item" key={i}>
-                    <span>{i + 1}</span>
-                    <span>k</span>
-                    <span>{t.name}</span>
-                    <span>
-                      <img src={imgRadarSmall} alt="" />
-                    </span>
-                    <span>Score: {t.score}</span>
-                  </div>
-                ))}
-                <div className="pagination">
-                  <Pagination simple total={50} />
-                </div>
-              </div>
-            </Drawer>
+
           </div>
           <div className="btn-group-1">
             <div>
-              <div className="topscore-head-main-btn">Influence</div>
-              <div className="topscore-head-main-btn">Curation</div>
+              {
+                tag1.map((t: string, i: number) => (
+                  <div className={activeTag1 == i ? 'activeBtnGroup btnTb' : 'btnTb'}
+                    onClick={() => setActiveTag1(i)} key={i}>{t}</div>
+                ))
+              }
             </div>
           </div>
           <div className="influence_curation">
@@ -411,54 +332,86 @@ export default function Main() {
                 height={"100%"}
               />
             </div>
-            <div className="right-text">
-              <p>YOUR 2022 LENS-PRINT</p>
-              <p>
-                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
-                CONTENT.YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
-                CONTENT.
-              </p>
-              <p>
-                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
-                CONTENT.
-              </p>
-              <p>
-                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
-                CONTENT.
-              </p>
-              <p>
-                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
-                CONTENT.
-              </p>
-            </div>
+            {
+              activeTag1 === 0 &&
+              <div className="right-text">
+                <p>YOUR 2022 LENS-PRINT</p>
+                <p>
+                  YOU HAVE POSTED <span>_NUM_</span>POSTS, <span>_NUM_</span> COMMENTS, <span>_NUM_</span> MIRRORS,KEEP CREATING IN THE NEW YEAR!
+                </p>
+                <p>
+                  YOU HAVE RECEIVED <span>_NUM_</span> COMMENTS AND <span>_NUM_</span> MIRRORS,YOUR VOICE IS ALWAYS ECHOED AND FLOWERS ARE ALWAYS WITH YOU.
+                </p>
+                <p>
+                  YOUR CAMPAIGN RATING IS <span>_NUM_</span> ,YOUR RANKING IS <span>_NUM_</span> ,AND YOUR ENGAGEMENT RATING IS <span>_NUM_</span>.
+                </p>
+                <p>
+                  YOUR ENGAGEMENT SCORE IS <span>_NUM_</span> AND YOUR RANK IS <span>_NUM_</span>.
+                </p>
+              </div>
+            }
+            {
+              activeTag1 === 1 &&
+              <div className="right-text">
+                <p>YOUR 2022 LENS-PRINT</p>
+                <p>
+                  YOU HAVE MIRRORED A TOTAL OF <span>_NUM_</span>PIECES OF CONTENT. THROUGH YOUR MIRRORS.
+                </p>
+                <p>
+                  YOU HAVE BROUGHT <span>_NUM_</span> TIMES COLLECT TO THE ORIGINAL AUTHORS, AND WE APPRECIATE EVERY MIRROR YOU MADE.
+                </p>
+              </div>
+            }
           </div>
           <div className="btn-group-2">
             <div>
-              <div className="topscore-head-main-btn">Collection</div>
-              <div className="topscore-head-main-btn">Publication</div>
+
+              {
+                tag2.map((t: string, i: number) => (
+                  <div className={activeTag2 == i ? 'activeBtnGroup btnTb' : 'btnTb'}
+                    onClick={() => setActiveTag2(i)} key={i}>{t}</div>
+                ))
+              }
             </div>
           </div>
           <div className="collect_pablication">
-            <div className="left-text">
-              <p>YOUR 2022 LENS-PRINT</p>
-              <p>
-                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
-                CONTENT.YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
-                CONTENT.
-              </p>
-              <p>
-                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
-                CONTENT.
-              </p>
-              <p>
-                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
-                CONTENT.
-              </p>
-              <p>
-                YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
-                CONTENT.
-              </p>
-            </div>
+            {
+              activeTag2 === 0 &&
+              <div className="left-text">
+                <p>YOUR 2022 LENS-PRINT</p>
+                <p>
+                  THE CONTENT YOU POSTED WAS COLLECTED A TOTAL OF <span>_NUM_</span> TIMES.
+                </p>
+                <p>
+                  YOUR COLLECTED <span>_NUM_</span> VALUABLE CONTENT.
+                </p>
+                <p>
+                  YOUR HAVE A CREATION SCORE OF <span>_NUM_</span> , A RANK OF <span>_NUM_</span>, AND YOUR COLLECTION SCORE IS <span>_NUM_</span> AND YOUR RANKING IS <span>_NUM_</span>.
+                </p>
+                <p>
+                  YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
+                  CONTENT.
+                </p>
+              </div>
+            }
+            {
+              activeTag2 === 1 &&
+              <div className="left-text">
+                <p>IN THE PAST YEAR</p>
+                <p>
+                  THE CONTENT YOU POSTED HAS BEEN COLLECTED A TOTAL OF <span>_NUM_</span> TIMES, AND YOUR SHARING ALWAYS ATTRACTS COUNTLESS ATTENTION.
+                </p>
+                <p>
+                  YOU HAVE A CREATION SCORE OF <span>_NUM_</span> ,A RANK OF <span>_NUM_</span> , AND A COLLECTION SCORE OF <span>_NUM_</span>.
+                </p>
+                <p>
+                  YOUR COLLECTION SCORE IS <span>_NUM_</span> AND YOUR RANKING IS <span>_NUM_</span>.
+                </p>
+                <p>
+                  YOUR MOST STREAMED POST WAS:
+                </p>
+              </div>
+            }
             <div className="right-rador">
               <Radar
                 data={rador3}
@@ -468,47 +421,18 @@ export default function Main() {
               />
             </div>
           </div>
-          <div className="con">
-            <div className="head">
-              <div>K</div>
-              <div>
-                <div>KNN3 Network</div>
-                <div>
-                  <span>@knn3network.lens</span>
-                </div>
-              </div>
-            </div>
-            <div className="msg">ewrwerwerwerwerwerewr</div>
-            <div className="msg-img">
-              <img src={IconS2} />
-            </div>
-            <div className="pro-data">
-              <div>
-                <span>
-                  <img src={IconG1} alt="" />
-                </span>
-                <span>45</span>
-              </div>
-              <div>
-                <span style={{ color: "red" }}>
-                  <img src={IconG2} alt="" style={{ color: "red" }} />
-                </span>
-                <span>45</span>
-              </div>
-              <div>
-                <span>
-                  <img src={IconG3} alt="" />
-                </span>
-                <span>45</span>
-              </div>
-              <div>
-                <span>
-                  <img src={IconG4} alt="" />
-                </span>
-                <span>45</span>
-              </div>
-            </div>
-          </div>
+          <Comment
+            data={{
+              headImg: '',
+              name: 'KNN3 Network',
+              lensHandle: '@knn3network.lens',
+              msg: 'GM and CRAZY THURSDA',
+              commentImg: S2,
+              iconNum1: '10',
+              iconNum2: '10',
+              iconNum3: '10',
+              iconNum4: '10',
+            }} />
         </div>
         <div
           className="leftOut"
@@ -530,13 +454,18 @@ export default function Main() {
         <div className="claim-bottom">
           <div>Claim</div>
           <div>
-            <div></div>
+            <div><img src={IconG5} alt="" /></div>
             <div>
               <TwitterOutlined />
             </div>
           </div>
         </div>
       </Modal>
+      <RankList
+        close={() => setShowList(false)}
+        isShow={showList}
+        activeName={checkRadarName}
+      />
     </div>
   );
 }

@@ -16,7 +16,7 @@ const ChartLine = (props: any) => {
     useEffect(() => {
         const option = {
             tooltip: {
-                trigger: 'axis',
+                trigger: 'item',
                 show: true
             },
             radar: {
@@ -66,6 +66,7 @@ const ChartLine = (props: any) => {
             },
             series: [{
                 type: 'radar',
+                name: ' ',
                 tooltip: {
                     trigger: 'item'
                 },
@@ -103,7 +104,7 @@ const ChartLine = (props: any) => {
         const chart = echarts.init(HTMLElement);
         chart.on('click', function (param) {
             if (param.targetType == "axisName") {
-                props.showList()
+                props.showList(param.name)
             }
         })
         chart.setOption(option);

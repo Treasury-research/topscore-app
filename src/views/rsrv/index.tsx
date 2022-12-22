@@ -48,13 +48,8 @@ export default function Main() {
   return (
     <div className="rsrv">
       <div className="rsrv-head">
-        <div className="rsrv-head-wallet-btn">Connect</div>
-        <div>
-          <div className="topscore-head-main-btn">?????</div>
-          <div className="topscore-head-main-btn">?????</div>
-        </div>
-        {account ? <div className="topscore-head-wallet-btn">{shortenAddr(account)}</div> : 
-        <div onClick={()=>connectWallet} className="topscore-head-wallet-btn">Connect</div>}
+        {account ? <div className="rsrv-head-wallet-btn">{shortenAddr(account)}</div> : 
+        <div onClick={()=>connectWallet} className="rsrv-head-wallet-btn">Connect</div>}
 
       </div>
       <div className="des-1">2022 Wrapped</div>
