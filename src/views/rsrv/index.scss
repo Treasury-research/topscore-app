@@ -1,5 +1,6 @@
 .rsrv {
-  background: rgba(14, 14, 14, 1);
+  background: url("./../../static/img/bg.gif") no-repeat center bottom;
+  background-size: cover;
   width: 100%;
   height: 100%;
 
@@ -72,11 +73,16 @@
       }
 
       .appint-gif-1{
+        height: 300px;
+        width: 300px;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
         z-index: 100;
+        img{
+          cursor: pointer;
+        }
       }
 
       .top-rador-info {
@@ -306,15 +312,15 @@
   }
 
   .des-1 {
-    font-family: "Eur";
-    font-size: 100px;
+    font-family: "EurExtend";
+    font-size: 80px;
     font-weight: 600;
     margin-left: 100px;
   }
 
   .des-2 {
-    font-family: "Eur";
-    font-size: 100px;
+    font-family: "EurExtend";
+    font-size: 80px;
     font-weight: 600;
     position: absolute;
     left: 40px;
@@ -323,8 +329,8 @@
   }
 
   .des-3 {
-    font-family: "Eur";
-    font-size: 100px;
+    font-family: "EurExtend";
+    font-size: 80px;
     font-weight: 600;
     position: absolute;
     right: 0;
@@ -333,8 +339,8 @@
   }
 
   .des-4 {
-    font-family: "Eur";
-    font-size: 100px;
+    font-family: "EurExtend";
+    font-size: 80px;
     font-weight: 600;
     color: #fff;
     text-align: right;
@@ -344,13 +350,23 @@
 
   .des-bottom {
     width: 100%;
-    display: flex;
-    margin-top: 40px;
     font-family: "Exan";
-
+    overflow: hidden;
+    text-indent: 100px;
     >div {
-      flex: 1;
-      text-indent: 50px;
+      float: left;
+      margin-right: 100px;
+    }
+    >div:nth-child(1){
+      text-indent: 100px;
+      img{
+        height: 60px;
+      }
+    }
+    >div:nth-child(2){
+      img{
+        height: 40px;
+      }
     }
   }
 }

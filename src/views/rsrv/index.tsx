@@ -5,6 +5,9 @@ import api from "../../api";
 import { shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
 import BotText from "./../../static/img/botText.gif";
+import BotLeftText from "./../../static/img/botLeftText.gif";
+import RadarDefaultBtn from "./../../static/img/radarDefaultBtn.gif";
+import RadarHover from "./../../static/img/radarHover.gif";
 import imgRadarSmall from "./../../static/img/radar-small.png";
 import { DownOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Radar from "./components/Radar";
@@ -114,11 +117,15 @@ export default function Main() {
             <div className="appint-gif-1">
               {
                 !isHoverRadar && 
-                <div onMouseEnter={() => setIsHoverRadar(true)}>2</div>
+                <div onMouseEnter={() => setIsHoverRadar(true)}>
+                  <img src={RadarDefaultBtn} alt="" />
+                </div>
               }
               {
                 isHoverRadar && 
-                <div onMouseLeave={() => setIsHoverRadar(false)}>3</div>
+                <div onMouseLeave={() => setIsHoverRadar(false)}>
+                  <img src={RadarHover} alt="" />
+                </div>
               }
             </div>
             <Drawer title="" placement="right" onClose={onClose} open={showList} closable={false}>
@@ -169,13 +176,9 @@ export default function Main() {
         <div className="des-4">is &nbsp;almost here</div>
         <div className="des-bottom">
           <div>
-            <p>Explore your</p>
-            <p>TOP POSTS & STATS WITH RECAPS ON LENS</p>
+          <img src={BotLeftText} alt="" />
           </div>
           <div><img src={BotText} alt="" /></div>
-          <div>
-            <p>THAT'S ALL WE CAN SAY FOR NOW...</p>
-          </div>
         </div>
       </div>
     </div>

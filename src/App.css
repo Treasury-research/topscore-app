@@ -18,6 +18,13 @@
 	src: url("./accests/font/EUR/EurostileBold.ttf");
 }
 
+@font-face {
+	font-family: "EurExtend";
+	font-weight: 500;
+	src: url("./accests/font/EUR/EurostileExtended.ttf");
+}
+
+
 html,
 body,
 div,
