@@ -62,6 +62,8 @@ const rankListDefault = [
   },
 ];
 
+const defaultPageLimit = 6;
+
 export default function Main() {
   const { account, connectWallet } = useWeb3Context();
   const [showList, setShowList] = useState(false);
@@ -71,6 +73,7 @@ export default function Main() {
   const [rankTotal, setRankTotal] = useState<number>(0);
   const [rankPageNo, setRankPageNo] = useState<number>(1);
   const [rankType, setRankType] = useState<string>('influence');
+  const [rankLoading, setRankLoading] = useState<boolean>(false);
   const [influence, setInfluence] = useState<any>({});
   const [curation, setCuration] = useState<any>({});
   const [collection, setCollection] = useState<any>({});
@@ -125,13 +128,14 @@ export default function Main() {
   };
 
   const getRankList = async () => {
-    const limit = 6
+    setRankLoading(true);
     const res:any = await api.get(`/lens/${rankType}/rank/list`, {
       params: {
-        limit,
-        offset: (rankPageNo - 1) * limit
+        limit: defaultPageLimit,
+        offset: (rankPageNo - 1) * defaultPageLimit
       }
     });
+    setRankLoading(false);
     setRankTotal(res.data.total);
     setRankList(res.data.data);
   }
@@ -395,7 +399,7 @@ export default function Main() {
                   </div>
                 ))}
                 <div className="pagination">
-                  <Pagination simple current={rankPageNo} pageSize={6} onChange={onRankChange} total={rankTotal} />
+                  <Pagination simple current={rankPageNo} pageSize={defaultPageLimit} onChange={onRankChange} total={rankTotal} />
                 </div>
               </div>
             </Drawer>
