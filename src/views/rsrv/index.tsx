@@ -8,60 +8,44 @@ import { DownOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Radar from "./components/Radar";
 import { Dropdown, Space, Menu, Drawer, Pagination, Modal } from "antd";
 
-const typeList = ['Influence', 'Campaign', 'Creation', 'Curation', 'Collection', 'Engagement'];
+const typeList = ['???','???', '???', '???', '???', '???'];
 const rankList = [{
-  name: 'Lens Protocol',
-  score: '201'
+  name: '???',
+  score: '???'
 },
 {
-  name: 'KNN3 Network',
-  score: '150'
+  name: '???',
+  score: '???'
 },
 {
-  name: 'Stani',
-  score: '130'
+  name: '???',
+  score: '???'
 },
 {
-  name: 'Stani',
-  score: '130'
+  name: '???',
+  score: '???'
 },
 {
-  name: 'Stani',
-  score: '130'
+  name: '???',
+  score: '???'
 },
 {
-  name: 'Stani',
-  score: '130'
+  name: '???',
+  score: '???'
 }]
 export default function Main() {
   const [showList, setShowList] = useState(false);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isHoverRadar, setIsHoverRadar] = useState(false);
 
   const onClose = () => {
     setShowList(false);
   };
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <div className="rsrv">
       <div className="rsrv-head">
-        <div>
-          <div className="topscore-head-main-btn">?????</div>
-          <div className="topscore-head-main-btn">?????</div>
-        </div>
-        <div className="topscore-head-wallet-btn">Connect</div>
+        <div className="rsrv-head-wallet-btn">Connect</div>
       </div>
       <div className="des-1">2022 Wrapped</div>
       <div className="des-2">Your</div>
@@ -77,50 +61,60 @@ export default function Main() {
                 <div>
                   <div>
                     <div>
-                      <p>1</p>
-                      <p>Rank</p>
+                      <p>?</p>
+                      <p>???</p>
                     </div>
                     <div>
-                      <p>1,231</p>
-                      <p>Score</p>
+                      <p>?</p>
+                      <p>???</p>
                     </div>
                   </div>
                   <div>
                     <div>
-                      <p>620</p>
-                      <p>Following</p>
+                      <p>?</p>
+                      <p>???</p>
                     </div>
                     <div>
-                      <p>12,912</p>
-                      <p>Followers</p>
+                      <p>?</p>
+                      <p>???</p>
                     </div>
                   </div>
                 </div>
                 <div>
                   <div>
                     <div>
-                      <p>32</p>
-                      <p>Collections</p>
+                      <p>?</p>
+                      <p>???</p>
                     </div>
                     <div>
-                      <p>24</p>
-                      <p>Collected</p>
+                      <p>?</p>
+                      <p>???</p>
                     </div>
                   </div>
                   <div>
                     <div>
-                      <p>2603</p>
-                      <p>Publications</p>
+                      <p>?</p>
+                      <p>???</p>
                     </div>
                     <div className="diff-sty-info">
-                      <p><span>2,912</span><span>Posts</span></p>
-                      <p><span>3,601</span><span>Comments</span></p>
-                      <p><span>910</span><span>Mirrors</span></p>
+                      <p><span>?</span><span>???</span></p>
+                      <p><span>?</span><span>???</span></p>
+                      <p><span>?</span><span>???</span></p>
                     </div>
                   </div>
                 </div>
 
               </div>
+            </div>
+            <div className="appint-gif-1">
+              {
+                !isHoverRadar && 
+                <div onMouseEnter={() => setIsHoverRadar(true)}>2</div>
+              }
+              {
+                isHoverRadar && 
+                <div onMouseLeave={() => setIsHoverRadar(false)}>3</div>
+              }
             </div>
             <Drawer title="" placement="right" onClose={onClose} open={showList} closable={false}>
               <div className="drawer">
@@ -142,8 +136,8 @@ export default function Main() {
                   }
                 >
                   <a onClick={(e) => e.preventDefault()}>
-                    <Space className="space ">
-                      <span className="list-type">Overall</span>
+                    <Space className="space overall">
+                      <span className="list-type">???</span>
                       <DownOutlined />
                     </Space>
                   </a>

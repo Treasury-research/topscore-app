@@ -9,6 +9,7 @@ import { Web3ContextProvider } from "./context/Web3Context";
 import Home from "./views/home";
 import Main from "./views/main";
 import Rsrv from "./views/rsrv";
+import Character from "./views/character";
 import "./App.css";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route path="/home" component={Home} />
             <Route path="/main" component={Main} />
             <Route path="/rsrv" component={Rsrv} />
+            <Route path="/character" component={Character} />
             <Redirect to="/rsrv" />
           </Switch>
         </Router>

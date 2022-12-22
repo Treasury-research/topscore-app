@@ -12,7 +12,7 @@ const ChartLine = (props: any) => {
         const option = {
             tooltip: {
                 trigger: 'axis',
-                show: true
+                show: false
             },
             legend: {
                 data: ['Influence', 'Campaign', 'Creation', 'Curation', 'Collection', 'Engagement'],
@@ -30,12 +30,12 @@ const ChartLine = (props: any) => {
                     clickable: true,
                 },
                 indicator: [
-                    { name: 'Influence', max: 100 },
-                    { name: 'Campaign', max: 100 },
-                    { name: 'Creation', max: 100 },
-                    { name: 'Curation', max: 100 },
-                    { name: 'Collection', max: 100 },
-                    { name: 'Engagement', max: 100 },
+                    { name: '             ', max: 100 },
+                    { name: '             ', max: 100 },
+                    { name: '             ', max: 100 },
+                    { name: '             ', max: 100 },
+                    { name: '             ', max: 100 },
+                    { name: '             ', max: 100 },
 
                 ],
                 shape: 'circle',
@@ -101,8 +101,9 @@ const ChartLine = (props: any) => {
                     }
                 },
                 areaStyle: {
+                    show: false,
                     normal: {
-                        opacity: 0.2
+                        opacity: 0
                     }
                 }
             }],
@@ -112,12 +113,16 @@ const ChartLine = (props: any) => {
         const HTMLElement = document.getElementById(id) as HTMLElement;
         const chart = echarts.init(HTMLElement);
         chart.on('click', function (param) {
-            if(param.targetType == "axisName"){
-                console.log(props)
+            if (param.targetType == "axisName") {
+                props.showList()
             }
-            props.showList()
         })
         chart.setOption(option);
+        window.addEventListener("resize", () => {
+            if (chart) {
+                chart.resize()
+            }
+        })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [optionsData]);
     return (

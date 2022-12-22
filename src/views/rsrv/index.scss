@@ -10,37 +10,20 @@
     overflow: hidden;
 
     >div {
-      margin: 20px 0 60px 0;
-    }
-
-    >div:nth-child(1) {
-      float: left;
-      margin-left: 100px;
-      overflow: hidden;
-
-      >div {
-        float: left;
-        margin-right: 20px;
-
-      }
-    }
-
-    >div:nth-child(2) {
-      float: right;
       margin-right: 40px;
+      margin-top: 20px;
     }
   }
 
   .rsrv-content {
-    height: calc(100vh - 230px);
+    height: calc(100vh - 200px);
     width: auto;
-    overflow-y: auto;
   }
 
   .rsrv-main {
     width: 1000px;
     margin: 0 auto;
-
+    height: calc(100% - 200px);
 
 
     >div:nth-child(1) {
@@ -75,7 +58,7 @@
     }
 
     .top-rador {
-      height: 440px;
+      height: 100%;
       width: 100%;
       position: relative;
 
@@ -88,6 +71,14 @@
         z-index: 99;
       }
 
+      .appint-gif-1{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        z-index: 100;
+      }
+
       .top-rador-info {
         position: absolute;
         width: 100%;
@@ -98,7 +89,10 @@
 
         .rador-info {
           overflow: hidden;
-          margin-top: 166px;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translate(0, -50%);
 
           >div:nth-child(1) {
             margin-left: 55px;
@@ -120,9 +114,13 @@
               float: left;
               width: 140px;
 
+              >div:nth-child(1) {
+                margin-bottom: 30px;
+              }
+
               >div {
 
-                margin-bottom: 30px;
+                margin-bottom: 0px;
 
                 >p {
                   text-align: center;
@@ -188,175 +186,171 @@
     }
   }
 
-  .topscore-head-main-btn {
-    background: #232429;
-    padding: 10px 16px;
-    font-weight: 600;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  .topscore-head-wallet-btn {
+  .rsrv-head-wallet-btn {
     background: rgba(255, 51, 0, 0.30);
     padding: 10px 16px;
     border-radius: 4px;
     cursor: pointer;
     font-weight: 600;
     font-family: 'Jura';
-  }
-}
-
-.drop-menu {
-  cursor: pointer;
-  width: 100%;
-  padding: 4px 10px;
-
-}
-
-.rank-list {
-  height: 500px;
-  width: 400px;
-  background: #262626;
-  position: absolute;
-  right: -70px;
-  z-index: 100;
-}
-
-.leftOut {
-  width: 40px;
-  height: 100px;
-  background: #262626 !important;
-  line-height: 100px;
-  text-align: center;
-  /* cursor: pointer; */
-  font-size: 24px;
-  cursor: pointer;
-  right: 5px;
-  position: absolute;
-  top: 336px;
-}
-
-.rightOut {
-  position: absolute;
-  left: -24px;
-  width: 40px;
-  height: 100px;
-  background: #262626 !important;
-  line-height: 100px;
-  text-align: center;
-  font-size: 24px;
-  cursor: pointer;
-  top: 235px;
-  color: #fff;
-}
-
-.drawer {
-  color: rgba(255, 255, 255, .8);
-  height: 100%;
-  width: 100%;
-}
-
-.list-type {
-  font-family: "Jura";
-  margin-bottom: 20px;
-}
-
-.space {
-  color: rgba(255, 255, 255, .8);
-  font-size: 20px;
-}
-
-.rank-item {
-  height: 60px;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  line-height: 60px;
-  padding: 0 10px;
-  margin-bottom: 20px;
-
-  >span:nth-child(1) {
-    font-family: "Exan";
+    float: right;
   }
 
-  >span:nth-child(2) {
-    background-color: rgb(255, 51, 0);
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
-    line-height: 30px;
+  .drop-menu {
+    cursor: pointer;
+    width: 100%;
+    padding: 4px 10px;
+  }
+
+  .rank-list {
+    height: 500px;
+    width: 400px;
+    background: #262626;
+    position: absolute;
+    right: -70px;
+    z-index: 100;
+  }
+
+  .leftOut {
+    width: 40px;
+    height: 100px;
+    background: #262626 !important;
+    line-height: 100px;
     text-align: center;
-    margin: 0 10px 0 20px;
+    /* cursor: pointer; */
+    font-size: 24px;
+    cursor: pointer;
+    right: 0px;
+    position: absolute;
+    top: 336px;
   }
 
-  >span:nth-child(3) {
-    margin-right: 10px;
+  .rightOut {
+    position: absolute;
+    left: -24px;
+    width: 40px;
+    height: 100px;
+    background: #262626 !important;
+    line-height: 100px;
+    text-align: center;
+    font-size: 24px;
+    cursor: pointer;
+    top: 235px;
+    color: #fff;
+  }
+
+  .drawer {
+    color: rgba(255, 255, 255, .8);
+    height: 100%;
+    width: 100%;
+  }
+
+  .list-type {
     font-family: "Jura";
+    margin-bottom: 20px;
   }
 
-  >span:nth-child(4) {
-    img {
+  .space {
+    color: rgba(255, 255, 255, .8);
+    font-size: 20px;
+  }
+
+  .overall{
+    margin-bottom: 20px;
+  }
+
+  .rank-item {
+    height: 60px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    line-height: 60px;
+    padding: 0 10px;
+    margin-bottom: 20px;
+
+    >span:nth-child(1) {
+      font-family: "Exan";
+    }
+
+    >span:nth-child(2) {
+      background-color: rgb(255, 51, 0);
+      display: inline-block;
+      width: 30px;
+      height: 30px;
       vertical-align: middle;
+      line-height: 30px;
+      text-align: center;
+      margin: 0 10px 0 20px;
+    }
+
+    >span:nth-child(3) {
+      margin-right: 10px;
+      font-family: "Jura";
+    }
+
+    >span:nth-child(4) {
+      img {
+        vertical-align: middle;
+      }
+    }
+
+    >span:nth-child(5) {
+      float: right;
+      font-family: "Jura";
     }
   }
 
-  >span:nth-child(5) {
-    float: right;
-    font-family: "Jura";
+  .pagination {
+    margin: 0 auto;
+    width: fit-content;
   }
-}
 
-.pagination {
-  margin: 0 auto;
-  width: fit-content;
-}
+  .des-1 {
+    font-family: "Eur";
+    font-size: 100px;
+    font-weight: 600;
+    margin-left: 100px;
+  }
 
-.des-1 {
-  font-family: "Eur";
-  font-size: 100px;
-  font-weight: 600;
-  margin-left: 100px;
-}
+  .des-2 {
+    font-family: "Eur";
+    font-size: 100px;
+    font-weight: 600;
+    position: absolute;
+    left: 40px;
+    top: 300px;
+    transform: rotate(270deg);
+  }
 
-.des-2 {
-  font-family: "Eur";
-  font-size: 100px;
-  font-weight: 600;
-  position: absolute;
-  left: 40px;
-  top: 300px;
-  transform: rotate(270deg);
-}
+  .des-3 {
+    font-family: "Eur";
+    font-size: 100px;
+    font-weight: 600;
+    position: absolute;
+    right: 0;
+    top: 40%;
+    transform: rotate(90deg);
+  }
 
-.des-3 {
-  font-family: "Eur";
-  font-size: 100px;
-  font-weight: 600;
-  position: absolute;
-  right: 40px;
-  top: 440px;
-  transform: rotate(90deg);
-}
+  .des-4 {
+    font-family: "Eur";
+    font-size: 100px;
+    font-weight: 600;
+    color: #fff;
+    text-align: right;
+    margin-right: 160px;
+    margin-top: 20px;
+  }
 
-.des-4 {
-  font-family: "Eur";
-  font-size: 100px;
-  font-weight: 600;
-  color: #fff;
-  text-align: right;
-  margin-right: 160px;
-  margin-top: 20px;
-}
+  .des-bottom {
+    width: 100%;
+    display: flex;
+    margin-top: 40px;
+    font-family: "Exan";
 
-.des-bottom {
-  width: 100%;
-  display: flex;
-  margin-top: 40px;
-  font-family: "Exan";
-
-  >div {
-    flex: 1;
-    text-indent: 50px;
+    >div {
+      flex: 1;
+      text-indent: 50px;
+    }
   }
 }

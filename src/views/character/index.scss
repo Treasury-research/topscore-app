@@ -1,0 +1,87 @@
+.character {
+  background: #0E0E0E;
+  width: 100%;
+  height: 100%;
+
+  color: rgba(255, 255, 255, .9);
+  font-size: 14px;
+
+  &-head {
+    overflow: hidden;
+
+    >div {
+      margin-top: 20px;
+    }
+
+    >div:nth-child(1) {
+      float: left;
+      margin-left: 100px;
+      overflow: hidden;
+
+      >div {
+        float: left;
+        margin-right: 20px;
+
+      }
+    }
+
+    >div:nth-child(2) {
+      float: right;
+      margin-right: 40px;
+    }
+  }
+
+  .character-head-main-btn {
+    background: #232429;
+    padding: 10px 16px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .character-head-wallet-btn {
+    background: rgba(255, 51, 0, 0.30);
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Jura';
+  }
+
+  .character-content {
+    height: calc(100vh - 140px);
+    width: 100%;
+    margin-top: 40px;
+    overflow-y: auto;
+
+    >div {
+      width: 80%;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      margin: 0 auto;
+
+      >div {
+        width: calc(25% - 15px);
+        margin-right: 20px;
+        cursor: pointer;
+        >div:nth-child(1) {
+          width: 100%;
+          height: 300px;
+          background: rgba(255, 255, 255, 0.1);
+        }
+        >div:nth-child(2){
+          height: 60px;
+          text-align: center;
+          line-height: 60px;
+          font-size: 18px;
+          font-family: 'Exan';
+        }
+      }
+      >div:nth-child(4n){
+        margin-right: 0;
+      }
+    }
+
+  }
+}
