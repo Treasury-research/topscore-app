@@ -67,8 +67,14 @@ export default function Main() {
 
   const doReserve = async() => {
     if(!account){
-      const connectedAddress: string = await connectWallet();
-      postReserve(connectedAddress);
+      try{
+        const connectedAddress: string = await connectWallet();
+        if(connectedAddress){
+          postReserve(connectedAddress);
+        }
+      } catch(err){
+        console.log('rejected')
+      }
     }else{
       postReserve(account);
     }
