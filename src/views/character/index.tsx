@@ -12,7 +12,7 @@ export default function Character() {
           <div className="character-head-main-btn">Profile</div>
           <div className="character-head-main-btn">CharacteristicDEX</div>
         </div>
-        <div className="character-head-wallet-btn">Connect</div>
+        <div className="character-head-wallet-btn">Connect Wallet</div>
       </div>
       {
         !showCharacterDetail &&

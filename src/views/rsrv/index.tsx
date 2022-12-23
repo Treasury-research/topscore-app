@@ -84,8 +84,7 @@ export default function Main() {
     <div className="rsrv">
       <div className="rsrv-head">
         {account ? <div className="rsrv-head-wallet-btn">{shortenAddr(account)}</div> : 
-        <div onClick={()=>connectWallet} className="rsrv-head-wallet-btn">Connect</div>}
-
+        <div onClick={()=>connectWallet} className="rsrv-head-wallet-btn">Connect Wallet</div>}
       </div>
       <div className="des-1">2022 Wrapped</div>
       <div className="des-2">Your</div>

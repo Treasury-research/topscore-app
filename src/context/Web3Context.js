@@ -4,9 +4,19 @@ import Web3 from "web3";
 import { endpoint } from "../config";
 import { LoadingOutlined } from "@ant-design/icons";
 import Web3Modal from "web3modal";
+import WalletConnect from "@walletconnect/web3-provider";
+import { infuraId } from "../config";
 
 const web3Modal = new Web3Modal({
-  // cacheProvider: true,
+  cacheProvider: true,
+  providerOptions: {
+    walletconnect: {
+      package: WalletConnect,
+      options: {
+        infuraId: infuraId,
+      },
+    },
+  },
 });
 
 const actionMapping = [
@@ -170,7 +180,7 @@ export const Web3ContextProvider = ({ children }) => {
   }, [account]);
 
   useEffect(() => {
-    connectWallet();
+    // connectWallet();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

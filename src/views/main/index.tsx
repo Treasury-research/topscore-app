@@ -216,7 +216,7 @@ export default function Main() {
             onClick={() => connectWallet}
             className="topscore-head-wallet-btn"
           >
-            Connect
+            Connect Wallet
           </div>
         )}
       </div>
