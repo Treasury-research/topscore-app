@@ -361,12 +361,14 @@
 
       img {
         height: 60px;
+        image-rendering: -webkit-optimize-contrast;
       }
     }
 
     >div:nth-child(2) {
       img {
         height: 40px;
+        image-rendering: -webkit-optimize-contrast;
       }
     }
   }
@@ -382,6 +384,7 @@
     color: #FFFFFF;
     height: 316px;
     width: 473px;
+    image-rendering: -webkit-optimize-contrast;
   }
 
   .ant-modal-close-x {
@@ -397,4 +400,25 @@
     right: 30px;
     top: 30px;
   }
+}
+
+@media screen and (max-width:800px){
+  .rsrv{
+    .des-1,
+    .des-2,
+    .des-3,
+    .des-4 {
+      font-size: 24px;
+    }
+    .des-3,.des-2{
+      top:55%
+    }
+    .rsrv-main {
+      width: auto;
+    }
+    .rador-info{
+      display: none;
+    }
+  }
+  
 }
