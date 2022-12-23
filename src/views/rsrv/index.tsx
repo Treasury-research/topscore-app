@@ -6,9 +6,10 @@ import { shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
 import BotText from "./../../static/img/botText.gif";
 import BotLeftText from "./../../static/img/botLeftText.gif";
+import imgHead from "./../../static/img/rsrv-head.png";
+import radorImg from './../../static/img/radar.png'
 import RadarDefaultBtn from "./../../static/img/radarDefaultBtn.gif";
 import RadarHover from "./../../static/img/radarHover.gif";
-import imgRadarSmall from "./../../static/img/radar-small.png";
 import { DownOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Radar from "./components/Radar";
 import { Dropdown, Space, Menu, Drawer, Pagination, Modal } from "antd";
@@ -183,15 +184,15 @@ export default function Main() {
                   rankList.map((t, i) =>
                     <div className="rank-item" key={i}>
                       <span>{i + 1}</span>
-                      <span>k</span>
+                      <span><img src={imgHead} alt="" /></span>
                       <span>{t.name}</span>
-                      <span><img src={imgRadarSmall} alt="" /></span>
+                      <span className="rank-item-radar-img"><img src={radorImg} alt="" /></span>
                       <span>Score: {t.score}</span>
                     </div>
                   )
                 }
                 <div className="pagination">
-                  <Pagination simple total={50} />
+                  <Pagination simple total={50} disabled/>
                 </div>
               </div>
             </Drawer>
@@ -200,9 +201,10 @@ export default function Main() {
               open={isOpen}
               footer={null}
               onCancel={() => setIsOpen(false)}
-              width={473}
+              width={700}
               className="modal-bg"
             >
+              <div className="notify-btn">Notify me by email</div>
             </Modal>
           </div>
         </div>

@@ -19,9 +19,9 @@
 }
 
 @font-face {
-	font-family: "EurExtend";
+	font-family: "EurBlack";
 	font-weight: 500;
-	src: url("./accests/font/EUR/EurostileExtended.ttf");
+	src: url("./accests/font/EUR/EurostileExtendedBlack.ttf");
 }
 
 
@@ -244,26 +244,38 @@ body {
 	color: #fff;
 }
 
+.ant-pagination-simple-pager input {
+	color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.ant-pagination-simple-pager {
+	color: rgba(255, 255, 255, 0.8) !important;
+}
+
 .claimModal .ant-modal-footer {
 	display: none;
 }
+
 .claimModal .ant-modal-body {
 	padding: 80px 50px 40px 50px;
-	background: #1E1E1E;;
+	background: #1E1E1E;
+	;
 }
-.claimModal .ant-modal-close{
+
+.claimModal .ant-modal-close {
 	height: 40px;
-    width: 40px;
-    background: #fff;
-    line-height: 40px;
-    top: 16px;
-    text-align: center;
-    right: 16px;
-	background: rgba(255,255,255,0.1);
-}
-.claimModal .ant-modal-close .ant-modal-close-x{
 	width: 40px;
-    height: 40px;
+	background: #fff;
+	line-height: 40px;
+	top: 16px;
+	text-align: center;
+	right: 16px;
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.claimModal .ant-modal-close .ant-modal-close-x {
+	width: 40px;
+	height: 40px;
 	line-height: 40px;
 	color: #fff;
 	font-size: 24px;

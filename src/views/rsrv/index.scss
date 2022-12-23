@@ -316,7 +316,7 @@
   .des-2,
   .des-3,
   .des-4 {
-    font-family: "EurExtend";
+    font-family: "Eur";
     font-size: 80px;
     font-weight: 600;
     color: rgba(255, 255, 255, .8);
@@ -324,19 +324,20 @@
 
   .des-1 {
     margin-left: 100px;
+    margin-top: 20px;
   }
 
   .des-2 {
     position: absolute;
     left: 40px;
-    top: 300px;
+    top: 260px;
     transform: rotate(270deg);
   }
 
   .des-3 {
     position: absolute;
     right: 0;
-    top: 40%;
+    top: 50%;
     transform: rotate(90deg);
   }
 
@@ -375,15 +376,15 @@
 }
 
 .modal-bg {
-  top: 260px !important;
-
+  top: 200px !important;
+  height: 400px !important;
   .ant-modal-content {
     background: url("./../../static/img/draw-bg.png") no-repeat center center;
-    background-size: cover;
+    background-size: contain;
     width: 100%;
     color: #FFFFFF;
-    height: 316px;
-    width: 473px;
+    height: 500px;
+    width: 700px;
     image-rendering: -webkit-optimize-contrast;
   }
 
@@ -397,28 +398,44 @@
   }
 
   .ant-modal-close {
-    right: 30px;
-    top: 30px;
+    right: 80px;
+    top: 60px;
+  }
+
+  .notify-btn {
+    background: rgba(255, 51, 0, 0.5);
+    color: rgba(255, 255, 255, 0.8);
+    bottom: 39px;
+    right: 78px;
+    position: absolute;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-family: 'Jura';
   }
 }
 
-@media screen and (max-width:800px){
-  .rsrv{
+@media screen and (max-width:800px) {
+  .rsrv {
+
     .des-1,
     .des-2,
     .des-3,
     .des-4 {
       font-size: 24px;
     }
-    .des-3,.des-2{
-      top:55%
+
+    .des-3,
+    .des-2 {
+      top: 55%
     }
+
     .rsrv-main {
       width: auto;
     }
-    .rador-info{
+
+    .rador-info {
       display: none;
     }
   }
-  
+
 }
