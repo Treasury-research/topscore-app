@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./index.scss";
-import { ResponseType } from "axios";
+import log from "../../lib/log";
 import api from "../../api";
 import { shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
@@ -43,10 +43,35 @@ export default function Main() {
   const [showList, setShowList] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isHoverRadar, setIsHoverRadar] = useState(false);
+  const [reserving, setReserving] = useState(false);
 
   const onClose = () => {
     setShowList(false);
   };
+
+  const postReserve = async(address: string) => {
+    if(reserving){
+      return
+    }
+    try{
+      setReserving(true)
+      await log("reserve", address)
+      setIsOpen(true);
+    }catch(err){
+      console.log(err);
+    }finally{
+      setReserving(false)
+    }
+  }
+
+  const doReserve = async() => {
+    if(!account){
+      const connectedAddress: string = await connectWallet();
+      postReserve(connectedAddress);
+    }else{
+      postReserve(account);
+    }
+  }
 
   return (
     <div className="rsrv">
@@ -124,7 +149,7 @@ export default function Main() {
               {
                 isHoverRadar && 
                 <div onMouseLeave={() => setIsHoverRadar(false)}>
-                  <img src={RadarHover} alt="" onClick={() => setIsOpen(true)}/>
+                  <img src={RadarHover} alt="" onClick={doReserve}/>
                 </div>
               }
             </div>

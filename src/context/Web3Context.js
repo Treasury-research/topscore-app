@@ -21,7 +21,7 @@ export const Web3Context = createContext({
   networkId: null,
   blockNumber: null,
   account: null,
-  connectWallet: async () => {},
+  connectWallet: async () => {return ''},
   resetWallet: async () => {},
   estimateGas: async () => {},
   sendTx: async () => {},
@@ -69,6 +69,8 @@ export const Web3ContextProvider = ({ children }) => {
       setBlockNumber(await web3Raw.eth.getBlockNumber());
 
       listenProvider(provider);
+
+      return accounts[0]
     } catch (error) {
       setWeb3(new Web3(endpoint));
       console.log(error);
