@@ -1,7 +1,5 @@
 export const baseURL = "https://lens-api.knn3.xyz/api";
 
-export const logURL = "http://35.85.55.16:3035";
-
 export const contracts =  {
     
 }
