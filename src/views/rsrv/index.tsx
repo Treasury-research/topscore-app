@@ -204,7 +204,7 @@ export default function Main() {
               width={700}
               className="modal-bg"
             >
-              <div className="notify-btn">Notify me by email</div>
+              <div className="notify-btn" onClick={() => window.open('https://sm1f0asueon.typeform.com/to/uT23cD90')}>Notify me by email</div>
             </Modal>
           </div>
         </div>
