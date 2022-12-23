@@ -1,3 +1,7 @@
+.rsrv-content{
+  height: 100%;
+  width: 100%;
+}
 .rsrv {
   background: url("./../../static/img/bg.gif") no-repeat center bottom;
   background-size: cover;
@@ -312,39 +316,38 @@
     width: fit-content;
   }
 
-  .des-1,
-  .des-2,
-  .des-3,
-  .des-4 {
-    font-family: "Eur";
-    font-size: 80px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, .8);
-  }
-
   .des-1 {
     margin-left: 100px;
     margin-top: 20px;
+    width: 800px;
   }
 
   .des-2 {
     position: absolute;
-    left: 40px;
-    top: 260px;
-    transform: rotate(270deg);
+    left: 84px;
+    top: 166px;
+    img{
+      height: 300px;
+    }
   }
 
   .des-3 {
     position: absolute;
-    right: 0;
-    top: 50%;
-    transform: rotate(90deg);
+    right: 50px;
+    top: 30%;
+    >img{
+      height: 400px;
+    }
   }
 
   .des-4 {
     text-align: right;
-    margin-right: 160px;
-    margin-top: 20px;
+    margin-right: 60px;
+    margin-top: 72px;
+    margin-bottom: 20px;
+    img{
+      width: 800px;
+    }
   }
 
   .des-bottom {
@@ -416,26 +419,50 @@
 
 @media screen and (max-width:800px) {
   .rsrv {
-
-    .des-1,
-    .des-2,
-    .des-3,
-    .des-4 {
-      font-size: 24px;
+    display: none;
+  }
+  .mobile-rsrv{
+    display: block;
+    background: #000;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    .img-top{
+      width: 80%;
+      image-rendering: -webkit-optimize-contrast;
     }
-
-    .des-3,
-    .des-2 {
-      top: 55%
+    .text1,.text2,.text3{
+      color: rgba(255, 255, 255, .5);
+      font-family: "Exan";
+      font-size: 20px;
     }
-
-    .rsrv-main {
-      width: auto;
+    .text1{
+      margin-top: 10vh;
     }
-
-    .rador-info {
-      display: none;
+    .text2{
+      float: right;
+    }
+    .text3{
+      overflow: hidden;
+      >div:nth-child(1){
+        float: left;
+      }
+      >div:nth-child(2){
+        float: right;
+      }
+    }
+    .img-bottom{
+      position: absolute;
+      bottom: 20px;
     }
   }
+}
 
+@media screen and (min-width:800px) {
+  .rsrv {
+    display: block;
+  }
+  .mobile-rsrv{
+    display: none;
+  }
 }
