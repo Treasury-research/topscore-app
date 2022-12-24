@@ -50,9 +50,11 @@ export default function Main() {
   const [isOpen, setIsOpen] = useState(false);
   const [isHoverRadar, setIsHoverRadar] = useState(false);
   const [reserving, setReserving] = useState(false);
+  const [activeName, setActiveName] = useState('');
 
   const onClose = () => {
     setShowList(false);
+    setActiveName('');
   };
 
   const postReserve = async (address: string) => {
@@ -99,7 +101,7 @@ export default function Main() {
           <div className="rsrv-main">
             <div className="top-rador">
               <div>
-                <Radar id="top-rador" width={"100%"} height={"100%"} showList={() => setShowList(true)} />
+                <Radar id="top-rador" width={"100%"} height={"100%"} showList={(name: string) => {setShowList(true); setActiveName(name)}} />
               </div>
               <div className="top-rador-info">
                 <div className="rador-info">
@@ -167,7 +169,7 @@ export default function Main() {
               </div>
               <Drawer title="" placement="right" onClose={onClose} open={showList} closable={false}>
                 <div className="drawer">
-                  <div className="rightOut" onClick={() => { setShowList(false) }}><RightOutlined /></div>
+                  <div className="rightOut" onClick={() => { setShowList(false); setActiveName('') }}><RightOutlined /></div>
                   <Dropdown
                     overlay={
                       <Menu>
@@ -186,7 +188,7 @@ export default function Main() {
                   >
                     <a onClick={(e) => e.preventDefault()}>
                       <Space className="space overall">
-                        <span className="list-type">???</span>
+                        <span className="list-type">{activeName || '???'}</span>
                         <DownOutlined />
                       </Space>
                     </a>

@@ -26,16 +26,16 @@ const ChartLine = (props: any) => {
                     color: 'rgba(255,255,255,.5)',
                     fontSize: 14,
                     backgroundColor: '#232429',
-                    padding: [10, 10, 4, 10],
+                    padding: [10, 10, 8, 10],
                     clickable: true,
                 },
                 indicator: [
-                    { name: '             ', max: 100 },
-                    { name: '             ', max: 100 },
-                    { name: '             ', max: 100 },
-                    { name: '             ', max: 100 },
-                    { name: '             ', max: 100 },
-                    { name: '             ', max: 100 },
+                    { name: 'Influence', max: 100, color: "#ffffff" },
+                    { name: '             ', max: 100, color: "#ffffff" },
+                    { name: '             ', max: 100, color: "#ffffff" },
+                    { name: '             ', max: 100, color: "#ffffff" },
+                    { name: '             ', max: 100, color: "#ffffff" },
+                    { name: '             ', max: 100, color: "#ffffff" },
 
                 ],
                 shape: 'circle',
@@ -114,7 +114,8 @@ const ChartLine = (props: any) => {
         const chart = echarts.init(HTMLElement);
         chart.on('click', function (param) {
             if (param.targetType == "axisName") {
-                props.showList()
+                const filteredName = param.name.replace(/\s/g, '');
+                props.showList(filteredName)
             }
         })
         chart.setOption(option);
