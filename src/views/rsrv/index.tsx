@@ -176,7 +176,7 @@ export default function Main() {
                     overlay={
                       <Menu className="drop-wrapper">
                         {
-                          typeList.map((t, i) =>
+                          typeList.filter(item => item !== activeName).map((t, i) =>
                             <div
                               className="drop-menu"
                               onClick={() => { setActiveName(t === '???' ? '' : t) ;setMenuOpen(false)}}
