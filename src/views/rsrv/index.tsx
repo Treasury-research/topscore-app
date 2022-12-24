@@ -19,7 +19,7 @@ import { DownOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Radar from "./components/Radar";
 import { Dropdown, Space, Menu, Drawer, Pagination, Modal } from "antd";
 
-const typeList = ['???', '???', '???', '???', '???', '???'];
+const typeList = ['Influence', '???', '???', '???', '???', '???'];
 const rankList = [{
   name: '???',
   score: '???'
@@ -51,6 +51,7 @@ export default function Main() {
   const [isHoverRadar, setIsHoverRadar] = useState(false);
   const [reserving, setReserving] = useState(false);
   const [activeName, setActiveName] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const onClose = () => {
     setShowList(false);
@@ -171,12 +172,14 @@ export default function Main() {
                 <div className="drawer">
                   <div className="rightOut" onClick={() => { setShowList(false); setActiveName('') }}><RightOutlined /></div>
                   <Dropdown
+                    open={menuOpen}
                     overlay={
-                      <Menu>
+                      <Menu className="drop-wrapper">
                         {
                           typeList.map((t, i) =>
                             <div
                               className="drop-menu"
+                              onClick={() => { setActiveName(t === '???' ? '' : t) ;setMenuOpen(false)}}
                               key={i}
                             >
                               {t}
@@ -186,7 +189,7 @@ export default function Main() {
                       </Menu>
                     }
                   >
-                    <a onClick={(e) => e.preventDefault()}>
+                    <a onClick={(e) =>  setMenuOpen(true)}>
                       <Space className="space overall">
                         <span className="list-type">{activeName || '???'}</span>
                         <DownOutlined />

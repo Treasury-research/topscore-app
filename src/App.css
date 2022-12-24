@@ -8,6 +8,12 @@
 
 @font-face {
 	font-family: "Jura";
+	font-weight: 400;
+	src: url("./accests/font/JURA/Jura-Regular.ttf");
+}
+
+@font-face {
+	font-family: "Jura";
 	font-weight: 500;
 	src: url("./accests/font/JURA/Jura-Bold.ttf");
 }
@@ -284,4 +290,12 @@ body {
 #WEB3_CONNECT_MODAL_ID{
 	z-index: 1000;
     position: relative;
+}
+
+.drop-wrapper{
+	color: #fff;
+	font-family: "Jura";
+	font-weight: 400;
+	background: #505050;
+	box-shadow: rgba(0,0,0,.5) 0 2px 4px;
 }

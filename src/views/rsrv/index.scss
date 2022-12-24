@@ -135,20 +135,24 @@
 
                 >p {
                   text-align: center;
-                }
-
-                >p:nth-child(1) {
-                  font-size: 20px;
+                  font-size: 16px;
                   font-family: "Jura";
                   font-weight: normal;
                   color: rgba(255, 255, 255, .8);
                 }
 
-                >p:nth-child(2) {
-                  font-size: 12px;
-                  color: rgba(255, 255, 255, .4);
-                  font-family: 'Jura';
-                }
+                // >p:nth-child(1) {
+                //   font-size: 20px;
+                //   font-family: "Jura";
+                //   font-weight: normal;
+                //   color: rgba(255, 255, 255, .8);
+                // }
+
+                // >p:nth-child(2) {
+                //   font-size: 12px;
+                //   color: rgba(255, 255, 255, .4);
+                //   font-family: 'Jura';
+                // }
               }
 
               .diff-sty-info {
