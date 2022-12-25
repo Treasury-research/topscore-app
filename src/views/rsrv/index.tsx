@@ -19,7 +19,7 @@ import { DownOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Radar from "./components/Radar";
 import { Dropdown, Space, Menu, Drawer, Pagination, Modal } from "antd";
 
-const typeList = ['Influence', '???', '???', '???', '???', '???'];
+const typeList = ['Influence', 'Campaign', '???', '???', '???', '???'];
 const rankList = [{
   name: '???',
   score: '???'
@@ -56,6 +56,7 @@ export default function Main() {
   const onClose = () => {
     setShowList(false);
     setActiveName('');
+    setMenuOpen(false);
   };
 
   const postReserve = async (address: string) => {

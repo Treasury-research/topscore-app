@@ -32,7 +32,7 @@ const ChartLine = (props: any) => {
                 },
                 indicator: [
                     { name: 'Influence', max: 100, color: "rgba(255,255,255,.6)" },
-                    { name: '             ', max: 100, color: "rgba(255,255,255,.6)" },
+                    { name: 'Campaign', max: 100, color: "rgba(255,255,255,.6)" },
                     { name: '             ', max: 100, color: "rgba(255,255,255,.6)" },
                     { name: '             ', max: 100, color: "rgba(255,255,255,.6)" },
                     { name: '             ', max: 100, color: "rgba(255,255,255,.6)" },
