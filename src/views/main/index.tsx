@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Spin } from 'antd'
 import "./index.scss";
 import { useParams, useHistory } from "react-router-dom";
 import { ResponseType } from "axios";
@@ -368,17 +369,19 @@ export default function Main() {
                     </Space>
                   </a>
                 </Dropdown>
-                {rankList.map((t:any, i) => (
-                  <div className="rank-item" key={i}>
-                    <span>{t.rank}</span>
-                    <span>k</span>
-                    <span>{t.profileId}</span>
-                    <span>
-                      <img src={imgRadarSmall} alt="" />
-                    </span>
-                    <span>Score: {new BN(t.score).toFixed(2)}</span>
-                  </div>
-                ))}
+                <Spin spinning={rankLoading}>
+                  {rankList.map((t:any, i) => (
+                    <div className="rank-item" key={i}>
+                      <span>{t.rank}</span>
+                      <span>k</span>
+                      <span>{t.profileId}</span>
+                      <span>
+                        <img src={imgRadarSmall} alt="" />
+                      </span>
+                      <span>Score: {new BN(t.score).toFixed(2)}</span>
+                    </div>
+                  ))}
+                </Spin>
                 <div className="pagination">
                   <Pagination simple current={rankPageNo} pageSize={defaultPageLimit} onChange={onRankChange} total={rankTotal} />
                 </div>
