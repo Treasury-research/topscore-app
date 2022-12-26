@@ -93,6 +93,7 @@ export default function Main() {
 
   const onClose = () => {
     setShowList(false);
+    setRankPageNo(1);
   };
 
   const showModal = () => {
