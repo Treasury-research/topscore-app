@@ -9,7 +9,7 @@ import radorImg from './../../../static/img/radar.png'
 const ChartLine = (props: any) => {
     const { optionsData = null, id = 'default-id', width = '100%', height = '100%', data } = props;
     let dataBJ = data.map((t: any) => {
-        t.max = 100;
+        t.max = 10000;
         return t.value
     })
     useEffect(() => {
@@ -108,7 +108,7 @@ const ChartLine = (props: any) => {
         })
         chart.setOption(option);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [optionsData]);
+    }, [optionsData, data]);
     return (
         <div style={{ width: width, height: height, position: "relative" }}>
             <div id={id} style={{ width: width, height: height, zIndex: '99' }}>

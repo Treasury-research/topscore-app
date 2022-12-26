@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Spin } from 'antd'
+import { Spin } from "antd";
 import "./index.scss";
 import { useParams, useHistory } from "react-router-dom";
 import { ResponseType } from "axios";
@@ -12,7 +12,7 @@ import {
   TwitterOutlined,
   DownOutlined,
   LeftOutlined,
-  RightOutlined
+  RightOutlined,
 } from "@ant-design/icons";
 import { Dropdown, Space, Menu, Modal, Drawer, Pagination } from "antd";
 import Radar from "./components/Radar";
@@ -45,7 +45,7 @@ export default function Main() {
   const [rankList, setRankList] = useState<[]>([]);
   const [rankTotal, setRankTotal] = useState<number>(0);
   const [rankPageNo, setRankPageNo] = useState<number>(1);
-  const [rankType, setRankType] = useState<string>('influence');
+  const [rankType, setRankType] = useState<string>("influence");
   const [rankLoading, setRankLoading] = useState<boolean>(false);
   const [influence, setInfluence] = useState<any>({});
   const [curation, setCuration] = useState<any>({});
@@ -56,39 +56,38 @@ export default function Main() {
   const [activeTag1, setActiveTag1] = useState<number>(0);
   const [activeTag2, setActiveTag2] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [checkRadarName, setCheckRadarName] = useState<string>('');
+  const [checkRadarName, setCheckRadarName] = useState<string>("");
   const [activeHandleIdx, setActiveHandleIdx] = useState<number>(0);
   const [rankInfo, setRankInfo] = useState<any>({});
 
-  const history = useHistory();
-  const params:any = useParams();
+  const params: any = useParams();
   const { address } = params;
 
   const [rador1, setRador1] = useState([
-    { name: "Influence", value: 90 },
-    { name: "Campaign", value: 80 },
-    { name: "Creation", value: 70 },
-    { name: "Curation", value: 60 },
-    { name: "Collection", value: 80 },
-    { name: "Engagement", value: 90 },
+    { name: "Influence", value: 0 },
+    { name: "Campaign", value: 0 },
+    { name: "Creation", value: 0 },
+    { name: "Curation", value: 0 },
+    { name: "Collection", value: 0 },
+    { name: "Engagement", value: 0 },
   ]);
 
   const [rador2, setRador2] = useState([
-    { name: "", value: 90 },
-    { name: "", value: 80 },
-    { name: "", value: 70 },
-    { name: "Curation", value: 60 },
-    { name: "", value: 80 },
-    { name: "", value: 90 },
+    { name: "", value: 0 },
+    { name: "", value: 0 },
+    { name: "", value: 0 },
+    { name: "Curation", value: 0 },
+    { name: "", value: 0 },
+    { name: "", value: 0 },
   ]);
 
   const [rador3, setRador3] = useState([
-    { name: "", value: 90 },
-    { name: "", value: 80 },
-    { name: "", value: 70 },
-    { name: "", value: 60 },
-    { name: "Campaign", value: 80 },
-    { name: "Engagement", value: 90 },
+    { name: "", value: 0 },
+    { name: "", value: 0 },
+    { name: "", value: 0 },
+    { name: "", value: 0 },
+    { name: "Campaign", value: 0 },
+    { name: "Engagement", value: 0 },
   ]);
 
   const onClose = () => {
@@ -110,16 +109,16 @@ export default function Main() {
 
   const getRankList = async () => {
     setRankLoading(true);
-    const res:any = await api.get(`/lens/${rankType}/rank/list`, {
+    const res: any = await api.get(`/lens/${rankType}/rank/list`, {
       params: {
         limit: defaultPageLimit,
-        offset: (rankPageNo - 1) * defaultPageLimit
-      }
+        offset: (rankPageNo - 1) * defaultPageLimit,
+      },
     });
     setRankLoading(false);
     setRankTotal(res.data.total);
     setRankList(res.data.data);
-  }
+  };
 
   const getLensHandle = async () => {
     const res: any = await api.get(`/lens/handles/${address}`);
@@ -128,10 +127,55 @@ export default function Main() {
 
   const getIndicators = async (profileId: string) => {
     const res: any = await api.get(`/lens/indicators/${profileId}`);
-    setUserInfo((prev:any) => ({
+    setUserInfo((prev: any) => ({
       ...prev,
-      ...res.data
-    }))
+      ...res.data,
+    }));
+  };
+
+  useEffect(() => {
+    const {influRank,campaignRank,creationRank,curationRank,collectionRank,engagementRank } = rankInfo;
+
+    setRador1(() => {
+      return [
+        ...[{ name: "Influence", value: influRank },
+        { name: "Campaign", value: campaignRank },
+        { name: "Creation", value: creationRank },
+        { name: "Curation", value: curationRank },
+        { name: "Collection", value: collectionRank },
+        { name: "Engagement", value: engagementRank },]
+      ]
+    })
+
+    setRador2(() => {
+      return [
+        ...[{ name: "", value: 0},
+        { name: "", value: 0 },
+        { name: "", value: 0 },
+      { name: "Curation", value: curationRank },
+        { name: "", value: 0 },
+        { name: "", value: 0 },]
+      ]
+    })
+
+    setRador3(() => {
+      return [
+        ...[{ name: "", value: 0 },
+        { name: "Campaign", value: campaignRank },
+        { name: "", value: 0 },
+        { name: "", value: 0 },
+        { name: "", value: 0 },
+        { name: "Engagement", value: engagementRank },]
+      ]
+    })
+  }, [rankInfo]);
+
+  const getRankInfo = async (profileId: string) => {
+    const res: any = await api.get(`/lens/scores/${profileId}`);
+    setRankInfo((prev: any) => ({
+      ...prev,
+      ...res.data,
+    }));
   };
 
   const getInfluence = async (profileId: string) => {
@@ -155,31 +199,30 @@ export default function Main() {
   };
 
   const getUserInfo = async (profileId: string) => {
-    const res = await Promise.all([
-      getIndicators(profileId),
-      getInfluence(profileId),
-      getCollection(profileId),
-      getCuration(profileId),
-      getPub(profileId)
-    ]);
+    getRankInfo(profileId);
+    getIndicators(profileId);
+    getInfluence(profileId);
+    getCollection(profileId);
+    getCuration(profileId);
+    getPub(profileId);
     getRankList();
   };
 
   const showRank = (name: string) => {
-    setActiveHandleIdx(typeList.indexOf(name))
+    setActiveHandleIdx(typeList.indexOf(name));
     setShowList(true);
-  }
+  };
 
-  const onRankChange= (val: number) => {
-    setRankPageNo(val)
-  }
+  const onRankChange = (val: number) => {
+    setRankPageNo(val);
+  };
 
-  useEffect(()=>{
-    if(!rankType || !rankPageNo){
-      return
+  useEffect(() => {
+    if (!rankType || !rankPageNo) {
+      return;
     }
     getRankList();
-  }, [rankPageNo, rankType])
+  }, [rankPageNo, rankType]);
 
   // useEffect(() => {
   //   if (!account) {
@@ -203,7 +246,6 @@ export default function Main() {
     const profile = handlesList[activeHandleIndex];
 
     setCurrentProfile(profile);
-
   }, [activeHandleIndex, handlesList]);
 
   useEffect(() => {
@@ -214,7 +256,6 @@ export default function Main() {
     }
 
     getUserInfo(profileId);
-
   }, [currentProfile]);
 
   return (
@@ -224,7 +265,7 @@ export default function Main() {
           <div className="topscore-head-main-btn">Profile</div>
           <div className="topscore-head-main-btn">CharacteristicDEX</div>
         </div>
-        <Wallet/>
+        <Wallet />
       </div>
       <div className="toscore-content">
         <div className="toscore-main">
@@ -356,7 +397,15 @@ export default function Main() {
                   overlay={
                     <Menu>
                       {typeList.map((t, i) => (
-                        <div className="drop-menu" key={i} onClick={() => {setActiveHandleIdx(i); setRankType(t.toLowerCase()); setRankPageNo(1)}}>
+                        <div
+                          className="drop-menu"
+                          key={i}
+                          onClick={() => {
+                            setActiveHandleIdx(i);
+                            setRankType(t.toLowerCase());
+                            setRankPageNo(1);
+                          }}
+                        >
                           {t}
                         </div>
                       ))}
@@ -365,13 +414,15 @@ export default function Main() {
                 >
                   <a onClick={(e) => e.preventDefault()}>
                     <Space className="space overall">
-                      <span className="list-type">{typeList[activeHandleIdx]}</span>
+                      <span className="list-type">
+                        {typeList[activeHandleIdx]}
+                      </span>
                       <DownOutlined />
                     </Space>
                   </a>
                 </Dropdown>
                 <Spin spinning={rankLoading}>
-                  {rankList.map((t:any, i) => (
+                  {rankList.map((t: any, i) => (
                     <div className="rank-item" key={i}>
                       <span>{t.rank}</span>
                       <span>k</span>
@@ -384,19 +435,28 @@ export default function Main() {
                   ))}
                 </Spin>
                 <div className="pagination">
-                  <Pagination simple current={rankPageNo} pageSize={defaultPageLimit} onChange={onRankChange} total={rankTotal} />
+                  <Pagination
+                    simple
+                    current={rankPageNo}
+                    pageSize={defaultPageLimit}
+                    onChange={onRankChange}
+                    total={rankTotal}
+                  />
                 </div>
               </div>
             </Drawer>
           </div>
           <div className="btn-group-1">
             <div>
-              {
-                tag1.map((t: string, i: number) => (
-                  <div className={activeTag1 == i ? 'activeBtnGroup btnTb' : 'btnTb'}
-                    onClick={() => setActiveTag1(i)} key={i}>{t}</div>
-                ))
-              }
+              {tag1.map((t: string, i: number) => (
+                <div
+                  className={activeTag1 == i ? "activeBtnGroup btnTb" : "btnTb"}
+                  onClick={() => setActiveTag1(i)}
+                  key={i}
+                >
+                  {t}
+                </div>
+              ))}
             </div>
           </div>
           <div className="influence_curation">
@@ -408,86 +468,112 @@ export default function Main() {
                 height={"100%"}
               />
             </div>
-            {
-              activeTag1 === 0 &&
+            {activeTag1 === 0 && (
               <div className="right-text">
                 <p>YOUR 2022 LENS-PRINT</p>
                 <p>
-                  YOU HAVE POSTED <span>{new BN(userInfo.post).toFormat()}</span> POSTS, <span>{new BN(userInfo.comment).toFormat()}</span> COMMENTS, <span>{new BN(userInfo.mirror).toFormat()}</span> MIRRORS, KEEP CREATING IN THE NEW YEAR!
+                  YOU HAVE POSTED{" "}
+                  <span>{new BN(userInfo.post).toFormat()}</span> POSTS,{" "}
+                  <span>{new BN(userInfo.comment).toFormat()}</span> COMMENTS,{" "}
+                  <span>{new BN(userInfo.mirror).toFormat()}</span> MIRRORS,
+                  KEEP CREATING IN THE NEW YEAR!
                 </p>
                 <p>
-                  YOU HAVE RECEIVED <span>_NUM_</span> COMMENTS AND <span>_NUM_</span> MIRRORS, YOUR VOICE IS ALWAYS ECHOED AND FLOWERS ARE ALWAYS WITH YOU.
+                  YOU HAVE RECEIVED <span>_NUM_</span> COMMENTS AND{" "}
+                  <span>_NUM_</span> MIRRORS, YOUR VOICE IS ALWAYS ECHOED AND
+                  FLOWERS ARE ALWAYS WITH YOU.
                 </p>
                 <p>
-                  YOUR CAMPAIGN RATING IS <span>_NUM_</span> ,YOUR RANKING IS <span>_NUM_</span> ,AND YOUR ENGAGEMENT RATING IS <span>_NUM_</span>.
+                  YOUR CAMPAIGN RATING IS <span>_NUM_</span> ,YOUR RANKING IS{" "}
+                  <span>_NUM_</span> ,AND YOUR ENGAGEMENT RATING IS{" "}
+                  <span>_NUM_</span>.
                 </p>
                 <p>
-                  YOUR ENGAGEMENT SCORE IS <span>_NUM_</span> AND YOUR RANK IS <span>_NUM_</span>.
+                  YOUR ENGAGEMENT SCORE IS <span>_NUM_</span> AND YOUR RANK IS{" "}
+                  <span>_NUM_</span>.
                 </p>
               </div>
-            }
-            {
-              activeTag1 === 1 &&
+            )}
+            {activeTag1 === 1 && (
               <div className="right-text">
                 <p>YOUR 2022 LENS-PRINT</p>
                 <p>
-                  YOU HAVE MIRRORED A TOTAL OF <span>{new BN(userInfo.mirror).toFormat()}</span> PIECES OF CONTENT. THROUGH YOUR MIRRORS.
+                  YOU HAVE MIRRORED A TOTAL OF{" "}
+                  <span>{new BN(userInfo.mirror).toFormat()}</span> PIECES OF
+                  CONTENT. THROUGH YOUR MIRRORS.
                 </p>
                 <p>
-                  YOU HAVE BROUGHT <span>{new BN(userInfo.collect).toFormat()}</span> TIMES COLLECT TO THE ORIGINAL AUTHORS, AND WE APPRECIATE EVERY MIRROR YOU MADE.
+                  YOU HAVE BROUGHT{" "}
+                  <span>{new BN(userInfo.collect).toFormat()}</span> TIMES
+                  COLLECT TO THE ORIGINAL AUTHORS, AND WE APPRECIATE EVERY
+                  MIRROR YOU MADE.
                 </p>
               </div>
-            }
+            )}
           </div>
           <div className="btn-group-2">
             <div>
-
-              {
-                tag2.map((t: string, i: number) => (
-                  <div className={activeTag2 == i ? 'activeBtnGroup btnTb' : 'btnTb'}
-                    onClick={() => setActiveTag2(i)} key={i}>{t}</div>
-                ))
-              }
+              {tag2.map((t: string, i: number) => (
+                <div
+                  className={activeTag2 == i ? "activeBtnGroup btnTb" : "btnTb"}
+                  onClick={() => setActiveTag2(i)}
+                  key={i}
+                >
+                  {t}
+                </div>
+              ))}
             </div>
           </div>
           <div className="collect_pablication">
-            {
-              activeTag2 === 0 &&
+            {activeTag2 === 0 && (
               <div className="left-text">
                 <p>YOUR 2022 LENS-PRINT</p>
                 <p>
-                  THE CONTENT YOU POSTED WAS COLLECTED A TOTAL OF <span>{new BN(userInfo.collectBy).toFormat()}</span> TIMES.
+                  THE CONTENT YOU POSTED WAS COLLECTED A TOTAL OF{" "}
+                  <span>{new BN(userInfo.collectBy).toFormat()}</span> TIMES.
                 </p>
                 <p>
-                  YOUR COLLECTED <span>{new BN(userInfo.collect).toFormat()}</span> VALUABLE CONTENT.
-                </p>
-                <p>
-                  YOUR HAVE A CREATION SCORE OF <span>{new BN(collection.creationScore).toFixed(2)}</span>, A RANK OF <span>{collection.creationRank}</span>, AND YOUR COLLECTION SCORE IS <span>{new BN(collection.collectionScore).toFixed(2)}</span> AND YOUR RANKING IS <span>{collection.collectionRank}</span>.
-                </p>
-                <p>
-                  YOUR 2022 HAVE MIRRORED A TOTAL OF <span>{new BN(userInfo.mirror).toFormat()}</span> OF
+                  YOUR COLLECTED{" "}
+                  <span>{new BN(userInfo.collect).toFormat()}</span> VALUABLE
                   CONTENT.
                 </p>
+                <p>
+                  YOUR HAVE A CREATION SCORE OF{" "}
+                  <span>{new BN(collection.creationScore).toFixed(2)}</span>, A
+                  RANK OF <span>{collection.creationRank}</span>, AND YOUR
+                  COLLECTION SCORE IS{" "}
+                  <span>{new BN(collection.collectionScore).toFixed(2)}</span>{" "}
+                  AND YOUR RANKING IS <span>{collection.collectionRank}</span>.
+                </p>
+                <p>
+                  YOUR 2022 HAVE MIRRORED A TOTAL OF{" "}
+                  <span>{new BN(userInfo.mirror).toFormat()}</span> OF CONTENT.
+                </p>
               </div>
-            }
-            {
-              activeTag2 === 1 &&
+            )}
+            {activeTag2 === 1 && (
               <div className="left-text">
                 <p>IN THE PAST YEAR</p>
                 <p>
-                  THE CONTENT YOU POSTED HAS BEEN COLLECTED A TOTAL OF <span>{new BN(userInfo.collectBy).toFormat()}</span> TIMES, AND YOUR SHARING ALWAYS ATTRACTS COUNTLESS ATTENTION.
+                  THE CONTENT YOU POSTED HAS BEEN COLLECTED A TOTAL OF{" "}
+                  <span>{new BN(userInfo.collectBy).toFormat()}</span> TIMES,
+                  AND YOUR SHARING ALWAYS ATTRACTS COUNTLESS ATTENTION.
                 </p>
                 <p>
-                  YOU HAVE A CREATION SCORE OF <span>{new BN(collection.creationScore).toFixed(2)}</span> ,A RANK OF <span>{collection.creationRank}</span>, AND A COLLECTION SCORE OF <span>{new BN(collection.collectionScore).toFixed(2)}</span>.
+                  YOU HAVE A CREATION SCORE OF{" "}
+                  <span>{new BN(collection.creationScore).toFixed(2)}</span> ,A
+                  RANK OF <span>{collection.creationRank}</span>, AND A
+                  COLLECTION SCORE OF{" "}
+                  <span>{new BN(collection.collectionScore).toFixed(2)}</span>.
                 </p>
                 <p>
-                  YOUR COLLECTION SCORE IS <span>{new BN(collection.collectionScore).toFixed(2)}</span> AND YOUR RANKING IS <span>{collection.collectionRank}</span>.
+                  YOUR COLLECTION SCORE IS{" "}
+                  <span>{new BN(collection.collectionScore).toFixed(2)}</span>{" "}
+                  AND YOUR RANKING IS <span>{collection.collectionRank}</span>.
                 </p>
-                <p>
-                  YOUR MOST STREAMED POST WAS:
-                </p>
+                <p>YOUR MOST STREAMED POST WAS:</p>
               </div>
-            }
+            )}
             <div className="right-rador">
               <Radar
                 data={rador3}
@@ -499,16 +585,17 @@ export default function Main() {
           </div>
           <Comment
             data={{
-              headImg: '',
-              name: 'KNN3 Network',
-              lensHandle: '@knn3network.lens',
-              msg: 'GM and CRAZY THURSDA',
+              headImg: "",
+              name: "KNN3 Network",
+              lensHandle: "@knn3network.lens",
+              msg: "GM and CRAZY THURSDA",
               commentImg: S2,
-              iconNum1: '10',
-              iconNum2: '10',
-              iconNum3: '10',
-              iconNum4: '10',
-            }} />
+              iconNum1: "10",
+              iconNum2: "10",
+              iconNum3: "10",
+              iconNum4: "10",
+            }}
+          />
         </div>
         <div
           className="leftOut"
@@ -530,7 +617,9 @@ export default function Main() {
         <div className="claim-bottom">
           <div>Claim</div>
           <div>
-            <div><img src={IconG5} alt="" /></div>
+            <div>
+              <img src={IconG5} alt="" />
+            </div>
             <div>
               <TwitterOutlined />
             </div>
