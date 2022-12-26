@@ -10,9 +10,9 @@ export default function Wallet() {
   const history = useHistory();
 
   const walletBtnClick = () => {
-    if(history.location.pathname === "/main"){
+    // if(history.location.pathname === "/main"){
       history.push(`/address/${account}`)
-    }
+    // }
   }
   
   return (

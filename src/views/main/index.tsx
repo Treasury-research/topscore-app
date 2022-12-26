@@ -354,7 +354,7 @@ export default function Main() {
                   overlay={
                     <Menu>
                       {typeList.map((t, i) => (
-                        <div className="drop-menu" key={i} onClick={() => setActiveHandleIdx(i)}>
+                        <div className="drop-menu" key={i} onClick={() => {setActiveHandleIdx(i); setRankType(t.toLowerCase()); setRankPageNo(1)}}>
                           {t}
                         </div>
                       ))}
