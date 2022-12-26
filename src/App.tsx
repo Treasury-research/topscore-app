@@ -20,6 +20,7 @@ function App() {
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/main" component={Main} />
+            <Route path="/address/:address" component={Main} />
             <Route path="/rsrv" component={Rsrv} />
             <Route path="/character" component={Character} />
             <Redirect to="/rsrv" />

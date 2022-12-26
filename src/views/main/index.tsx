@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./index.scss";
+import { useParams, useHistory } from "react-router-dom";
 import { ResponseType } from "axios";
 import api from "../../api";
 import BN from "bignumber.js";
@@ -55,6 +56,11 @@ export default function Main() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [checkRadarName, setCheckRadarName] = useState<string>('');
   const [activeHandleIdx, setActiveHandleIdx] = useState<number>(0);
+  const [rankInfo, setRankInfo] = useState<any>({});
+
+  const history = useHistory();
+  const params:any = useParams();
+  const { address} = params;
 
   const [rador1, setRador1] = useState([
     { name: "Influence", value: 90 },
@@ -113,8 +119,7 @@ export default function Main() {
   }
 
   const getLensHandle = async () => {
-    const testAccount = "0xcde3725b25d6d9bc78cf0941cc15fd9710c764b9";
-    const res: any = await api.get(`/lens/handles/${testAccount}`);
+    const res: any = await api.get(`/lens/handles/${address}`);
     setHandlesList(res.data);
   };
 
@@ -173,12 +178,19 @@ export default function Main() {
     getRankList();
   }, [rankPageNo, rankType])
 
+  // useEffect(() => {
+  //   if (!account) {
+  //     return;
+  //   }
+  //   getLensHandle();
+  // }, [account]);
+
   useEffect(() => {
-    if (!account) {
+    if (!address) {
       return;
     }
     getLensHandle();
-  }, [account]);
+  }, [address]);
 
   useEffect(() => {
     if (!handlesList || handlesList.length === 0) {
@@ -210,10 +222,10 @@ export default function Main() {
           <div className="topscore-head-main-btn">CharacteristicDEX</div>
         </div>
         {account ? (
-          <div className="topscore-head-wallet-btn">{shortenAddr(account)}</div>
+          <div onClick={()=> history.push(`/address/${account}`)} className="topscore-head-wallet-btn">{shortenAddr(account)}</div>
         ) : (
           <div
-            onClick={() => connectWallet}
+            onClick={() => connectWallet()}
             className="topscore-head-wallet-btn"
           >
             Connect Wallet
@@ -405,10 +417,10 @@ export default function Main() {
               <div className="right-text">
                 <p>YOUR 2022 LENS-PRINT</p>
                 <p>
-                  YOU HAVE POSTED <span>_NUM_</span>POSTS, <span>_NUM_</span> COMMENTS, <span>_NUM_</span> MIRRORS,KEEP CREATING IN THE NEW YEAR!
+                  YOU HAVE POSTED <span>{new BN(userInfo.post).toFormat()}</span> POSTS, <span>{new BN(userInfo.comment).toFormat()}</span> COMMENTS, <span>{new BN(userInfo.mirror).toFormat()}</span> MIRRORS, KEEP CREATING IN THE NEW YEAR!
                 </p>
                 <p>
-                  YOU HAVE RECEIVED <span>_NUM_</span> COMMENTS AND <span>_NUM_</span> MIRRORS,YOUR VOICE IS ALWAYS ECHOED AND FLOWERS ARE ALWAYS WITH YOU.
+                  YOU HAVE RECEIVED <span>_NUM_</span> COMMENTS AND <span>_NUM_</span> MIRRORS, YOUR VOICE IS ALWAYS ECHOED AND FLOWERS ARE ALWAYS WITH YOU.
                 </p>
                 <p>
                   YOUR CAMPAIGN RATING IS <span>_NUM_</span> ,YOUR RANKING IS <span>_NUM_</span> ,AND YOUR ENGAGEMENT RATING IS <span>_NUM_</span>.
@@ -423,10 +435,10 @@ export default function Main() {
               <div className="right-text">
                 <p>YOUR 2022 LENS-PRINT</p>
                 <p>
-                  YOU HAVE MIRRORED A TOTAL OF <span>_NUM_</span>PIECES OF CONTENT. THROUGH YOUR MIRRORS.
+                  YOU HAVE MIRRORED A TOTAL OF <span>{new BN(userInfo.mirror).toFormat()}</span> PIECES OF CONTENT. THROUGH YOUR MIRRORS.
                 </p>
                 <p>
-                  YOU HAVE BROUGHT <span>_NUM_</span> TIMES COLLECT TO THE ORIGINAL AUTHORS, AND WE APPRECIATE EVERY MIRROR YOU MADE.
+                  YOU HAVE BROUGHT <span>{new BN(userInfo.collect).toFormat()}</span> TIMES COLLECT TO THE ORIGINAL AUTHORS, AND WE APPRECIATE EVERY MIRROR YOU MADE.
                 </p>
               </div>
             }
@@ -448,16 +460,16 @@ export default function Main() {
               <div className="left-text">
                 <p>YOUR 2022 LENS-PRINT</p>
                 <p>
-                  THE CONTENT YOU POSTED WAS COLLECTED A TOTAL OF <span>_NUM_</span> TIMES.
+                  THE CONTENT YOU POSTED WAS COLLECTED A TOTAL OF <span>{new BN(userInfo.collectBy).toFormat()}</span> TIMES.
                 </p>
                 <p>
-                  YOUR COLLECTED <span>_NUM_</span> VALUABLE CONTENT.
+                  YOUR COLLECTED <span>{new BN(userInfo.collect).toFormat()}</span> VALUABLE CONTENT.
                 </p>
                 <p>
-                  YOUR HAVE A CREATION SCORE OF <span>_NUM_</span> , A RANK OF <span>_NUM_</span>, AND YOUR COLLECTION SCORE IS <span>_NUM_</span> AND YOUR RANKING IS <span>_NUM_</span>.
+                  YOUR HAVE A CREATION SCORE OF <span>{new BN(collection.creationScore).toFixed(2)}</span>, A RANK OF <span>{collection.creationRank}</span>, AND YOUR COLLECTION SCORE IS <span>{new BN(collection.collectionScore).toFixed(2)}</span> AND YOUR RANKING IS <span>{collection.collectionRank}</span>.
                 </p>
                 <p>
-                  YOUR 2022 HAVE MIRRORED A TOTAL OF <span>_NUM_</span> OF
+                  YOUR 2022 HAVE MIRRORED A TOTAL OF <span>{new BN(userInfo.mirror).toFormat()}</span> OF
                   CONTENT.
                 </p>
               </div>
@@ -467,13 +479,13 @@ export default function Main() {
               <div className="left-text">
                 <p>IN THE PAST YEAR</p>
                 <p>
-                  THE CONTENT YOU POSTED HAS BEEN COLLECTED A TOTAL OF <span>_NUM_</span> TIMES, AND YOUR SHARING ALWAYS ATTRACTS COUNTLESS ATTENTION.
+                  THE CONTENT YOU POSTED HAS BEEN COLLECTED A TOTAL OF <span>{new BN(userInfo.collectBy).toFormat()}</span> TIMES, AND YOUR SHARING ALWAYS ATTRACTS COUNTLESS ATTENTION.
                 </p>
                 <p>
-                  YOU HAVE A CREATION SCORE OF <span>_NUM_</span> ,A RANK OF <span>_NUM_</span> , AND A COLLECTION SCORE OF <span>_NUM_</span>.
+                  YOU HAVE A CREATION SCORE OF <span>{new BN(collection.creationScore).toFixed(2)}</span> ,A RANK OF <span>{collection.creationRank}</span>, AND A COLLECTION SCORE OF <span>{new BN(collection.collectionScore).toFixed(2)}</span>.
                 </p>
                 <p>
-                  YOUR COLLECTION SCORE IS <span>_NUM_</span> AND YOUR RANKING IS <span>_NUM_</span>.
+                  YOUR COLLECTION SCORE IS <span>{new BN(collection.collectionScore).toFixed(2)}</span> AND YOUR RANKING IS <span>{collection.collectionRank}</span>.
                 </p>
                 <p>
                   YOUR MOST STREAMED POST WAS:
