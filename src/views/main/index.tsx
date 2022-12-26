@@ -6,6 +6,7 @@ import api from "../../api";
 import BN from "bignumber.js";
 import { formatIPFS, shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
+import Wallet from "../../components/WalletBtn";
 import {
   TwitterOutlined,
   DownOutlined,
@@ -221,16 +222,7 @@ export default function Main() {
           <div className="topscore-head-main-btn">Profile</div>
           <div className="topscore-head-main-btn">CharacteristicDEX</div>
         </div>
-        {account ? (
-          <div onClick={()=> history.push(`/address/${account}`)} className="topscore-head-wallet-btn">{shortenAddr(account)}</div>
-        ) : (
-          <div
-            onClick={() => connectWallet()}
-            className="topscore-head-wallet-btn"
-          >
-            Connect Wallet
-          </div>
-        )}
+        <Wallet/>
       </div>
       <div className="toscore-content">
         <div className="toscore-main">
