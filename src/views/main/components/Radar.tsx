@@ -23,7 +23,7 @@ const ChartLine = (props: any) => {
                     color: 'rgba(255,255,255,.5)',
                     fontSize: 14,
                     backgroundColor: '#232429',
-                    padding: [10, 10, 4, 10],
+                    padding: [8, 10, 8, 10],
                     clickable: true,
                 },
                 indicator: data,

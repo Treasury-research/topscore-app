@@ -60,7 +60,7 @@ export default function Main() {
 
   const history = useHistory();
   const params:any = useParams();
-  const { address} = params;
+  const { address } = params;
 
   const [rador1, setRador1] = useState([
     { name: "Influence", value: 90 },
