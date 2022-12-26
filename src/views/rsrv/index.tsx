@@ -4,6 +4,7 @@ import log from "../../lib/log";
 import api from "../../api";
 import { shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
+import Wallet from "../../components/WalletBtn";
 import BotText from "./../../static/img/botText.gif";
 import BotLeftText from "./../../static/img/botLeftText.gif";
 import imgHead from "./../../static/img/rsrv-head.png";
@@ -93,8 +94,7 @@ export default function Main() {
     <div className="rsrv-content">
       <div className="rsrv">
         <div className="rsrv-head">
-          {account ? <div className="rsrv-head-wallet-btn">{shortenAddr(account)}</div> :
-            <div onClick={() => { connectWallet() }} className="rsrv-head-wallet-btn">Connect Wallet</div>}
+          <Wallet/>
         </div>
         <div className="des-1"><img src={ImgWrapped} alt="" /></div>
         <div className="des-2"><img src={ImgYour} alt="" /></div>

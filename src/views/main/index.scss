@@ -24,11 +24,6 @@
 
       }
     }
-
-    >div:nth-child(2) {
-      float: right;
-      margin-right: 40px;
-    }
   }
 
   .toscore-content {
@@ -306,14 +301,6 @@
     color: #fff;
   }
 
-  .topscore-head-wallet-btn {
-    background: rgba(255, 51, 0, 0.30);
-    padding: 10px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
-    font-family: 'Jura';
-  }
 }
 
 .drop-menu {
