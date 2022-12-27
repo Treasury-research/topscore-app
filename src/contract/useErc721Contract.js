@@ -52,11 +52,16 @@ export default function useERC721Contract() {
 
       const tokenURI = formatIPFS(tokenURIRaw);
       const res = (await axios.get(tokenURI)).data;
-      // const res = {"name":"ChaChaSwapPassTest","image":"ipfs://bafybeiflkkftflvs7hszhsqhhb7lqimoiinc4o5ootnjwpsv7jltrnkona","external_url":"","attributes":[],"description":"test nft # 15"}
       res.imageUri = formatIPFS(res.image);
       res.name = res.name.replace(/#\d*$/, "");
       return res;
     },
+
+    async getTokenId(nftAddress) {
+      const contract = new web3.eth.Contract(Erc721Abi, nftAddress);
+      return await contract.methods.tokenOfOwnerByIndex(account, 0).call();
+    },
+
     //TODO.need optimize , move to store
     async getAll(nftAddress) {
       const contract = new web3.eth.Contract(Erc721Abi, nftAddress);
@@ -70,7 +75,7 @@ export default function useERC721Contract() {
           .tokenOfOwnerByIndex(account, i)
           .call();
 
-        console.log('to id', tokenId)
+        console.log("to id", tokenId);
 
         list.push(tokenId);
 

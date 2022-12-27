@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Spin } from "antd";
 import "./index.scss";
 import { useParams, useHistory } from "react-router-dom";
-import { TwitterShareButton } from "react-share";
-import { ResponseType } from "axios";
 import api from "../../api";
+import { Helmet } from "react-helmet";
 import BN from "bignumber.js";
 import { formatIPFS, shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
+import Follow from "./components/Follow";
 import Wallet from "../../components/WalletBtn";
 import {
   TwitterOutlined,
@@ -18,10 +18,9 @@ import {
 import { Dropdown, Space, Menu, Modal, Drawer, Pagination } from "antd";
 import Radar from "./components/Radar";
 import Comment from "./components/comment";
-import IconG5 from "./../../static/img/g5.svg";
 import imgRadarSmall from "./../../static/img/radar-small.png";
 import S2 from "./../../static/img/s2.png";
-// import Follow from "./components/Follow";
+import ClaimModal from "./components/ClaimModal";
 
 const tag1 = ["Influence", "Curation"];
 
@@ -43,6 +42,7 @@ export default function Main() {
   const { account, connectWallet } = useWeb3Context();
   const [showList, setShowList] = useState(false);
   const [handlesList, setHandlesList] = useState<any>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState<any>({});
   const [rankList, setRankList] = useState<[]>([]);
   const [rankTotal, setRankTotal] = useState<number>(0);
@@ -57,7 +57,6 @@ export default function Main() {
   const [pub, setPub] = useState<any>({});
   const [activeTag1, setActiveTag1] = useState<number>(0);
   const [activeTag2, setActiveTag2] = useState<number>(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [checkRadarName, setCheckRadarName] = useState<string>("");
   const [activeHandleIdx, setActiveHandleIdx] = useState<number>(0);
   const [rankInfo, setRankInfo] = useState<any>({});
@@ -99,18 +98,6 @@ export default function Main() {
     setRankPageNo(1);
   };
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   const getRankList = async () => {
     setRankLoading(true);
     const res: any = await api.get(`/lens/${rankType}/rank/list`, {
@@ -147,7 +134,7 @@ export default function Main() {
 
   useEffect(() => {
     const {
-      influReda, 
+      influReda,
       campaignReda,
       engagementReda,
       collectReda,
@@ -163,7 +150,7 @@ export default function Main() {
           { name: "Creation", value: creationReda },
           { name: "Curation", value: curationReda },
           { name: "Collection", value: collectReda },
-          { name: "Engagement", value: engagementReda},
+          { name: "Engagement", value: engagementReda },
         ],
       ];
     });
@@ -303,6 +290,18 @@ export default function Main() {
 
   return (
     <div className="toscore">
+      <Helmet>
+        <meta property="og:title" content="xxxx" />
+        <meta property="og:description" content="xxxx" />
+        <meta
+          property="og:image"
+          content="https://lens-api.knn3.xyz/api/lens/generate/shareImg/4252"
+        />
+        <meta property="og:locale'" content="en_US" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://topscore.knn3.xyz" />
+        <meta property="og:site_name" content="Topscore" />
+      </Helmet>
       <div className="toscore-head">
         <div>
           {account && (
@@ -357,8 +356,13 @@ export default function Main() {
                     Share & Mint
                   </div>
                 ) : (
-                  <div>123</div>
-                  // <Follow profileId={currentProfile.handle} />
+                  // <div>
+                  //   123
+                  // </div>
+                  <Follow
+                    profileId={currentProfile.profileId}
+                    handle={currentProfile.handle}
+                  />
                 )}
               </>
             )}
@@ -544,29 +548,6 @@ export default function Main() {
                 ) : (
                   <p>Let's strive to do better next year!</p>
                 )}
-
-                {/* <p>YOUR 2022 LENS-PRINT</p>
-                <p>
-                  YOU HAVE POSTED{" "}
-                  <span>{new BN(userInfo.post).toFormat()}</span> POSTS,{" "}
-                  <span>{new BN(userInfo.comment).toFormat()}</span> COMMENTS,{" "}
-                  <span>{new BN(userInfo.mirror).toFormat()}</span> MIRRORS,
-                  KEEP CREATING IN THE NEW YEAR!
-                </p>
-                <p>
-                  YOU HAVE RECEIVED <span>_NUM_</span> COMMENTS AND{" "}
-                  <span>_NUM_</span> MIRRORS, YOUR VOICE IS ALWAYS ECHOED AND
-                  FLOWERS ARE ALWAYS WITH YOU.
-                </p>
-                <p>
-                  YOUR CAMPAIGN RATING IS <span>_NUM_</span> ,YOUR RANKING IS{" "}
-                  <span>_NUM_</span> ,AND YOUR ENGAGEMENT RATING IS{" "}
-                  <span>_NUM_</span>.
-                </p>
-                <p>
-                  YOUR ENGAGEMENT SCORE IS <span>_NUM_</span> AND YOUR RANK IS{" "}
-                  <span>_NUM_</span>.
-                </p> */}
               </div>
             )}
             {activeTag1 === 1 && (
@@ -599,18 +580,6 @@ export default function Main() {
                     </p>
                   </>
                 )}
-                {/* <p>YOUR 2022 LENS-PRINT</p>
-                <p>
-                  YOU HAVE MIRRORED A TOTAL OF{" "}
-                  <span>{new BN(userInfo.mirror).toFormat()}</span> PIECES OF
-                  CONTENT. THROUGH YOUR MIRRORS.
-                </p>
-                <p>
-                  YOU HAVE BROUGHT{" "}
-                  <span>{new BN(userInfo.collect).toFormat()}</span> TIMES
-                  COLLECT TO THE ORIGINAL AUTHORS, AND WE APPRECIATE EVERY
-                  MIRROR YOU MADE.
-                </p> */}
               </div>
             )}
           </div>
@@ -684,29 +653,6 @@ export default function Main() {
                     </p>
                   </>
                 )}
-                {/* 
-                <p>YOUR 2022 LENS-PRINT</p>
-                <p>
-                  THE CONTENT YOU POSTED WAS COLLECTED A TOTAL OF{" "}
-                  <span>{new BN(userInfo.collectBy).toFormat()}</span> TIMES.
-                </p>
-                <p>
-                  YOUR COLLECTED{" "}
-                  <span>{new BN(userInfo.collect).toFormat()}</span> VALUABLE
-                  CONTENT.
-                </p>
-                <p>
-                  YOUR HAVE A CREATION SCORE OF{" "}
-                  <span>{new BN(collection.creationScore).toFixed(2)}</span>, A
-                  RANK OF <span>{collection.creationRank}</span>, AND YOUR
-                  COLLECTION SCORE IS{" "}
-                  <span>{new BN(collection.collectionScore).toFixed(2)}</span>{" "}
-                  AND YOUR RANKING IS <span>{collection.collectionRank}</span>.
-                </p>
-                <p>
-                  YOUR 2022 HAVE MIRRORED A TOTAL OF{" "}
-                  <span>{new BN(userInfo.mirror).toFormat()}</span> OF CONTENT.
-                </p> */}
               </div>
             )}
             {activeTag2 === 1 && (
@@ -780,25 +726,6 @@ export default function Main() {
                     </p>
                   </>
                 )}
-                {/* <p>IN THE PAST YEAR</p>
-                <p>
-                  THE CONTENT YOU POSTED HAS BEEN COLLECTED A TOTAL OF{" "}
-                  <span>{new BN(userInfo.collectBy).toFormat()}</span> TIMES,
-                  AND YOUR SHARING ALWAYS ATTRACTS COUNTLESS ATTENTION.
-                </p>
-                <p>
-                  YOU HAVE A CREATION SCORE OF{" "}
-                  <span>{new BN(collection.creationScore).toFixed(2)}</span> ,A
-                  RANK OF <span>{collection.creationRank}</span>, AND A
-                  COLLECTION SCORE OF{" "}
-                  <span>{new BN(collection.collectionScore).toFixed(2)}</span>.
-                </p>
-                <p>
-                  YOUR COLLECTION SCORE IS{" "}
-                  <span>{new BN(collection.collectionScore).toFixed(2)}</span>{" "}
-                  AND YOUR RANKING IS <span>{collection.collectionRank}</span>.
-                </p>
-                <p>YOUR MOST STREAMED POST WAS:</p> */}
               </div>
             )}
             <div className="right-rador">
@@ -833,36 +760,8 @@ export default function Main() {
           <LeftOutlined />
         </div>
       </div>
-      <Modal
-        className="claimModal"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        width={400}
-      >
-        <div className="claim-img"></div>
-        <div className="claim-bottom">
-          <div>Mint</div>
-          <div>
-            {/* <div>
-              <img src={IconG5} alt="" />
-            </div> */}
-            <div>
-              <TwitterShareButton
-                url="https://topscore.knn3.xyz"
-                title="Hello world"
-              >
-                <TwitterOutlined />
-              </TwitterShareButton>
-            </div>
-          </div>
-        </div>
-      </Modal>
-      {/* <RankList
-        close={() => setShowList(false)}
-        isShow={showList}
-        activeName={checkRadarName}
-      /> */}
+
+      {isModalOpen && <ClaimModal onCancel={() => setIsModalOpen(false)} />}
     </div>
   );
 }

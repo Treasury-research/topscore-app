@@ -1,4 +1,4 @@
-import envConf from "./polygon";
+import envConf from "./mumbai";
 
 export const baseURL = "https://lens-api.knn3.xyz/api";
 
