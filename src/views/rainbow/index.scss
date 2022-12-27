@@ -36,6 +36,7 @@
     padding: 10px 16px;
     font-weight: 600;
     border-radius: 4px;
+    font-family: 'Jura';
     cursor: pointer;
   }
 
@@ -49,39 +50,49 @@
   }
 
   .character-content {
-    height: calc(100vh - 140px);
-    width: 100%;
+    height: 514px;
+    width: 795px;
+    margin: 0 auto;
     margin-top: 40px;
-    overflow-y: auto;
+    background: url("./../../static/img/character-bg.png") no-repeat center bottom;
+    background-size: cover;
+    position: relative;
 
     >div {
-      width: 80%;
-      display: flex;
-      flex-wrap: wrap;
-      align-content: flex-start;
-      margin: 0 auto;
-
-      >div {
-        width: calc(25% - 15px);
-        margin-right: 20px;
-        cursor: pointer;
-        >div:nth-child(1) {
-          width: 100%;
-          height: 300px;
-          background: rgba(255, 255, 255, 0.1);
-        }
-        >div:nth-child(2){
-          height: 60px;
-          text-align: center;
-          line-height: 60px;
-          font-size: 18px;
-          font-family: 'Exan';
-        }
-      }
-      >div:nth-child(4n){
-        margin-right: 0;
-      }
+      height: 200px;
+      width: 200px;
+      // background: red;
+      position: absolute;
     }
 
+    .ch-1 {
+      left: -211px;
+      top: 63px;
+    }
+
+    .ch-2 {
+      left: -141px;
+      top: 379px;
+    }
+
+    .ch-3 {
+      left: 141px;
+      top: 520px;
+    }
+
+    .ch-4 {
+      left: 512px;
+      top: 510px;
+    }
+
+    .ch-5 {
+      right: -215px;
+      top: 413px;
+    }
+
+    .ch-6 {
+      right: -172px;
+      top: 60px;
+    }
   }
 }

@@ -261,6 +261,10 @@ export default function Main() {
     history.push(`/address/${account}`);
   };
 
+  const goRainBow = () => {
+    history.push(`/rainbow`);
+  };
+
   useEffect(() => {
     console.log("addr change", address);
     if (!address) {
@@ -306,7 +310,7 @@ export default function Main() {
               Profile
             </div>
           )}
-          <div className="topscore-head-main-btn">CharacteristicDEX</div>
+          <div className="topscore-head-main-btn" onClick={goRainBow}>Lens-Rainbow</div>
         </div>
         <Wallet />
       </div>
