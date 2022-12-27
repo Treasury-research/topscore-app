@@ -1,30 +1,50 @@
 import React, { useState, useEffect } from "react";
 import "./index.scss";
-import api from "./../../../../api";
-import { Divider } from "antd";
+import api from "../../../../api";
+import Mastermind from "./../../../../static/img/Mastermind.png";
+import Pioneer from "./../../../../static/img/Pioneer.png";
+import Artist from "./../../../../static/img/Artist.png";
+import Conductor from "./../../../../static/img/Conductor.png";
+import Actor from "./../../../../static/img/Actor.png";
+import Antiquer from "./../../../../static/img/Antiquer.png";
+import Spy from "./../../../../static/img/Spy.png";
+import Magician from "./../../../../static/img/Magician.png";
+import Healer from "./../../../../static/img/Healer.png";
+import Volcanologist from "./../../../../static/img/Volcanologist.png";
+import Photographer from "./../../../../static/img/Photographer.png";
+import Designer from "./../../../../static/img/Designer.png";
+import Architect from "./../../../../static/img/Architect.png";
+import Engineer from "./../../../../static/img/Engineer.png";
+import Promotor from "./../../../../static/img/Promotor.png";
+import Supervisor from "./../../../../static/img/Supervisor.png";
+import Mobilizer from "./../../../../static/img/Mobilizer.png";
+import Counselor from "./../../../../static/img/Counselor.png";
+import Musician from "./../../../../static/img/Musician.png";
+import Motivator from "./../../../../static/img/Motivator.png";
+import Demonstrator from "./../../../../static/img/Demonstrator.png";
 
 const background = {
-    mastermind: '',
-    Pioneer: '',
-    Artist: '',
-    Conductor: '',
-    Actor: '',
-    Antiquer: '',
-    Spy: '',
-    Magician: '',
-    Healer: '',
-    Volcanologist: '',
-    Photographer: '',
-    Designer: '',
-    Architect: '',
-    Engineer: '',
-    Promotor: '',
-    Supervisor: '',
-    Mobilizer: '',
-    Counselor: '',
-    Musician: '',
-    Motivator: '',
-    Demonstrator: '',
+    Mastermind: Mastermind,
+    Pioneer: Pioneer,
+    Artist: Artist,
+    Conductor: Conductor,
+    Actor: Actor,
+    Antiquer: Antiquer,
+    Spy: Spy,
+    Magician: Magician,
+    Healer: Healer,
+    Volcanologist: Volcanologist,
+    Photographer: Photographer,
+    Designer: Designer,
+    Architect: Architect,
+    Engineer: Engineer,
+    Promotor: Promotor,
+    Supervisor: Supervisor,
+    Mobilizer: Mobilizer,
+    Counselor: Counselor,
+    Musician: Musician,
+    Motivator: Motivator,
+    Demonstrator: Demonstrator,
 }
 
 const Character = (props: any) => {
@@ -44,6 +64,7 @@ const Character = (props: any) => {
         ];
         arr.sort((a: any, b: any) => { return b.score - a.score })
         const img = getImg(arr);
+        setImgUrl(img)
     };
 
     useEffect(() => {
@@ -58,7 +79,7 @@ const Character = (props: any) => {
         if (arr[0].score - arr[1].score > 1.6) {
             switch (arr[0].type) {
                 case 'curationReda': //灰色
-                    return background['mastermind'];
+                    return background['Mastermind'];
                 case 'campaignReda': //蓝色
                     return background['Pioneer'];
                 case 'creationReda': //紫色
@@ -166,8 +187,10 @@ const Character = (props: any) => {
 
     return (
         <div>
-            {/* <img src={imgUrl} alt="" /> */}
-            234234324
+            {
+                imgUrl && 
+                <img src={imgUrl} alt="" />
+            }
         </div>
     );
 };

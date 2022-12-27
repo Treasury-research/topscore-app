@@ -18,6 +18,7 @@ import {
 import { Dropdown, Space, Menu, Modal, Drawer, Pagination } from "antd";
 import Radar from "./components/Radar";
 import Comment from "./components/comment";
+import Character from "./components/character";
 import imgRadarSmall from "./../../static/img/radar-small.png";
 import S2 from "./../../static/img/s2.png";
 import ClaimModal from "./components/ClaimModal";
@@ -750,6 +751,9 @@ export default function Main() {
               iconNum4: "10",
             }}
           />
+          <div>
+          <Character profileId={currentProfile.profileId}/>
+          </div>
         </div>
         <div
           className="leftOut"
