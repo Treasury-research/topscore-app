@@ -21,6 +21,7 @@ import Comment from "./components/comment";
 import IconG5 from "./../../static/img/g5.svg";
 import imgRadarSmall from "./../../static/img/radar-small.png";
 import S2 from "./../../static/img/s2.png";
+// import Follow from "./components/Follow";
 
 const tag1 = ["Influence", "Curation"];
 
@@ -60,6 +61,7 @@ export default function Main() {
   const [checkRadarName, setCheckRadarName] = useState<string>("");
   const [activeHandleIdx, setActiveHandleIdx] = useState<number>(0);
   const [rankInfo, setRankInfo] = useState<any>({});
+  const [isSelf, setIsSelf] = useState<boolean>(false);
 
   const history = useHistory();
   const params: any = useParams();
@@ -145,23 +147,23 @@ export default function Main() {
 
   useEffect(() => {
     const {
-      influRank,
-      campaignRank,
-      creationRank,
-      curationRank,
-      collectionRank,
-      engagementRank,
+      influReda, 
+      campaignReda,
+      engagementReda,
+      collectReda,
+      creationReda,
+      curationReda,
     } = rankInfo;
 
     setRador1(() => {
       return [
         ...[
-          { name: "Influence", value: influRank },
-          { name: "Campaign", value: campaignRank },
-          { name: "Creation", value: creationRank },
-          { name: "Curation", value: curationRank },
-          { name: "Collection", value: collectionRank },
-          { name: "Engagement", value: engagementRank },
+          { name: "Influence", value: influReda },
+          { name: "Campaign", value: campaignReda },
+          { name: "Creation", value: creationReda },
+          { name: "Curation", value: curationReda },
+          { name: "Collection", value: collectReda },
+          { name: "Engagement", value: engagementReda},
         ],
       ];
     });
@@ -172,7 +174,7 @@ export default function Main() {
           { name: "", value: 0 },
           { name: "", value: 0 },
           { name: "", value: 0 },
-          { name: "Curation", value: curationRank },
+          { name: "Curation", value: curationReda },
           { name: "", value: 0 },
           { name: "", value: 0 },
         ],
@@ -183,11 +185,11 @@ export default function Main() {
       return [
         ...[
           { name: "", value: 0 },
-          { name: "Campaign", value: campaignRank },
+          { name: "Campaign", value: campaignReda },
           { name: "", value: 0 },
           { name: "", value: 0 },
           { name: "", value: 0 },
-          { name: "Engagement", value: engagementRank },
+          { name: "Engagement", value: engagementReda },
         ],
       ];
     });
@@ -268,6 +270,14 @@ export default function Main() {
   }, [address]);
 
   useEffect(() => {
+    if (!address || !account) {
+      return;
+    }
+
+    setIsSelf(address === account);
+  }, [address, account]);
+
+  useEffect(() => {
     if (!handlesList || handlesList.length === 0) {
       return;
     }
@@ -333,12 +343,21 @@ export default function Main() {
                 <div>@{currentProfile.handle}</div>
               </div>
             </div>
-            <div
-              className="topscore-head-wallet-btn"
-              onClick={() => setIsModalOpen(true)}
-            >
-              Share & Mint
-            </div>
+            {account && (
+              <>
+                {isSelf ? (
+                  <div
+                    className="topscore-head-wallet-btn"
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    Share & Mint
+                  </div>
+                ) : (
+                  <div>123</div>
+                  // <Follow profileId={currentProfile.handle} />
+                )}
+              </>
+            )}
           </div>
 
           <div className="top-rador">
@@ -565,7 +584,8 @@ export default function Main() {
                   <>
                     <p>In 2022,</p>{" "}
                     <p>
-                      you had <span>{new BN(userInfo.post).toFormat()}</span> pieces of content and bringing{" "}
+                      you had <span>{new BN(userInfo.post).toFormat()}</span>{" "}
+                      pieces of content and bringing{" "}
                       <span>{new BN(userInfo.collectBy).toFormat()}</span>
                       Collects to the original authors.
                     </p>
@@ -612,8 +632,10 @@ export default function Main() {
                     <p>you achieved incredible success with your content! </p>
                     <p>
                       Your content has been collected{" "}
-                      <span>{new BN(userInfo.collectBy).toFormat()}</span>times, and you have collected{" "}
-                      <span>{new BN(userInfo.collect).toFormat()}</span> pieces of valuable content.
+                      <span>{new BN(userInfo.collectBy).toFormat()}</span>times,
+                      and you have collected{" "}
+                      <span>{new BN(userInfo.collect).toFormat()}</span> pieces
+                      of valuable content.
                     </p>
                     <p>
                       Your Creation score was{" "}
@@ -635,17 +657,22 @@ export default function Main() {
                     <p>In 2022,</p>
                     <p>
                       Your content has been collected{" "}
-                      <span>{new BN(userInfo.collectBy).toFormat()}</span> times, and you have
-                      collected <span>{new BN(userInfo.collect).toFormat()}</span> pieces of valuable content.
+                      <span>{new BN(userInfo.collectBy).toFormat()}</span>{" "}
+                      times, and you have collected{" "}
+                      <span>{new BN(userInfo.collect).toFormat()}</span> pieces
+                      of valuable content.
                     </p>
                     <p>
                       Your Creation score was{" "}
                       <span>{new BN(rankInfo.creationScore).toFixed(2)}</span>,
-                      ranking <span>{new BN(rankInfo.collectionRank).toFormat()}</span>,{" "}
+                      ranking{" "}
+                      <span>{new BN(rankInfo.collectionRank).toFormat()}</span>,{" "}
                     </p>
                     <p>
-                      while your Collection score was <span>{new BN(rankInfo.collectionScore).toFixed(2)}</span>,
-                      ranking <span>{new BN(rankInfo.collectionRank).toFormat()}</span>.{" "}
+                      while your Collection score was{" "}
+                      <span>{new BN(rankInfo.collectionScore).toFixed(2)}</span>
+                      , ranking{" "}
+                      <span>{new BN(rankInfo.collectionRank).toFormat()}</span>.{" "}
                     </p>
                     <p>
                       Continue to put in your best effort and aim for even
@@ -694,8 +721,11 @@ export default function Main() {
                       that really got people talking.{" "}
                     </p>
                     <p>
-                      You received an incredible <span>{new BN(userInfo.receiveComment).toFormat()}</span> Comments,
-                      and your content was Mirrored <span>{new BN(userInfo.receiveMirror).toFormat()}</span> times.{" "}
+                      You received an incredible{" "}
+                      <span>{new BN(userInfo.receiveComment).toFormat()}</span>{" "}
+                      Comments, and your content was Mirrored{" "}
+                      <span>{new BN(userInfo.receiveMirror).toFormat()}</span>{" "}
+                      times.{" "}
                     </p>
                     <p>
                       Your Campaign score was{" "}

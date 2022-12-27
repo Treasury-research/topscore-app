@@ -9,7 +9,7 @@ import radorImg from './../../../static/img/radar.png'
 const ChartLine = (props: any) => {
     const { optionsData = null, id = 'default-id', width = '100%', height = '100%', data } = props;
     let dataBJ = data.map((t: any) => {
-        t.max = 10000;
+        t.max = 10;
         return t.value
     })
     useEffect(() => {
