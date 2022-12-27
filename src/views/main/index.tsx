@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Spin } from "antd";
 import "./index.scss";
 import { useParams, useHistory } from "react-router-dom";
-import { TwitterShareButton } from 'react-share'
+import { TwitterShareButton } from "react-share";
 import { ResponseType } from "axios";
 import api from "../../api";
 import BN from "bignumber.js";
@@ -61,6 +61,7 @@ export default function Main() {
   const [activeHandleIdx, setActiveHandleIdx] = useState<number>(0);
   const [rankInfo, setRankInfo] = useState<any>({});
 
+  const history = useHistory();
   const params: any = useParams();
   const { address } = params;
 
@@ -134,41 +135,62 @@ export default function Main() {
     }));
   };
 
+  const getPublication = async (profileId: string) => {
+    const res: any = await api.get(`/lens/publication/${profileId}`);
+    setUserInfo((prev: any) => ({
+      ...prev,
+      ...res.data,
+    }));
+  };
+
   useEffect(() => {
-    const {influRank,campaignRank,creationRank,curationRank,collectionRank,engagementRank } = rankInfo;
+    const {
+      influRank,
+      campaignRank,
+      creationRank,
+      curationRank,
+      collectionRank,
+      engagementRank,
+    } = rankInfo;
 
     setRador1(() => {
       return [
-        ...[{ name: "Influence", value: influRank },
-        { name: "Campaign", value: campaignRank },
-        { name: "Creation", value: creationRank },
-        { name: "Curation", value: curationRank },
-        { name: "Collection", value: collectionRank },
-        { name: "Engagement", value: engagementRank },]
-      ]
-    })
+        ...[
+          { name: "Influence", value: influRank },
+          { name: "Campaign", value: campaignRank },
+          { name: "Creation", value: creationRank },
+          { name: "Curation", value: curationRank },
+          { name: "Collection", value: collectionRank },
+          { name: "Engagement", value: engagementRank },
+        ],
+      ];
+    });
 
     setRador2(() => {
       return [
-        ...[{ name: "", value: 0},
-        { name: "", value: 0 },
-        { name: "", value: 0 },
-      { name: "Curation", value: curationRank },
-        { name: "", value: 0 },
-        { name: "", value: 0 },]
-      ]
-    })
+        ...[
+          { name: "", value: 0 },
+          { name: "", value: 0 },
+          { name: "", value: 0 },
+          { name: "Curation", value: curationRank },
+          { name: "", value: 0 },
+          { name: "", value: 0 },
+        ],
+      ];
+    });
 
     setRador3(() => {
       return [
-        ...[{ name: "", value: 0 },
-        { name: "Campaign", value: campaignRank },
-        { name: "", value: 0 },
-        { name: "", value: 0 },
-        { name: "", value: 0 },
-        { name: "Engagement", value: engagementRank },]
-      ]
-    })
+        ...[
+          { name: "", value: 0 },
+          { name: "Campaign", value: campaignRank },
+          { name: "", value: 0 },
+          { name: "", value: 0 },
+          { name: "", value: 0 },
+          { name: "Engagement", value: engagementRank },
+        ],
+      ];
+    });
   }, [rankInfo]);
 
   const getRankInfo = async (profileId: string) => {
@@ -206,6 +228,7 @@ export default function Main() {
     getCollection(profileId);
     getCuration(profileId);
     getPub(profileId);
+    getPublication(profileId);
     getRankList();
   };
 
@@ -232,7 +255,12 @@ export default function Main() {
   //   getLensHandle();
   // }, [account]);
 
+  const goProfile = () => {
+    history.push(`/address/${account}`);
+  };
+
   useEffect(() => {
+    console.log("addr change", address);
     if (!address) {
       return;
     }
@@ -263,7 +291,11 @@ export default function Main() {
     <div className="toscore">
       <div className="toscore-head">
         <div>
-          <div className="topscore-head-main-btn">Profile</div>
+          {account && (
+            <div className="topscore-head-main-btn" onClick={goProfile}>
+              Profile
+            </div>
+          )}
           <div className="topscore-head-main-btn">CharacteristicDEX</div>
         </div>
         <Wallet />
@@ -471,7 +503,26 @@ export default function Main() {
             </div>
             {activeTag1 === 0 && (
               <div className="right-text">
-                <p>YOUR 2022 LENS-PRINT</p>
+                <p>In 2022,</p>
+                <p>you had the power to capture hearts and minds,</p>
+                <p>growing your followers by _num_ and</p>
+                <p>
+                  achieving an influence score of{" "}
+                  <span>{new BN(rankInfo.influScore).toFixed(2)}</span>,
+                </p>
+                <p>
+                  ranking you{" "}
+                  <span>{new BN(rankInfo.influRank).toFormat()}</span> in the
+                  game of social media,
+                </p>
+
+                {userInfo.follower > 0 ? (
+                  <p>A true sign of your authority and influence!</p>
+                ) : (
+                  <p>Let's strive to do better next year!</p>
+                )}
+
+                {/* <p>YOUR 2022 LENS-PRINT</p>
                 <p>
                   YOU HAVE POSTED{" "}
                   <span>{new BN(userInfo.post).toFormat()}</span> POSTS,{" "}
@@ -492,12 +543,39 @@ export default function Main() {
                 <p>
                   YOUR ENGAGEMENT SCORE IS <span>_NUM_</span> AND YOUR RANK IS{" "}
                   <span>_NUM_</span>.
-                </p>
+                </p> */}
               </div>
             )}
             {activeTag1 === 1 && (
               <div className="right-text">
-                <p>YOUR 2022 LENS-PRINT</p>
+                {userInfo.mirror > 0 ? (
+                  <>
+                    <p>In the past year,</p>
+                    <p>
+                      you mirrored{" "}
+                      <span>{new BN(userInfo.mirror).toFormat()}</span> pieces
+                      of content, resulting in{" "}
+                      <span>{new BN(rankInfo.curationScore).toFormat()}</span>
+                      Collects for the original authors.
+                    </p>
+
+                    <p>Let's take the time to your achievement in 2022!</p>
+                  </>
+                ) : (
+                  <>
+                    <p>In 2022,</p>{" "}
+                    <p>
+                      you had <span>{new BN(userInfo.post).toFormat()}</span> pieces of content and bringing{" "}
+                      <span>{new BN(userInfo.collectBy).toFormat()}</span>
+                      Collects to the original authors.
+                    </p>
+                    <p>
+                      We celebrate your achievements and applaud you for your
+                      efforts in 2022!
+                    </p>
+                  </>
+                )}
+                {/* <p>YOUR 2022 LENS-PRINT</p>
                 <p>
                   YOU HAVE MIRRORED A TOTAL OF{" "}
                   <span>{new BN(userInfo.mirror).toFormat()}</span> PIECES OF
@@ -508,7 +586,7 @@ export default function Main() {
                   <span>{new BN(userInfo.collect).toFormat()}</span> TIMES
                   COLLECT TO THE ORIGINAL AUTHORS, AND WE APPRECIATE EVERY
                   MIRROR YOU MADE.
-                </p>
+                </p> */}
               </div>
             )}
           </div>
@@ -528,6 +606,54 @@ export default function Main() {
           <div className="collect_pablication">
             {activeTag2 === 0 && (
               <div className="left-text">
+                {userInfo.collectBy > 0 ? (
+                  <>
+                    <p>In 2022, </p>
+                    <p>you achieved incredible success with your content! </p>
+                    <p>
+                      Your content has been collected{" "}
+                      <span>{new BN(userInfo.collectBy).toFormat()}</span>times, and you have collected{" "}
+                      <span>{new BN(userInfo.collect).toFormat()}</span> pieces of valuable content.
+                    </p>
+                    <p>
+                      Your Creation score was{" "}
+                      <span>{new BN(rankInfo.creationScore).toFixed(2)}</span>{" "}
+                      ranking you{" "}
+                      <span>{new BN(rankInfo.creationRank).toFormat()}</span>!{" "}
+                    </p>
+                    <p>
+                      Your Collection score was also{" "}
+                      <span>{new BN(rankInfo.collectionScore).toFixed(2)}</span>
+                      , earning you a place at{" "}
+                      <span>{new BN(rankInfo.collectionRank).toFormat()}</span>{" "}
+                      on the leaderboard.{" "}
+                    </p>
+                    <p>It's been a great year for you and your creations!</p>
+                  </>
+                ) : (
+                  <>
+                    <p>In 2022,</p>
+                    <p>
+                      Your content has been collected{" "}
+                      <span>{new BN(userInfo.collectBy).toFormat()}</span> times, and you have
+                      collected <span>{new BN(userInfo.collect).toFormat()}</span> pieces of valuable content.
+                    </p>
+                    <p>
+                      Your Creation score was{" "}
+                      <span>{new BN(rankInfo.creationScore).toFixed(2)}</span>,
+                      ranking <span>{new BN(rankInfo.collectionRank).toFormat()}</span>,{" "}
+                    </p>
+                    <p>
+                      while your Collection score was <span>{new BN(rankInfo.collectionScore).toFixed(2)}</span>,
+                      ranking <span>{new BN(rankInfo.collectionRank).toFormat()}</span>.{" "}
+                    </p>
+                    <p>
+                      Continue to put in your best effort and aim for even
+                      greater achievements in the coming year!
+                    </p>
+                  </>
+                )}
+                {/* 
                 <p>YOUR 2022 LENS-PRINT</p>
                 <p>
                   THE CONTENT YOU POSTED WAS COLLECTED A TOTAL OF{" "}
@@ -549,12 +675,78 @@ export default function Main() {
                 <p>
                   YOUR 2022 HAVE MIRRORED A TOTAL OF{" "}
                   <span>{new BN(userInfo.mirror).toFormat()}</span> OF CONTENT.
-                </p>
+                </p> */}
               </div>
             )}
             {activeTag2 === 1 && (
               <div className="left-text">
-                <p>IN THE PAST YEAR</p>
+                {true ? (
+                  <>
+                    {/* 版本1(正常) */}
+                    <p>In 2022, </p>
+                    <p>you made a splash on social media! </p>
+                    <p>
+                      You posted <span>{new BN(userInfo.post).toFormat()}</span>{" "}
+                      times, made{" "}
+                      <span>{new BN(userInfo.comment).toFormat()}</span>{" "}
+                      Comments, and created
+                      <span>{new BN(userInfo.mirror).toFormat()}</span> Mirrors
+                      that really got people talking.{" "}
+                    </p>
+                    <p>
+                      You received an incredible <span>{new BN(userInfo.receiveComment).toFormat()}</span> Comments,
+                      and your content was Mirrored <span>{new BN(userInfo.receiveMirror).toFormat()}</span> times.{" "}
+                    </p>
+                    <p>
+                      Your Campaign score was{" "}
+                      <span>{new BN(rankInfo.campaignScore).toFixed(2)}</span>,
+                      making you a{" "}
+                      <span>{new BN(rankInfo.campaignRank).toFormat()}</span>{" "}
+                      ranker,{" "}
+                    </p>
+                    <p>
+                      and your Engagement score was{" "}
+                      <span>{new BN(rankInfo.engagementScore).toFixed(2)}</span>
+                      , giving you a place in
+                      <span>
+                        {new BN(rankInfo.engagementRank).toFormat()}
+                      </span>!{" "}
+                    </p>
+                    <p>You really set the bar for social media success!</p>
+                  </>
+                ) : (
+                  <>
+                    {/* 版本2(0 page rank <?) */}
+                    <p>In 2022, </p>
+                    <p>
+                      you posted <span>{new BN(userInfo.post).toFormat()}</span>{" "}
+                      Posts, <span>{new BN(userInfo.comment).toFormat()}</span>{" "}
+                      Comments,{" "}
+                      <span>{new BN(userInfo.mirror).toFormat()}</span> Mirrors,{" "}
+                    </p>
+                    <p>
+                      earned <span>_num_</span> Comments, were mirrored{" "}
+                      <span>_num_</span> times,{" "}
+                    </p>
+                    <p>
+                      your Campaign Score was{" "}
+                      <span>{new BN(rankInfo.campaignScore).toFixed(2)}</span>,
+                      ranking{" "}
+                      <span>{new BN(rankInfo.campaignRank).toFormat()}</span>,{" "}
+                    </p>
+                    <p>
+                      your Engagement Score was{" "}
+                      <span>{new BN(rankInfo.engagementScore).toFixed(2)}</span>
+                      , ranking{" "}
+                      <span>{new BN(rankInfo.engagementRank).toFormat()}</span>.{" "}
+                    </p>
+                    <p>
+                      Keep up the fantastic work and shoot for the stars in the
+                      next year!
+                    </p>
+                  </>
+                )}
+                {/* <p>IN THE PAST YEAR</p>
                 <p>
                   THE CONTENT YOU POSTED HAS BEEN COLLECTED A TOTAL OF{" "}
                   <span>{new BN(userInfo.collectBy).toFormat()}</span> TIMES,
@@ -572,7 +764,7 @@ export default function Main() {
                   <span>{new BN(collection.collectionScore).toFixed(2)}</span>{" "}
                   AND YOUR RANKING IS <span>{collection.collectionRank}</span>.
                 </p>
-                <p>YOUR MOST STREAMED POST WAS:</p>
+                <p>YOUR MOST STREAMED POST WAS:</p> */}
               </div>
             )}
             <div className="right-rador">
@@ -622,7 +814,10 @@ export default function Main() {
               <img src={IconG5} alt="" />
             </div> */}
             <div>
-              <TwitterShareButton url="https://topscore.knn3.xyz" title="Hello world">
+              <TwitterShareButton
+                url="https://topscore.knn3.xyz"
+                title="Hello world"
+              >
                 <TwitterOutlined />
               </TwitterShareButton>
             </div>
