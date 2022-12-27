@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-// import ApproveButton from "components/ApproveButton";
+import ApproveButton from "../../../../components/ApproveButton";
 import useWeb3Context from "../../../../hooks/useWeb3Context";
 import { switchChain } from "../../../../lib/tool";
 import useLenshubContract from "../../../../contract/useLenshubContract";
@@ -88,53 +87,27 @@ export default function Lens({ profileId, handle }: any) {
     getProfile();
   }, [profileId, handle, chainId]);
 
-  return account ? (
-      <>
-        {followBalance.length === 0 ? (
-          <>
-            {/* <ApproveButton
-                  skipCheck={
-                    !feeInfo || !feeInfo.amount || feeInfo.amount === "0"
-                  }
-                  tokenAddress={feeInfo.currency}
-                  contractAddress={config.contracts.lenshub}
-                >
-                  <div className="topscore-head-wallet-btn" onClick={doFollow}>
-                    Follow
-                  </div>
-                </ApproveButton> */}
+  return followBalance.length === 0 ? (
+    <>
+      <ApproveButton
+        skipCheck={!feeInfo || !feeInfo.amount || feeInfo.amount === "0"}
+        tokenAddress={feeInfo.currency}
+        contractAddress={config.contracts.lenshub}
+      >
+        <div className="topscore-head-wallet-btn" onClick={doFollow}>
+          Follow
+        </div>
+      </ApproveButton>
 
-            {feeInfo.amount && tokenInfo.symbol && (
-              <div className="text-center">
-                Price:{" "}
-                {new BN(feeInfo.amount)
-                  .shiftedBy(-tokenInfo.decimals)
-                  .toString()}{" "}
-                {tokenInfo.symbol}
-              </div>
-            )}
-          </>
-        ) : (
-          <div
-            className={"topscore-head-wallet-btn"}
-            onClick={doUnfollow}
-            onMouseEnter={() => setIsFollowing((prev) => !prev)}
-            onMouseLeave={() => setIsFollowing((prev) => !prev)}
-          >
-            {isFollowing ? "Following" : "Unfollow"}
-          </div>
-        )}
-      </>
-    );
-  }
-//   {
-//     config.chainId !== chainId && (
-//       <div
-//         className={"topscore-head-wallet-btn"}
-//         onClick={() => switchChain(config.chainId)}
-//       >
-//         Switch to polygon to continue.
-//       </div>
-//     );
-//   }
+      {feeInfo.amount && tokenInfo.symbol && (
+        <div className="text-center">
+          Price:{" "}
+          {new BN(feeInfo.amount).shiftedBy(-tokenInfo.decimals).toString()}{" "}
+          {tokenInfo.symbol}
+        </div>
+      )}
+    </>
+  ) : (
+    <div className={"topscore-head-wallet-btn"}>Following</div>
+  );
 }

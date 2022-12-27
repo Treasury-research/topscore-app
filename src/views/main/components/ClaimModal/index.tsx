@@ -5,11 +5,14 @@ import axios from "axios";
 import { TwitterShareButton } from "react-share";
 import useWeb3Context from "../../../../hooks/useWeb3Context";
 import useClaimContract from "../../../../contract/useClaimContract";
+import useERC721Contract from "../../../../contract/useErc721Contract";
 import { TwitterOutlined } from "@ant-design/icons";
 
 export default function ClaimModal({ onCancel }: any) {
   const claimContract = useClaimContract();
-  const [merkleProof, setMerkleProof] = useState();
+  const erc721Contract = useERC721Contract();
+  const [merkleProof, setMerkleProof] = useState<any>([]);
+  const [checking, setChecking] = useState(true);
   const [canClaim, setCanClaim] = useState(false);
   const { account } = useWeb3Context();
   const handleOk = () => {
@@ -21,18 +24,32 @@ export default function ClaimModal({ onCancel }: any) {
   };
 
   const getMerkleProof = async () => {
-    const res: any = await axios.get(config.claimApi);
-    setMerkleProof(res);
+    const res: any = await axios.get(
+      `${config.claimApi}/api/v1/merkletree/${account}`
+    );
+
+    setMerkleProof(() => [...res.data.result]);
   };
 
   const checkCanClaim = async () => {
     const res = await claimContract.canClaim(merkleProof);
     setCanClaim(res);
+    setChecking(false);
   };
 
   const doClaim = async () => {
     await claimContract.claim(merkleProof);
   };
+
+  const checkBalance = async() => {
+    const res = await erc721Contract.balanceOf(config.contracts.nft);
+    console.log('balance', res)
+    if(res > 0){
+      const tokenId = await erc721Contract.getTokenId(config.contracts.nft);
+      const res = await erc721Contract.getNftInfo(config.contracts.nft, tokenId);
+      console.log('metadata', res)
+    }
+  }
 
   useEffect(() => {
     if (!account) {
@@ -40,9 +57,13 @@ export default function ClaimModal({ onCancel }: any) {
     }
 
     getMerkleProof();
+    checkBalance();
   }, [account]);
 
   useEffect(() => {
+    if (!merkleProof || merkleProof.length === 0) {
+      return;
+    }
     checkCanClaim();
   }, [merkleProof]);
 
@@ -56,7 +77,9 @@ export default function ClaimModal({ onCancel }: any) {
     >
       <div className="claim-img"></div>
       <div className="claim-bottom">
-        {canClaim ? (
+        {checking ? (
+          <div>Checking...</div>
+        ) : canClaim ? (
           <div onClick={doClaim}>Mint</div>
         ) : (
           <div>You are not eligible to mint</div>

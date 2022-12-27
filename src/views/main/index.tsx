@@ -6,6 +6,7 @@ import api from "../../api";
 import BN from "bignumber.js";
 import { formatIPFS, shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
+import Follow from './components/Follow'
 import Wallet from "../../components/WalletBtn";
 import {
   TwitterOutlined,
@@ -339,10 +340,10 @@ export default function Main() {
                     Share & Mint
                   </div>
                 ) : (
-                  <div>
-                    123
-                  </div>
-                  // <Follow profileId={currentProfile.profileId} handle={currentProfile.handle} />
+                  // <div>
+                  //   123
+                  // </div>
+                  <Follow profileId={currentProfile.profileId} handle={currentProfile.handle} />
                 )}
               </>
             )}
@@ -528,29 +529,6 @@ export default function Main() {
                 ) : (
                   <p>Let's strive to do better next year!</p>
                 )}
-
-                {/* <p>YOUR 2022 LENS-PRINT</p>
-                <p>
-                  YOU HAVE POSTED{" "}
-                  <span>{new BN(userInfo.post).toFormat()}</span> POSTS,{" "}
-                  <span>{new BN(userInfo.comment).toFormat()}</span> COMMENTS,{" "}
-                  <span>{new BN(userInfo.mirror).toFormat()}</span> MIRRORS,
-                  KEEP CREATING IN THE NEW YEAR!
-                </p>
-                <p>
-                  YOU HAVE RECEIVED <span>_NUM_</span> COMMENTS AND{" "}
-                  <span>_NUM_</span> MIRRORS, YOUR VOICE IS ALWAYS ECHOED AND
-                  FLOWERS ARE ALWAYS WITH YOU.
-                </p>
-                <p>
-                  YOUR CAMPAIGN RATING IS <span>_NUM_</span> ,YOUR RANKING IS{" "}
-                  <span>_NUM_</span> ,AND YOUR ENGAGEMENT RATING IS{" "}
-                  <span>_NUM_</span>.
-                </p>
-                <p>
-                  YOUR ENGAGEMENT SCORE IS <span>_NUM_</span> AND YOUR RANK IS{" "}
-                  <span>_NUM_</span>.
-                </p> */}
               </div>
             )}
             {activeTag1 === 1 && (
@@ -583,18 +561,6 @@ export default function Main() {
                     </p>
                   </>
                 )}
-                {/* <p>YOUR 2022 LENS-PRINT</p>
-                <p>
-                  YOU HAVE MIRRORED A TOTAL OF{" "}
-                  <span>{new BN(userInfo.mirror).toFormat()}</span> PIECES OF
-                  CONTENT. THROUGH YOUR MIRRORS.
-                </p>
-                <p>
-                  YOU HAVE BROUGHT{" "}
-                  <span>{new BN(userInfo.collect).toFormat()}</span> TIMES
-                  COLLECT TO THE ORIGINAL AUTHORS, AND WE APPRECIATE EVERY
-                  MIRROR YOU MADE.
-                </p> */}
               </div>
             )}
           </div>
@@ -668,29 +634,6 @@ export default function Main() {
                     </p>
                   </>
                 )}
-                {/* 
-                <p>YOUR 2022 LENS-PRINT</p>
-                <p>
-                  THE CONTENT YOU POSTED WAS COLLECTED A TOTAL OF{" "}
-                  <span>{new BN(userInfo.collectBy).toFormat()}</span> TIMES.
-                </p>
-                <p>
-                  YOUR COLLECTED{" "}
-                  <span>{new BN(userInfo.collect).toFormat()}</span> VALUABLE
-                  CONTENT.
-                </p>
-                <p>
-                  YOUR HAVE A CREATION SCORE OF{" "}
-                  <span>{new BN(collection.creationScore).toFixed(2)}</span>, A
-                  RANK OF <span>{collection.creationRank}</span>, AND YOUR
-                  COLLECTION SCORE IS{" "}
-                  <span>{new BN(collection.collectionScore).toFixed(2)}</span>{" "}
-                  AND YOUR RANKING IS <span>{collection.collectionRank}</span>.
-                </p>
-                <p>
-                  YOUR 2022 HAVE MIRRORED A TOTAL OF{" "}
-                  <span>{new BN(userInfo.mirror).toFormat()}</span> OF CONTENT.
-                </p> */}
               </div>
             )}
             {activeTag2 === 1 && (
@@ -764,25 +707,6 @@ export default function Main() {
                     </p>
                   </>
                 )}
-                {/* <p>IN THE PAST YEAR</p>
-                <p>
-                  THE CONTENT YOU POSTED HAS BEEN COLLECTED A TOTAL OF{" "}
-                  <span>{new BN(userInfo.collectBy).toFormat()}</span> TIMES,
-                  AND YOUR SHARING ALWAYS ATTRACTS COUNTLESS ATTENTION.
-                </p>
-                <p>
-                  YOU HAVE A CREATION SCORE OF{" "}
-                  <span>{new BN(collection.creationScore).toFixed(2)}</span> ,A
-                  RANK OF <span>{collection.creationRank}</span>, AND A
-                  COLLECTION SCORE OF{" "}
-                  <span>{new BN(collection.collectionScore).toFixed(2)}</span>.
-                </p>
-                <p>
-                  YOUR COLLECTION SCORE IS{" "}
-                  <span>{new BN(collection.collectionScore).toFixed(2)}</span>{" "}
-                  AND YOUR RANKING IS <span>{collection.collectionRank}</span>.
-                </p>
-                <p>YOUR MOST STREAMED POST WAS:</p> */}
               </div>
             )}
             <div className="right-rador">
@@ -819,12 +743,6 @@ export default function Main() {
       </div>
 
       {isModalOpen &&   <ClaimModal onCancel={()=> setIsModalOpen(false)} />}
-     
-      {/* <RankList
-        close={() => setShowList(false)}
-        isShow={showList}
-        activeName={checkRadarName}
-      /> */}
     </div>
   );
 }
