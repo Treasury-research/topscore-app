@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Spin } from "antd";
 import "./index.scss";
 import { useParams, useHistory } from "react-router-dom";
+import { TwitterShareButton } from 'react-share'
 import { ResponseType } from "axios";
 import api from "../../api";
 import BN from "bignumber.js";
@@ -304,7 +305,7 @@ export default function Main() {
               className="topscore-head-wallet-btn"
               onClick={() => setIsModalOpen(true)}
             >
-              Share & Claim
+              Share & Mint
             </div>
           </div>
 
@@ -615,13 +616,15 @@ export default function Main() {
       >
         <div className="claim-img"></div>
         <div className="claim-bottom">
-          <div>Claim</div>
+          <div>Mint</div>
           <div>
-            <div>
+            {/* <div>
               <img src={IconG5} alt="" />
-            </div>
+            </div> */}
             <div>
-              <TwitterOutlined />
+              <TwitterShareButton url="https://topscore.knn3.xyz" title="Hello world">
+                <TwitterOutlined />
+              </TwitterShareButton>
             </div>
           </div>
         </div>
