@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Spin } from "antd";
 import "./index.scss";
 import { useParams, useHistory } from "react-router-dom";
-import { TwitterShareButton } from "react-share";
-import { ResponseType } from "axios";
 import api from "../../api";
 import BN from "bignumber.js";
 import { formatIPFS, shortenAddr } from "../../lib/tool";
@@ -18,10 +16,9 @@ import {
 import { Dropdown, Space, Menu, Modal, Drawer, Pagination } from "antd";
 import Radar from "./components/Radar";
 import Comment from "./components/comment";
-import IconG5 from "./../../static/img/g5.svg";
 import imgRadarSmall from "./../../static/img/radar-small.png";
 import S2 from "./../../static/img/s2.png";
-// import Follow from "./components/Follow";
+import ClaimModal from "./components/ClaimModal";
 
 const tag1 = ["Influence", "Curation"];
 
@@ -43,6 +40,7 @@ export default function Main() {
   const { account, connectWallet } = useWeb3Context();
   const [showList, setShowList] = useState(false);
   const [handlesList, setHandlesList] = useState<any>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState<any>({});
   const [rankList, setRankList] = useState<[]>([]);
   const [rankTotal, setRankTotal] = useState<number>(0);
@@ -57,7 +55,6 @@ export default function Main() {
   const [pub, setPub] = useState<any>({});
   const [activeTag1, setActiveTag1] = useState<number>(0);
   const [activeTag2, setActiveTag2] = useState<number>(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [checkRadarName, setCheckRadarName] = useState<string>("");
   const [activeHandleIdx, setActiveHandleIdx] = useState<number>(0);
   const [rankInfo, setRankInfo] = useState<any>({});
@@ -99,17 +96,6 @@ export default function Main() {
     setRankPageNo(1);
   };
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
 
   const getRankList = async () => {
     setRankLoading(true);
@@ -353,8 +339,10 @@ export default function Main() {
                     Share & Mint
                   </div>
                 ) : (
-                  <div>123</div>
-                  // <Follow profileId={currentProfile.handle} />
+                  <div>
+                    123
+                  </div>
+                  // <Follow profileId={currentProfile.profileId} handle={currentProfile.handle} />
                 )}
               </>
             )}
@@ -829,31 +817,9 @@ export default function Main() {
           <LeftOutlined />
         </div>
       </div>
-      <Modal
-        className="claimModal"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        width={400}
-      >
-        <div className="claim-img"></div>
-        <div className="claim-bottom">
-          <div>Mint</div>
-          <div>
-            {/* <div>
-              <img src={IconG5} alt="" />
-            </div> */}
-            <div>
-              <TwitterShareButton
-                url="https://topscore.knn3.xyz"
-                title="Hello world"
-              >
-                <TwitterOutlined />
-              </TwitterShareButton>
-            </div>
-          </div>
-        </div>
-      </Modal>
+
+      {isModalOpen &&   <ClaimModal onCancel={()=> setIsModalOpen(false)} />}
+     
       {/* <RankList
         close={() => setShowList(false)}
         isShow={showList}
