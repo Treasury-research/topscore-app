@@ -14,6 +14,7 @@ export default function ClaimModal({ onCancel }: any) {
   const [merkleProof, setMerkleProof] = useState<any>([]);
   const [checking, setChecking] = useState(true);
   const [canClaim, setCanClaim] = useState(false);
+  const [imageUri, setImageUri] = useState("");
   const { account } = useWeb3Context();
   const handleOk = () => {
     onCancel();
@@ -39,17 +40,20 @@ export default function ClaimModal({ onCancel }: any) {
 
   const doClaim = async () => {
     await claimContract.claim(merkleProof);
+    checkBalance();
   };
 
-  const checkBalance = async() => {
+  const checkBalance = async () => {
     const res = await erc721Contract.balanceOf(config.contracts.nft);
-    console.log('balance', res)
-    if(res > 0){
+    if (res > 0) {
       const tokenId = await erc721Contract.getTokenId(config.contracts.nft);
-      const res = await erc721Contract.getNftInfo(config.contracts.nft, tokenId);
-      console.log('metadata', res)
+      const res = await erc721Contract.getNftInfo(
+        config.contracts.nft,
+        tokenId
+      );
+      setImageUri(res.imageUri);
     }
-  }
+  };
 
   useEffect(() => {
     if (!account) {
@@ -75,12 +79,18 @@ export default function ClaimModal({ onCancel }: any) {
       onCancel={handleCancel}
       width={400}
     >
-      <div className="claim-img"></div>
+      {imageUri ? (
+        <img className="claim-img" src={imageUri} />
+      ) : (
+        <div className="claim-img" />
+      )}
       <div className="claim-bottom">
         {checking ? (
           <div>Checking...</div>
         ) : canClaim ? (
           <div onClick={doClaim}>Mint</div>
+        ) : imageUri ? (
+          <div>You have minted</div>
         ) : (
           <div>You are not eligible to mint</div>
         )}
