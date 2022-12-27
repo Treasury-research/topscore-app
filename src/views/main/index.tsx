@@ -3,10 +3,11 @@ import { Spin } from "antd";
 import "./index.scss";
 import { useParams, useHistory } from "react-router-dom";
 import api from "../../api";
+import { Helmet } from "react-helmet";
 import BN from "bignumber.js";
 import { formatIPFS, shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
-import Follow from './components/Follow'
+import Follow from "./components/Follow";
 import Wallet from "../../components/WalletBtn";
 import {
   TwitterOutlined,
@@ -97,7 +98,6 @@ export default function Main() {
     setRankPageNo(1);
   };
 
-
   const getRankList = async () => {
     setRankLoading(true);
     const res: any = await api.get(`/lens/${rankType}/rank/list`, {
@@ -134,7 +134,7 @@ export default function Main() {
 
   useEffect(() => {
     const {
-      influReda, 
+      influReda,
       campaignReda,
       engagementReda,
       collectReda,
@@ -150,7 +150,7 @@ export default function Main() {
           { name: "Creation", value: creationReda },
           { name: "Curation", value: curationReda },
           { name: "Collection", value: collectReda },
-          { name: "Engagement", value: engagementReda},
+          { name: "Engagement", value: engagementReda },
         ],
       ];
     });
@@ -286,6 +286,18 @@ export default function Main() {
 
   return (
     <div className="toscore">
+      <Helmet>
+        <meta property="og:title" content="xxxx" />
+        <meta property="og:description" content="xxxx" />
+        <meta
+          property="og:image"
+          content="https://lens-api.knn3.xyz/api/lens/generate/shareImg/4252"
+        />
+        <meta property="og:locale'" content="en_US" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://topscore.knn3.xyz" />
+        <meta property="og:site_name" content="Topscore" />
+      </Helmet>
       <div className="toscore-head">
         <div>
           {account && (
@@ -343,7 +355,10 @@ export default function Main() {
                   // <div>
                   //   123
                   // </div>
-                  <Follow profileId={currentProfile.profileId} handle={currentProfile.handle} />
+                  <Follow
+                    profileId={currentProfile.profileId}
+                    handle={currentProfile.handle}
+                  />
                 )}
               </>
             )}
@@ -742,7 +757,7 @@ export default function Main() {
         </div>
       </div>
 
-      {isModalOpen &&   <ClaimModal onCancel={()=> setIsModalOpen(false)} />}
+      {isModalOpen && <ClaimModal onCancel={() => setIsModalOpen(false)} />}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "antd";
 import config from "../../../../config";
+import { toast } from "material-react-toastify";
 import axios from "axios";
 import { TwitterShareButton } from "react-share";
 import useWeb3Context from "../../../../hooks/useWeb3Context";
