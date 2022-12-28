@@ -15,6 +15,7 @@ import ImgCh3Hover from "./../../static/img/ch3-hover.png"
 import ImgCh4Hover from "./../../static/img/ch4-hover.png"
 import ImgCh5Hover from "./../../static/img/ch5-hover.png"
 import ImgCh6Hover from "./../../static/img/ch6-hover.png"
+import HeaderBtn from "../../components/HeaderBtn";
 
 export default function Character() {
 
@@ -36,11 +37,7 @@ export default function Character() {
   return (
     <div className="character">
       <div className="character-head">
-        <div>
-          <div><img src={Icon} alt="" /></div>
-          <div className="character-head-main-btn" onClick={goProfile}>Profile</div>
-          <div className="character-head-main-btn">Lens-Rainbow</div>
-        </div>
+        <HeaderBtn/>
         <Wallet />
       </div>
       <div className="character-content">

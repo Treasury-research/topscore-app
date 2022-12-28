@@ -19,6 +19,7 @@ import { Dropdown, Space, Menu, Modal, Drawer, Pagination } from "antd";
 import Radar from "./components/Radar";
 import Comment from "./components/comment";
 import Character from "./components/character";
+import HeaderBtn from "../../components/HeaderBtn";
 import imgRadarSmall from "./../../static/img/radar-small.png";
 import S2 from "./../../static/img/s2.png";
 import ClaimModal from "./components/ClaimModal";
@@ -312,14 +313,7 @@ export default function Main() {
         <meta property="og:site_name" content="Topscore" />
       </Helmet>
       <div className="toscore-head">
-        <div>
-          {account && (
-            <div className="topscore-head-main-btn" onClick={goProfile}>
-              Profile
-            </div>
-          )}
-          <div className="topscore-head-main-btn" onClick={goRainBow}>Lens-Rainbow</div>
-        </div>
+        <HeaderBtn/>
         <Wallet />
       </div>
       <div className="toscore-content">
