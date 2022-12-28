@@ -148,6 +148,7 @@
                     font-weight: normal;
                     color: rgba(255, 255, 255, .8);
                   }
+
                   // >span:nth-child(1) {
                   //   font-size: 12px;
                   //   color: rgba(255, 255, 255, .8);
@@ -208,6 +209,35 @@
 
     .influence_curation {
       display: flex;
+      font-family: "Exan";
+
+      .influence-default-text {
+        font-size: 20px;
+        margin-top: 20px;
+        >p:nth-child(1){
+          margin-bottom: 10px;
+        }
+        >p:nth-child(2){
+          text-indent: 200px;
+        }
+      }
+
+      .curation-default-text{
+        font-size: 20px;
+        margin-top: 20px;
+        >p{
+          margin-bottom: 10px;
+        }
+        >p:nth-child(2){
+          text-indent: 420px;
+        }
+        >p:nth-child(3){
+          text-indent: 520px;
+        }
+        >p:nth-child(4){
+          text-indent: 620px;
+        }
+      }
 
       .left-rador {
         flex: 2
@@ -233,7 +263,46 @@
 
     .collect_pablication {
       display: flex;
-
+      font-family: "Exan";
+      .collect-default-text{
+        font-size: 20px;
+        width: 100%;
+        margin-top: 20px;
+        >div{
+          width: calc(50% - 10px);
+          float: left;
+          >p{
+            margin-bottom: 10px;
+          }
+        }
+        >div:nth-child(1){
+          margin-right: 20px;
+          >p{
+            text-align: right;
+          }
+        }
+        >div:nth-child(2){
+          >p{
+            text-align: left;
+          }
+        }
+      }
+      .publication-default-text{
+        font-size: 20px;
+        margin-top: 20px;
+        >p{
+          margin-bottom: 10px;
+        }
+        >p:nth-child(2){
+          text-indent: 400px;
+        }
+        >p:nth-child(3){
+          text-indent: 600px;
+        }
+        >p:nth-child(4){
+          text-indent: 600px;
+        }
+      }
       .left-text {
         flex: 3;
 
@@ -449,7 +518,7 @@
       cursor: pointer;
     }
 
-    >div:nth-child(2) {
+    .twitter-icon {
       color: rgb(40, 168, 223);
       font-size: 24px;
     }

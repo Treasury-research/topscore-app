@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react";
 import "./index.scss";
 import { useParams, useHistory } from "react-router-dom";
 import Wallet from "../../components/WalletBtn";
-import Icon from "./../../static/img/topIcon.png";
-import ImgCh1 from "./../../static/img/ch1.png";
-import ImgCh2 from "./../../static/img/ch2.png";
-import ImgCh3 from "./../../static/img/ch3.png";
-import ImgCh4 from "./../../static/img/ch4.png";
-import ImgCh5 from "./../../static/img/ch5.png";
-import ImgCh6 from "./../../static/img/ch6.png";
-import ImgCh1Hover from "./../../static/img/ch1-hover.png"
-import ImgCh2Hover from "./../../static/img/ch2-hover.png"
-import ImgCh3Hover from "./../../static/img/ch3-hover.png"
-import ImgCh4Hover from "./../../static/img/ch4-hover.png"
-import ImgCh5Hover from "./../../static/img/ch5-hover.png"
-import ImgCh6Hover from "./../../static/img/ch6-hover.png"
+import ImgCh1 from "./../../static/img/dark-rainbow/ch1.png";
+import ImgCh2 from "./../../static/img/dark-rainbow/ch2.png";
+import ImgCh3 from "./../../static/img/dark-rainbow/ch3.png";
+import ImgCh4 from "./../../static/img/dark-rainbow/ch4.png";
+import ImgCh5 from "./../../static/img/dark-rainbow/ch5.png";
+import ImgCh6 from "./../../static/img/dark-rainbow/ch6.png";
+import ImgCh1Hover from "./../../static/img/dark-hover-rainbow/ch1-hover.png"
+import ImgCh2Hover from "./../../static/img/dark-hover-rainbow/ch2-hover.png"
+import ImgCh3Hover from "./../../static/img/dark-hover-rainbow/ch3-hover.png"
+import ImgCh4Hover from "./../../static/img/dark-hover-rainbow/ch4-hover.png"
+import ImgCh5Hover from "./../../static/img/dark-hover-rainbow/ch5-hover.png"
+import ImgCh6Hover from "./../../static/img/dark-hover-rainbow/ch6-hover.png"
+import HeaderBtn from "../../components/HeaderBtn";
 
 export default function Character() {
 
@@ -36,11 +36,7 @@ export default function Character() {
   return (
     <div className="character">
       <div className="character-head">
-        <div>
-          <div><img src={Icon} alt="" /></div>
-          <div className="character-head-main-btn" onClick={goProfile}>Profile</div>
-          <div className="character-head-main-btn">Lens-Rainbow</div>
-        </div>
+        <HeaderBtn/>
         <Wallet />
       </div>
       <div className="character-content">

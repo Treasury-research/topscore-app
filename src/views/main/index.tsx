@@ -19,6 +19,7 @@ import { Dropdown, Space, Menu, Modal, Drawer, Pagination } from "antd";
 import Radar from "./components/Radar";
 import Comment from "./components/comment";
 import Character from "./components/character";
+import HeaderBtn from "../../components/HeaderBtn";
 import imgRadarSmall from "./../../static/img/radar-small.png";
 import S2 from "./../../static/img/s2.png";
 import ClaimModal from "./components/ClaimModal";
@@ -276,9 +277,9 @@ export default function Main() {
       return;
     }
 
-    if(queryProfileId && handlesList[activeHandleIndex].profileId !== Number(queryProfileId)){
-      setActiveHandleIndex(handlesList.findIndex((item:any) => item.profileId === Number(queryProfileId)));
-    }else{
+    if (queryProfileId && handlesList[activeHandleIndex].profileId !== Number(queryProfileId)) {
+      setActiveHandleIndex(handlesList.findIndex((item: any) => item.profileId === Number(queryProfileId)));
+    } else {
       history.push(`/user/${address}/${handlesList[activeHandleIndex].profileId}`)
     }
 
@@ -312,14 +313,7 @@ export default function Main() {
         <meta property="og:site_name" content="Topscore" />
       </Helmet>
       <div className="toscore-head">
-        <div>
-          {account && (
-            <div className="topscore-head-main-btn" onClick={goProfile}>
-              Profile
-            </div>
-          )}
-          <div className="topscore-head-main-btn" onClick={goRainBow}>Lens-Rainbow</div>
-        </div>
+        <HeaderBtn />
         <Wallet />
       </div>
       <div className="toscore-content">
@@ -532,15 +526,37 @@ export default function Main() {
             </div>
           </div>
           <div className="influence_curation">
-            <div className="left-rador">
-              <Radar
-                data={rador2}
-                id="top-rador_1"
-                width={"100%"}
-                height={"100%"}
-              />
-            </div>
-            {activeTag1 === 0 && (
+            {
+              activeTag1 === 0 && JSON.stringify(rankInfo) === '{}' &&
+              <div className="influence-default-text">
+                <p>THE COMPANIONS</p>
+                <p>MAKE THE JOURNEY &nbsp;  NO LONGER &nbsp; LONELY.</p>
+              </div>
+            }
+
+            {
+              activeTag1 === 1 && JSON.stringify(rankInfo) === '{}' &&
+              <div className="curation-default-text">
+                <p>YOU WILL MEET LIKE MINDED PEOPLE</p>
+                <p>ALONG</p>
+                <p>THE</p>
+                <p>WAY</p>
+              </div>
+            }
+
+            {
+              JSON.stringify(rankInfo) !== '{}' &&
+              <div className="left-rador">
+                <Radar
+                  data={rador2}
+                  id="top-rador_1"
+                  width={"100%"}
+                  height={"100%"}
+                />
+              </div>
+            }
+
+            {activeTag1 === 0 && JSON.stringify(rankInfo) !== '{}' && (
               <div className="right-text">
                 <p>In 2022,</p>
                 <p>you had the power to capture hearts and minds,</p>
@@ -562,7 +578,7 @@ export default function Main() {
                 )}
               </div>
             )}
-            {activeTag1 === 1 && (
+            {activeTag1 === 1 && JSON.stringify(rankInfo) !== '{}' && (
               <div className="right-text">
                 {userInfo.mirror > 0 ? (
                   <>
@@ -609,7 +625,33 @@ export default function Main() {
             </div>
           </div>
           <div className="collect_pablication">
-            {activeTag2 === 0 && (
+            {
+              activeTag2 === 0 && JSON.stringify(rankInfo) === '{}' &&
+              <div className="collect-default-text">
+                <div>
+                  <p>PEOPLE</p>
+                  <p>SOMETIMES</p>
+                  <p>FORGET,</p>
+                </div>
+                <div>
+                  <p>BUT</p>
+                  <p>BLOCKS</p>
+                  <p>DONT.</p>
+                </div>
+              </div>
+            }
+
+            {
+              activeTag2 === 1 && JSON.stringify(rankInfo) === '{}' &&
+              <div className="publication-default-text">
+                <p>THE FLAME OF WISDOM ALWAYS</p>
+                <p>BURSTS OUT IN</p>
+                <p>THE</p>
+                <p>DISCUSSION</p>
+              </div>
+            }
+
+            {activeTag2 === 0 && JSON.stringify(rankInfo) !== '{}' && (
               <div className="left-text">
                 {userInfo.collectBy > 0 ? (
                   <>
@@ -667,7 +709,7 @@ export default function Main() {
                 )}
               </div>
             )}
-            {activeTag2 === 1 && (
+            {activeTag2 === 1 && JSON.stringify(rankInfo) !== '{}' && (
               <div className="left-text">
                 {true ? (
                   <>
@@ -740,14 +782,17 @@ export default function Main() {
                 )}
               </div>
             )}
-            <div className="right-rador">
-              <Radar
-                data={rador3}
-                id="top-rador_2"
-                width={"100%"}
-                height={"100%"}
-              />
-            </div>
+            {
+              JSON.stringify(rankInfo) !== '{}' &&
+              <div className="right-rador">
+                <Radar
+                  data={rador3}
+                  id="top-rador_2"
+                  width={"100%"}
+                  height={"100%"}
+                />
+              </div>
+            }
           </div>
           <Comment
             data={{
@@ -763,7 +808,7 @@ export default function Main() {
             }}
           />
           <div>
-          <Character profileId={currentProfile.profileId}/>
+            <Character profileId={currentProfile.profileId} />
           </div>
         </div>
         <div
