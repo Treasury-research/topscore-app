@@ -8,7 +8,7 @@ export const formatIPFS = (val) => {
     return val;
   }
   if (val.indexOf("ipfs://") > -1) {
-    return val.replace("ipfs://", "https://lens.infura-ipfs.io/ipfs/");
+    return val.replace("ipfs://", "https://ipfs.io/");
   } else {
     return val;
   }

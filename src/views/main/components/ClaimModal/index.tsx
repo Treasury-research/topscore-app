@@ -56,7 +56,10 @@ export default function ClaimModal({ onCancel }: any) {
     }
   };
 
-  // https://lenster.xyz/?text=Can+you+unlock+the+Hashing+it+Out%3A+Application+Infrastructre+Pt.1+puzzle%3F&via=infinitykeys.lens&url=https%3A%2F%2Finfinitykeys.io%2Fpuzzle%2Fhio-infra&hashtags=infinitykeys&preview=true
+  const LensterShareButton = (text: string, url: string, hashtags: string) => {
+    window.open(`https://lenster.xyz/?text=${text}&url=${url}&hashtags=${hashtags}&preview=true`)
+  }
+
 
   useEffect(() => {
     if (!account) {
