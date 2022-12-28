@@ -100,7 +100,7 @@ export default function ClaimModal({ onCancel }: any) {
               url="https://topscore.knn3.xyz"
               title="Hello world"
             >
-              <TwitterOutlined />
+              <TwitterOutlined className="twitter-icon"/>
             </TwitterShareButton>
           </div>
         </div>
