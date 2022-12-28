@@ -20,7 +20,7 @@ import { DownOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Radar from "./components/Radar";
 import { Dropdown, Space, Menu, Drawer, Pagination, Modal } from "antd";
 
-const typeList = ['Influence', 'Campaign', '???', '???', '???', '???'];
+const typeList = ['Influence', 'Campaign', 'Engagement', 'Creation', '???', '???'];
 const rankList = [{
   name: '???',
   score: '???'

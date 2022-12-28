@@ -30,6 +30,10 @@ export default function ClaimModal({ onCancel }: any) {
       `${config.baseURL}/v1/merkletree/${account}`
     );
 
+    if (res.data.result.length === 0) {
+      setChecking(false);
+    }
+
     setMerkleProof(() => [...res.data.result]);
   };
 
@@ -56,10 +60,16 @@ export default function ClaimModal({ onCancel }: any) {
     }
   };
 
-  const LensterShareButton = (text: string, url: string, hashtags: string) => {
-    window.open(`https://lenster.xyz/?text=${text}&url=${url}&hashtags=${hashtags}&preview=true`)
-  }
-
+  const LensterShareButton = ({ text, url, hashtags, children }: any) => {
+    return (
+      <a
+        target="_blank"
+        href={`https://lenster.xyz/?text=${text}&url=${url}&hashtags=${hashtags}&preview=true`}
+      >
+        {children}
+      </a>
+    );
+  };
 
   useEffect(() => {
     if (!account) {
@@ -100,17 +110,27 @@ export default function ClaimModal({ onCancel }: any) {
         ) : (
           <div>You are not eligible to mint</div>
         )}
-        <div>
-          <div><img src={IconLenster} alt="" /></div>
+        {(canClaim || imageUri) && (
           <div>
-            <TwitterShareButton
-              url="https://topscore.knn3.xyz"
-              title="Hello world"
-            >
-              <TwitterOutlined className="twitter-icon"/>
-            </TwitterShareButton>
+            <div>
+              <LensterShareButton
+                text="Hello world"
+                url="https://topscore.knn3.xyz"
+                hashtags="Topscore"
+              >
+                <img src={IconLenster} />
+              </LensterShareButton>
+            </div>
+            <div>
+              <TwitterShareButton
+                url="https://topscore.knn3.xyz"
+                title="Hello world"
+              >
+                <TwitterOutlined className="twitter-icon" />
+              </TwitterShareButton>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </Modal>
   );
