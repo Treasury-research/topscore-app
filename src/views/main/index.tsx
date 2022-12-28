@@ -301,11 +301,11 @@ export default function Main() {
   return (
     <div className="toscore">
       <Helmet>
-        <meta property="og:title" content="xxxx" />
-        <meta property="og:description" content="xxxx" />
+        <meta property="og:title" content="Your 2022 Wrapped on Lens" />
+        <meta property="og:description" content="TopScore - a KNN3-powered scoring system based on Lens Protocol to evaluate this campaign." />
         <meta
           property="og:image"
-          content="https://lens-api.knn3.xyz/api/lens/generate/shareImg/4252"
+          content={`https://lens-api.knn3.xyz/api/lens/generate/shareImg/${currentProfile.profileId}"`}
         />
         <meta property="og:locale'" content="en_US" />
         <meta property="og:type" content="website" />
