@@ -132,6 +132,47 @@ export default function Main() {
   };
 
   useEffect(() => {
+    if (JSON.stringify(rankInfo) !== '{}') {
+      const {
+        influReda,
+        campaignReda,
+        engagementReda,
+        collectReda,
+        creationReda,
+        curationReda,
+      } = rankInfo;
+
+      if (activeTag1 == 0) {
+        setRador2(() => {
+          return [
+            ...[
+              { name: "Influence", value: influReda },
+              { name: "", value: campaignReda },
+              { name: "", value: creationReda },
+              { name: "", value: curationReda },
+              { name: "", value: collectReda },
+              { name: "", value: engagementReda },
+            ],
+          ];
+        });
+      } else {
+        setRador2(() => {
+          return [
+            ...[
+              { name: "", value: influReda },
+              { name: "", value: campaignReda },
+              { name: "", value: creationReda },
+              { name: "Curation", value: curationReda },
+              { name: "", value: collectReda },
+              { name: "", value: engagementReda },
+            ],
+          ];
+        });
+      }
+    }
+  }, [activeTag1]);
+
+  useEffect(() => {
     const {
       influReda,
       campaignReda,
@@ -157,12 +198,12 @@ export default function Main() {
     setRador2(() => {
       return [
         ...[
-          { name: "", value: 0 },
-          { name: "", value: 0 },
-          { name: "", value: 0 },
-          { name: "Curation", value: curationReda },
-          { name: "", value: 0 },
-          { name: "", value: 0 },
+          { name: "Influence", value: influReda },
+          { name: "", value: campaignReda },
+          { name: "", value: creationReda },
+          { name: "", value: curationReda },
+          { name: "", value: collectReda },
+          { name: "", value: engagementReda },
         ],
       ];
     });
@@ -170,11 +211,11 @@ export default function Main() {
     setRador3(() => {
       return [
         ...[
-          { name: "", value: 0 },
+          { name: "", value: influReda },
           { name: "Campaign", value: campaignReda },
-          { name: "", value: 0 },
-          { name: "", value: 0 },
-          { name: "", value: 0 },
+          { name: "", value: creationReda },
+          { name: "", value: curationReda },
+          { name: "", value: collectReda },
           { name: "Engagement", value: engagementReda },
         ],
       ];
@@ -551,6 +592,7 @@ export default function Main() {
                   id="top-rador_1"
                   width={"100%"}
                   height={"100%"}
+                  showList={(name: string) => console.log(name)}
                 />
               </div>
             }
@@ -789,6 +831,7 @@ export default function Main() {
                   id="top-rador_2"
                   width={"100%"}
                   height={"100%"}
+                  showList={(name: string) => console.log(name)}
                 />
               </div>
             }
