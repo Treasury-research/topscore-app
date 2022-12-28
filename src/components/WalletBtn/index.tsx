@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./index.scss";
-import { useHistory } from "react-router-dom";
 import { shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
 
 export default function Wallet() {
   const { account, connectWallet } = useWeb3Context();
 
-  const history = useHistory();
-
-  const walletBtnClick = () => {
-    // if(history.location.pathname === "/main"){
-      history.push(`/user/${account}`)
-    // }
-  }
-  
   return (
     <div>
       {account ? (
-        <div onClick={() => walletBtnClick()} className="topscore-head-wallet-btn">{shortenAddr(account)}</div>
+        <div className="topscore-head-wallet-btn">{shortenAddr(account)}</div>
       ) : (
         <div
           onClick={() => connectWallet()}
