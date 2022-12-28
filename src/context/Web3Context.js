@@ -1,7 +1,7 @@
 import { useState, createContext, useCallback, useEffect } from "react";
 import { toast } from "material-react-toastify";
 import Web3 from "web3";
-import { endpoint } from "../config";
+import config from "../config";
 import { LoadingOutlined } from "@ant-design/icons";
 import Web3Modal from "web3modal";
 import WalletConnect from "@walletconnect/web3-provider";
@@ -82,7 +82,7 @@ export const Web3ContextProvider = ({ children }) => {
 
       return accounts[0]
     } catch (error) {
-      setWeb3(new Web3(endpoint));
+      setWeb3(new Web3(config.provider));
       console.log(error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

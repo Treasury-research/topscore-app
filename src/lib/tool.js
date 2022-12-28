@@ -1,8 +1,8 @@
 import Web3 from "web3";
 import { message } from "antd";
-import { endpoint } from "../config";
+import config from "../config";
 
-const web3 = new Web3(endpoint);
+const web3 = new Web3(config.provider);
 
 export const shortenAddr = (address, length = 3) => {
   return `${address.slice(0, length)}...${address.slice(-length)}`;

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import useWeb3Context from "../../hooks/useWeb3Context";
 import BN from "bignumber.js";
 import useErc20Contract from "../../contract/useErc20Contract";
-import style from "./style.module.scss";
 
 export default function ApproveButton({
   tokenAddress,
@@ -46,8 +45,8 @@ export default function ApproveButton({
   return allowance > 0 || skipCheck ? (
     children
   ) : (
-    <a onClick={doApprove} className={style.flowApprove}>
-      {approving ? "Approving" : "Approve"}
-    </a>
+    <div onClick={doApprove} className="topscore-head-wallet-btn">
+      {approving ? "Approving" : "Approve to follow"}
+    </div>
   );
 }

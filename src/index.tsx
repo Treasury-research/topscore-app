@@ -4,7 +4,6 @@ import "./index.css";
 import { ToastContainer } from "material-react-toastify";
 import App from "./App";
 import 'material-react-toastify/dist/ReactToastify.css';
-// import reportWebVitals from './reportWebVitals';
 import { ConfigProvider } from "antd";
 import { RecoilRoot } from "recoil";
 

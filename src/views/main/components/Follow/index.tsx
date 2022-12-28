@@ -26,6 +26,7 @@ export default function Lens({ profileId, handle }: any) {
   const { account, chainId } = useWeb3Context();
 
   const doFollow = async () => {
+    console.log("fff", profileId, feeInfo);
     const res: any = await lenshubContract.follow(profileId, feeInfo);
     if (res) {
       setFollowBalance((prev: any) => {
@@ -95,17 +96,16 @@ export default function Lens({ profileId, handle }: any) {
         contractAddress={config.contracts.lenshub}
       >
         <div className="topscore-head-wallet-btn" onClick={doFollow}>
-          Follow
+          Follow{` `}
+          {feeInfo.amount && tokenInfo.symbol && (
+            <>
+              (
+              {new BN(feeInfo.amount).shiftedBy(-tokenInfo.decimals).toString()}{" "}
+              {tokenInfo.symbol})
+            </>
+          )}
         </div>
       </ApproveButton>
-
-      {feeInfo.amount && tokenInfo.symbol && (
-        <div className="text-center">
-          Price:{" "}
-          {new BN(feeInfo.amount).shiftedBy(-tokenInfo.decimals).toString()}{" "}
-          {tokenInfo.symbol}
-        </div>
-      )}
     </>
   ) : (
     <div className={"topscore-head-wallet-btn"}>Following</div>
