@@ -50,6 +50,7 @@ export default function useERC721Contract() {
 
       const tokenURIRaw = await contract.methods.tokenURI(tokenId).call();
 
+      console.log('aaaa', tokenURIRaw)
       const tokenURI = formatIPFS(tokenURIRaw);
       const res = (await axios.get(tokenURI)).data;
       res.imageUri = formatIPFS(res.image);
