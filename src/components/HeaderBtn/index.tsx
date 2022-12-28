@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./index.scss";
 import { useHistory } from "react-router-dom";
 import Icon from "./../../static/img/topIcon.png";
 import useWeb3Context from "../../hooks/useWeb3Context";
