@@ -7,6 +7,7 @@ import useWeb3Context from "../../../../hooks/useWeb3Context";
 import useClaimContract from "../../../../contract/useClaimContract";
 import useERC721Contract from "../../../../contract/useErc721Contract";
 import { TwitterOutlined } from "@ant-design/icons";
+import IconLenster from "./../../../../static/img/g5.svg";
 
 export default function ClaimModal({ onCancel }: any) {
   const claimContract = useClaimContract();
@@ -77,7 +78,7 @@ export default function ClaimModal({ onCancel }: any) {
       open={true}
       onOk={handleOk}
       onCancel={handleCancel}
-      width={400}
+      width={500}
     >
       {imageUri ? (
         <img className="claim-img" src={imageUri} />
@@ -95,6 +96,7 @@ export default function ClaimModal({ onCancel }: any) {
           <div>You are not eligible to mint</div>
         )}
         <div>
+          <div><img src={IconLenster} alt="" /></div>
           <div>
             <TwitterShareButton
               url="https://topscore.knn3.xyz"
