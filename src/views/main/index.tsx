@@ -19,6 +19,7 @@ import Radar from "./components/Radar";
 import Comment from "./components/comment";
 import Character from "./components/character";
 import HeaderBtn from "../../components/HeaderBtn";
+import FixedIcon from "./components/FixedIcon";
 import imgRadarSmall from "./../../static/img/radar-small.png";
 import S2 from "./../../static/img/s2.png";
 import ClaimModal from "./components/ClaimModal";
@@ -352,6 +353,7 @@ export default function Main() {
         <meta property="og:url" content="https://topscore.knn3.xyz" />
         <meta property="og:site_name" content="Topscore" />
       </Helmet>
+      <FixedIcon/>
       <div className="toscore-head">
         <HeaderBtn />
         <Wallet />
