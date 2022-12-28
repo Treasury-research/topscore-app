@@ -58,8 +58,6 @@ export default function Main() {
   const [pub, setPub] = useState<any>({});
   const [activeTag1, setActiveTag1] = useState<number>(0);
   const [activeTag2, setActiveTag2] = useState<number>(0);
-  const [checkRadarName, setCheckRadarName] = useState<string>("");
-  const [activeHandleIdx, setActiveHandleIdx] = useState<number>(0);
   const [rankInfo, setRankInfo] = useState<any>({});
   const [isSelf, setIsSelf] = useState<boolean>(false);
 
@@ -223,7 +221,7 @@ export default function Main() {
   };
 
   const showRank = (name: string) => {
-    setActiveHandleIdx(typeList.indexOf(name));
+    setActiveHandleIndex(typeList.indexOf(name));
     setShowList(true);
   };
 
@@ -269,9 +267,19 @@ export default function Main() {
     setIsSelf(address === account);
   }, [address, account]);
 
+  const changeProfile = (profileId: number) => {
+    history.push(`/${address}/${profileId}`)
+  }
+
   useEffect(() => {
     if (!handlesList || handlesList.length === 0) {
       return;
+    }
+
+    if(queryProfileId && handlesList[activeHandleIndex].profileId !== Number(queryProfileId)){
+      setActiveHandleIndex(handlesList.findIndex((item:any) => item.profileId === Number(queryProfileId)));
+    }else{
+      history.push(`/${address}/${handlesList[activeHandleIndex].profileId}`)
     }
 
     const profile = handlesList[activeHandleIndex];
@@ -328,7 +336,10 @@ export default function Main() {
                           <div
                             className="drop-menu"
                             key={i}
-                            onClick={() => setActiveHandleIndex(i)}
+                            onClick={() => {
+                              setActiveHandleIndex(i)
+                              changeProfile(t.profileId);
+                            }}
                           >
                             {t.handle}
                           </div>
@@ -462,7 +473,7 @@ export default function Main() {
                           className="drop-menu"
                           key={i}
                           onClick={() => {
-                            setActiveHandleIdx(i);
+                            setActiveHandleIndex(i);
                             setRankType(t.toLowerCase());
                             setRankPageNo(1);
                           }}
@@ -476,7 +487,7 @@ export default function Main() {
                   <a onClick={(e) => e.preventDefault()}>
                     <Space className="space overall">
                       <span className="list-type">
-                        {typeList[activeHandleIdx]}
+                        {typeList[activeHandleIndex]}
                       </span>
                       <DownOutlined />
                     </Space>
