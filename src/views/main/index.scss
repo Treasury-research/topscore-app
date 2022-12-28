@@ -521,11 +521,12 @@
     .twitter-icon {
       color: rgb(40, 168, 223);
       font-size: 24px;
+      line-height: 46px;
     }
 
     >div:nth-child(1) {
-      font-size: 24px;
-      // margin-right: 20px;
+      font-size: 20px;
+      margin-right: 10px;
     }
   }
 }
