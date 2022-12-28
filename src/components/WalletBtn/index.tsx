@@ -11,7 +11,7 @@ export default function Wallet() {
 
   const walletBtnClick = () => {
     // if(history.location.pathname === "/main"){
-      history.push(`/${account}`)
+      history.push(`/user/${account}`)
     // }
   }
   

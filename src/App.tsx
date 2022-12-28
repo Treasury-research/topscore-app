@@ -20,7 +20,7 @@ function App() {
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/main" component={Main} />
-            <Route path={["/:address/:queryProfileId", "/:address"]} component={Main} />
+            <Route path={["/user/:address/:queryProfileId", "/user/:address"]} component={Main} />
             <Route path="/rsrv" component={Rsrv} />
             <Route path="/rainbow" component={Rainbow} />
             <Redirect to="/rsrv" />

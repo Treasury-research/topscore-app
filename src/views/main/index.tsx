@@ -244,7 +244,7 @@ export default function Main() {
   // }, [account]);
 
   const goProfile = () => {
-    history.push(`/${account}`);
+    history.push(`/user/${account}`);
   };
 
   const goRainBow = () => {
@@ -268,7 +268,7 @@ export default function Main() {
   }, [address, account]);
 
   const changeProfile = (profileId: number) => {
-    history.push(`/${address}/${profileId}`)
+    history.push(`/user/${address}/${profileId}`)
   }
 
   useEffect(() => {
@@ -279,7 +279,7 @@ export default function Main() {
     if(queryProfileId && handlesList[activeHandleIndex].profileId !== Number(queryProfileId)){
       setActiveHandleIndex(handlesList.findIndex((item:any) => item.profileId === Number(queryProfileId)));
     }else{
-      history.push(`/${address}/${handlesList[activeHandleIndex].profileId}`)
+      history.push(`/user/${address}/${handlesList[activeHandleIndex].profileId}`)
     }
 
     const profile = handlesList[activeHandleIndex];
