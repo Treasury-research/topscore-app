@@ -44,9 +44,13 @@ export default function ClaimModal({ onCancel }: any) {
   };
 
   const doClaim = async () => {
-    await claimContract.claim(merkleProof);
-    checkBalance();
-    setCanClaim(false);
+    try {
+      await claimContract.claim(merkleProof);
+      checkBalance();
+      setCanClaim(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const checkBalance = async () => {
@@ -109,7 +113,7 @@ export default function ClaimModal({ onCancel }: any) {
         ) : imageUri ? (
           <div>You have minted</div>
         ) : (
-          <div>You haven’t reserved</div>
+          <div>You have not reserved</div>
         )}
         {(canClaim || imageUri) && (
           <div>
