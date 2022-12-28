@@ -65,7 +65,7 @@ export default function Main() {
 
   const history = useHistory();
   const params: any = useParams();
-  const { address } = params;
+  const { address, queryProfileId } = params;
 
   const [rador1, setRador1] = useState([
     { name: "Influence", value: 0 },
@@ -246,7 +246,7 @@ export default function Main() {
   // }, [account]);
 
   const goProfile = () => {
-    history.push(`/address/${account}`);
+    history.push(`/${account}`);
   };
 
   const goRainBow = () => {

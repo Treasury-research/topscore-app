@@ -26,7 +26,7 @@ export default function ClaimModal({ onCancel }: any) {
 
   const getMerkleProof = async () => {
     const res: any = await axios.get(
-      `${config.claimApi}/api/v1/merkletree/${account}`
+      `${config.baseURL}/v1/merkletree/${account}`
     );
 
     setMerkleProof(() => [...res.data.result]);
