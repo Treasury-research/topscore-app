@@ -5,7 +5,6 @@ import { useParams, useHistory } from "react-router-dom";
 import api from "../../api";
 import { Helmet } from "react-helmet";
 import BN from "bignumber.js";
-import { formatIPFS, shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
 import Follow from "./components/Follow";
 import Wallet from "../../components/WalletBtn";
