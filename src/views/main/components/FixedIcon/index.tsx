@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./index.scss";
-import IconKnn3 from "./../../../../static/img/knn3-logo.png";
-import IconLenster from "./../../../../static/img/lenster-logo.png";
-import IconTwitter from "./../../../../static/img/twitter-logo.png";
-import IconDiscord from "./../../../../static/img/discord-logo.png";
+import IconKnn3 from "./../../../../static/img/fixIcon/KNN3.svg";
+import IconLenster from "./../../../../static/img/fixIcon/lenster.svg";
+import IconTwitter from "./../../../../static/img/fixIcon/Twitter.svg";
+import IconDiscord from "./../../../../static/img/fixIcon/Discord.svg";
 import IconHoverKnn3 from "./../../../../static/img/knn3-hover-logo.png";
 import IconHoverLenster from "./../../../../static/img/lenster-hover-logo.png";
 import IconHoverTwitter from "./../../../../static/img/twitter-hover-logo.png";
