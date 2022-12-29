@@ -411,7 +411,7 @@ export default function Main() {
       <div className="toscore-content">
         <div className="toscore-main">
           <div>
-            <div className="toscore-main-base-info">
+            {handlesList && handlesList.length > 0 ?<div className="toscore-main-base-info">
               {currentProfile.imageURI && canLoadAvatar ? (
                 <img
                   className="net-head-img"
@@ -452,7 +452,8 @@ export default function Main() {
                 </div>
                 <div>@{currentProfile.handle}</div>
               </div>
-            </div>
+            </div> : <div className="empty-hint"> You don't have any profile yet.</div> }
+            
             {account && (
               <>
                 {isSelf ? (
@@ -479,6 +480,7 @@ export default function Main() {
                 ) : (
                   <>
                     <div
+                      onClick={goProfile}
                       className="topscore-head-wallet-btn"
                     >
                       Check Mine
