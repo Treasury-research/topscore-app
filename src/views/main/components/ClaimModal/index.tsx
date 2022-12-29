@@ -80,7 +80,18 @@ export default function ClaimModal({ onCancel, profileId }: any) {
     return (
       <a
         target="_blank"
-        href={`https://lenster.xyz/?text=${title}&url=${url}&hashtags=${hashtags}&preview=true`}
+        href={`https://lenster.xyz/?text=${encodeURIComponent(title)}&url=${url}&hashtags=${hashtags}&preview=true`}
+      >
+        {children}
+      </a>
+    );
+  };
+
+  const TwitterShareButton2 = ({ title, url, hashtags, children }: any) => {
+    return (
+      <a
+        target="_blank"
+        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&hashtags=${hashtags}&preview=true`}
       >
         {children}
       </a>
@@ -126,7 +137,7 @@ export default function ClaimModal({ onCancel, profileId }: any) {
         ) : (
           <div>You have not reserved</div>
         )}
-        {(canClaim || imageUri) && (
+        {(canClaim || imageUri || true) && (
           <div>
             <div onClick={() => log("share_lens", account || "")}>
               <LensterShareButton
@@ -138,13 +149,13 @@ export default function ClaimModal({ onCancel, profileId }: any) {
               </LensterShareButton>
             </div>
             <div onClick={() => log("share_twitter", account || "")}>
-              <TwitterShareButton
+              <TwitterShareButton2
                 url={`https://topscore.knn3.xyz/user/${account}/${profileId}`}
                 hashtags={["TopScore", "Lens", "Your2022WrappedonLens"]}
                 title={`My 2022 Wrapped on Lens: https://topscore.knn3.xyz/user/${account}/${profileId} So what are your #TopScore? What is your social personality? FreeMint #LensRainbowNFT！@knn3_network`}
               >
                 <TwitterOutlined className="twitter-icon" />
-              </TwitterShareButton>
+              </TwitterShareButton2>
             </div>
           </div>
         )}
