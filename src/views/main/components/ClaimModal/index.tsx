@@ -76,27 +76,16 @@ export default function ClaimModal({ onCancel, profileId }: any) {
     }
   };
 
-  const LensterShareButton = ({ text, url, hashtags, children }: any) => {
+  const LensterShareButton = ({ title, url, hashtags, children }: any) => {
     return (
       <a
         target="_blank"
-        href={`https://lenster.xyz/?text=${text}&url=${url}&hashtags=${hashtags}&preview=true`}
+        href={`https://lenster.xyz/?text=${title}&url=${url}&hashtags=${hashtags}&preview=true`}
       >
         {children}
       </a>
     );
   };
-
-  // const TwitterShareButton = ({ text, url, hashtags, children }: any) => {
-  //   return (
-  //     <a
-  //       target="_blank"
-  //       href={`https://lenster.xyz/?text=${text}&url=${url}&hashtags=${hashtags}&preview=true`}
-  //     >
-  //       {children}
-  //     </a>
-  //   );
-  // };
 
   useEffect(() => {
     if (!account) {
@@ -137,18 +126,18 @@ export default function ClaimModal({ onCancel, profileId }: any) {
         ) : (
           <div>You have not reserved</div>
         )}
-        {(canClaim || imageUri || true) && (
+        {(canClaim || imageUri) && (
           <div>
-            <div onClick={() => log('share_lens', account || '')}>
+            <div onClick={() => log("share_lens", account || "")}>
               <LensterShareButton
-                text="Hello world"
-                url="https://topscore.knn3.xyz"
-                hashtags="Topscore"
+                title={`My 2022 Wrapped on Lens: https://topscore.knn3.xyz/user/${account}/${profileId} So what are your TopScore? What is your social personality? FreeMint LensRainbowNFT！@knn3_network`}
+                url={`https://topscore.knn3.xyz/user/${account}/${profileId}`}
+                hashtags="TopScore, Lens, Your2022WrappedonLens"
               >
                 <img src={IconLenster} />
               </LensterShareButton>
             </div>
-            <div onClick={() => log('share_twitter', account || '')}>
+            <div onClick={() => log("share_twitter", account || "")}>
               <TwitterShareButton
                 url={`https://topscore.knn3.xyz/user/${account}/${profileId}`}
                 hashtags={["TopScore", "Lens", "Your2022WrappedonLens"]}
