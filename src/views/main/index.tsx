@@ -742,7 +742,8 @@ export default function Main() {
                       you had <span>{new BN(userInfo.post).toFormat()}</span>{" "}
                       pieces of content and bringing{" "}
                       <span>{new BN(userInfo.collectBy).toFormat()}</span>{" "}
-                      Collects to the original authors.
+                      Collects to the original authors.  Your Curation score was
+                       {new BN(rankInfo.curationScore).toFormat()}, ranking you {new BN(rankInfo.curationRank).toFormat()}!
                     </p>
                     <p>
                       We celebrate your achievements and applaud you for your
