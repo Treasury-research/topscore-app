@@ -34,7 +34,7 @@ const ChartLine = (props: any) => {
                     { name: 'Influence', max: 100, color: "rgba(255,255,255,.6)" },
                     { name: 'Campaign', max: 100, color: "rgba(255,255,255,.6)" },
                     { name: 'Creation', max: 100, color: "rgba(255,255,255,.6)" },
-                    { name: '             ', max: 100, color: "rgba(255,255,255,.6)" },
+                    { name: 'Curation', max: 100, color: "rgba(255,255,255,.6)" },
                     { name: 'Collection', max: 100, color: "rgba(255,255,255,.6)" },
                     { name: 'Engagement', max: 100, color: "rgba(255,255,255,.6)" },
 
