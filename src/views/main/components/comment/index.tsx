@@ -20,7 +20,13 @@ const Comment = (props: any) => {
         <div className="con">
             <div className="head">
                 <div>
-                    <img src={headImg} alt="" />
+                    {
+                        headImg ? (
+                            <img src={headImg} alt="" />
+                        ):(
+                            <div className="head-default">K</div>
+                        )
+                    }
                 </div>
                 <div>
                     <div>{name}</div>
