@@ -86,6 +86,17 @@ export default function ClaimModal({ onCancel, profileId }: any) {
     );
   };
 
+  // const TwitterShareButton = ({ text, url, hashtags, children }: any) => {
+  //   return (
+  //     <a
+  //       target="_blank"
+  //       href={`https://lenster.xyz/?text=${text}&url=${url}&hashtags=${hashtags}&preview=true`}
+  //     >
+  //       {children}
+  //     </a>
+  //   );
+  // };
+
   useEffect(() => {
     if (!account) {
       return;
@@ -139,9 +150,8 @@ export default function ClaimModal({ onCancel, profileId }: any) {
             <div>
               <TwitterShareButton
                 url={`https://topscore.knn3.xyz/user/${account}/${profileId}`}
-                related={["@knn3_network"]}
                 hashtags={["TopScore", "Lens", "Your2022WrappedonLens"]}
-                title={`My 2022 Wrapped on Lens: https://topscore.knn3.xyz/user/${account}/${profileId} So what are your #TopScore? What is your social personality? FreeMint #LensRainbowNFT！`}
+                title={`My 2022 Wrapped on Lens: https://topscore.knn3.xyz/user/${account}/${profileId} So what are your #TopScore? What is your social personality? FreeMint #LensRainbowNFT！@knn3_network`}
               >
                 <TwitterOutlined className="twitter-icon" />
               </TwitterShareButton>
