@@ -23,6 +23,12 @@ const HeaderBtn = (props: any) => {
     history.push(`/rainbow`);
   };
 
+  const gotoMain = () => {
+    if(history.location.pathname === '/rainbow'){
+      history.push(`/main`)
+    }
+  };
+
   const getLensHandle = async () => {
     const res: any = await api.get(`/lens/handles/${account}`);
     setHandlesList(res.data);
@@ -38,7 +44,7 @@ const HeaderBtn = (props: any) => {
   return (
     <div>
       <div>
-        <img src={Icon} alt="" />
+        <img src={Icon} alt="" onClick={() => gotoMain()}/>
       </div>
       {account && (
         <div className="topscore-head-main-btn" onClick={goProfile}>
