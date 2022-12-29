@@ -7,7 +7,7 @@ import radorImg from './../../../static/img/radar.png'
 // ];
 
 const ChartLine = (props: any) => {
-    const { optionsData = null, id = 'default-id', width = '100%', height = '100%', data } = props;
+    const { optionsData = null, id = 'default-id', width = '100%', height = '100%', data, showTooltip } = props;
     let dataBJ = data.map((t: any) => {
         t.max = 10;
         return t.value
@@ -65,8 +65,9 @@ const ChartLine = (props: any) => {
             },
             series: [{
                 type: 'radar',
-                name: ' ',
+                name: 'Stat',
                 tooltip: {
+                    show: showTooltip,
                     trigger: 'item'
                 },
                 data: [dataBJ],
@@ -106,7 +107,7 @@ const ChartLine = (props: any) => {
                 props.showList(param.name)
             }
 
-            if (param.seriesType && param.seriesType == "radar"){
+            if (param.seriesType && param.seriesType == "radar") {
                 props.showList('Overall')
             }
         })
@@ -120,7 +121,7 @@ const ChartLine = (props: any) => {
     }, [optionsData, data]);
     return (
         <div style={{ width: width, height: height, position: "relative" }}>
-            <div id={id} style={{ width: width, height: height, zIndex: '99'}}>
+            <div id={id} style={{ width: width, height: height, zIndex: '99' }}>
 
             </div>
             <img src={radorImg} alt="" style={{ position: "absolute", zIndex: '9', height: "80%", left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }} />

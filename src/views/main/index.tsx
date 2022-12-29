@@ -37,12 +37,11 @@ const typeList = [
   "Overall",
   "Influence",
   "Campaign",
-  "Creation",
-  "Curation",
-  "Collection",
   "Engagement",
+  "Creation",
+  "Collection",
+  "Curation",
 ];
-
 export default function Main() {
   const { account, connectWallet } = useWeb3Context();
   const [showList, setShowList] = useState(false);
@@ -75,10 +74,10 @@ export default function Main() {
   const [rador1, setRador1] = useState([
     { name: "Influence", value: 0 },
     { name: "Campaign", value: 0 },
-    { name: "Creation", value: 0 },
+    { name: "Engagement", value: 0 },
     { name: "Curation", value: 0 },
     { name: "Collection", value: 0 },
-    { name: "Engagement", value: 0 },
+    { name: "Creation", value: 0 },
   ]);
 
   const [rador2, setRador2] = useState([
@@ -181,6 +180,47 @@ export default function Main() {
   }, [activeTag1]);
 
   useEffect(() => {
+    if (JSON.stringify(rankInfo) !== "{}") {
+      const {
+        influReda,
+        campaignReda,
+        engagementReda,
+        collectReda,
+        creationReda,
+        curationReda,
+      } = rankInfo;
+
+      if (activeTag2 == 0) {
+        setRador3(() => {
+          return [
+            ...[
+              { name: "", value: influReda },
+              { name: "", value: campaignReda },
+              { name: "", value: engagementReda },
+              { name: "", value: curationReda },
+              { name: "Collection", value: collectReda },
+              { name: "Creation", value: creationReda },
+            ],
+          ];
+        });
+      } else {
+        setRador3(() => {
+          return [
+            ...[
+              { name: "", value: influReda },
+              { name: "Campaign", value: campaignReda },
+              { name: "Engagement", value: engagementReda },
+              { name: "", value: curationReda },
+              { name: "", value: collectReda },
+              { name: "", value: engagementReda },
+            ],
+          ];
+        });
+      }
+    }
+  }, [activeTag2]);
+
+  useEffect(() => {
     const {
       influReda,
       campaignReda,
@@ -195,10 +235,10 @@ export default function Main() {
         ...[
           { name: "Influence", value: influReda },
           { name: "Campaign", value: campaignReda },
-          { name: "Creation", value: creationReda },
+          { name: "Engagement", value: engagementReda },
           { name: "Curation", value: curationReda },
           { name: "Collection", value: collectReda },
-          { name: "Engagement", value: engagementReda },
+          { name: "Creation", value: creationReda },
         ],
       ];
     });
@@ -220,11 +260,11 @@ export default function Main() {
       return [
         ...[
           { name: "", value: influReda },
-          { name: "Campaign", value: campaignReda },
-          { name: "", value: creationReda },
+          { name: "", value: campaignReda },
+          { name: "", value: engagementReda },
           { name: "", value: curationReda },
-          { name: "", value: collectReda },
-          { name: "Engagement", value: engagementReda },
+          { name: "Collection", value: collectReda },
+          { name: "Creation", value: creationReda },
         ],
       ];
     });
@@ -443,6 +483,7 @@ export default function Main() {
                 id="top-rador"
                 width={"100%"}
                 height={"100%"}
+                showTooltip={true}
                 showList={(name: string) => showRank(name)}
               />
             </div>
@@ -474,14 +515,14 @@ export default function Main() {
                       <p>Rank</p>
                     </div>
                     <div>
-                      <p>{new BN(userInfo.score).toFixed(2)}</p>
-                      <p>Score</p>
+                      <p>{new BN(userInfo.following).toFormat()}</p>
+                      <p>Following</p>
                     </div>
                   </div>
                   <div>
                     <div>
-                      <p>{new BN(userInfo.following).toFormat()}</p>
-                      <p>Following</p>
+                      <p>{new BN(userInfo.score).toFixed(2)}</p>
+                      <p>Score</p>
                     </div>
                     <div>
                       <p>{new BN(userInfo.follower).toFormat()}</p>
@@ -638,6 +679,7 @@ export default function Main() {
                   id="top-rador_1"
                   width={"100%"}
                   height={"100%"}
+                  showTooltip={false}
                   showList={(name: string) => console.log(name)}
                 />
               </div>
@@ -872,6 +914,7 @@ export default function Main() {
                   id="top-rador_2"
                   width={"100%"}
                   height={"100%"}
+                  showTooltip={false}
                   showList={(name: string) => console.log(name)}
                 />
               </div>
