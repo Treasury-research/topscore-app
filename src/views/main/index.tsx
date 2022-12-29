@@ -468,7 +468,7 @@ export default function Main() {
                     Share & Mint
                   </div>
                   <div
-                    className="topscore-head-wallet-btn"
+                    className="topscore-head-wallet-btn downLoadBtn"
                     onClick={() => {
                       setDownloadModalVisible(true);
                       log("download", account);
@@ -481,7 +481,7 @@ export default function Main() {
                   <>
                     <div
                       onClick={goProfile}
-                      className="topscore-head-wallet-btn"
+                      className="topscore-head-wallet-btn downLoadBtn"
                     >
                       Check Mine
                     </div>

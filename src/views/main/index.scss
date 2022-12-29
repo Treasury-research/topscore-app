@@ -575,3 +575,22 @@
 .charcter-main{
   margin-bottom: 400px;
 }
+
+.downLoadBtn{
+  position: absolute;
+  right: 120px;
+  top: 20px;
+  background: #232429 !important;
+}
+
+.download-modal-btn{
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: "Jura";
+  background: #232429 !important;
+  color: rgba(255, 255, 255, .8);
+  width:fit-content;
+  float: left;
+}
