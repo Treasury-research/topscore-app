@@ -25,7 +25,7 @@ const HeaderBtn = (props: any) => {
 
   const gotoMain = () => {
     if(history.location.pathname === '/rainbow'){
-      history.push(`/main`)
+      history.goBack()
     }
   };
 
