@@ -49,50 +49,67 @@
     font-family: 'Jura';
   }
 
+  .character-content-scroll{
+    height: calc(100vh - 80px);
+    width: 100%;
+    overflow: auto;
+  }
   .character-content {
-    height: 514px;
-    width: 795px;
-    margin: 0 auto;
-    margin-top: 40px;
-    background: url("./../../static/img/character-bg.png") no-repeat center bottom;
-    background-size: cover;
+    height: 100%;
+    width: 1000px;
     position: relative;
-
+    margin: 0 auto;
+    padding-top: 60px;
+    p{
+      font-family: "Jura";
+      font-size: 16px;
+      color: rgba(255, 255, 255, .9);
+      margin-bottom: 6px;
+      span{
+        color: green;
+      }
+    }
     >div {
-      height: 200px;
-      width: 200px;
-      // background: red;
-      position: absolute;
+      float: left;
     }
 
-    .ch-1 {
-      left: -211px;
-      top: 63px;
+    .character-content-left {
+      width: 55%;
+      height: 100%;
+      >div{
+        margin-bottom: 60px;
+      }
+      .title{
+        font-size: 20px;
+        font-family: "Eur";
+        color: rgba(255, 51, 0, 1);
+        margin-bottom: 20px;
+      }
     }
 
-    .ch-2 {
-      left: -141px;
-      top: 379px;
-    }
-
-    .ch-3 {
-      left: 141px;
-      top: 520px;
-    }
-
-    .ch-4 {
-      left: 512px;
-      top: 510px;
-    }
-
-    .ch-5 {
-      right: -215px;
-      top: 413px;
-    }
-
-    .ch-6 {
-      right: -172px;
-      top: 60px;
+    .character-content-right {
+      width: 45%;
+      height: 100%;
+      position: relative;
+      >div{
+        float: left;
+        width: 40%;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        height: 228px;
+        >img{
+          height: 100%;
+          width: 100%;
+        }
+      }
+      .right-des{
+        position: absolute;
+        right: -20px;
+        bottom: 100px;
+        width: fit-content;
+        height: fit-content;
+        margin: 0;
+      }
     }
   }
 }
