@@ -561,7 +561,7 @@ export default function Main() {
                     <div className="rank-item" key={i}>
                       <span>{t.rank}</span>
                       {t.imageURI ? <img className="avatar" src={formatIPFS(t.imageURI)} /> : <span>k</span>}
-                      <span>{t.handle}</span>
+                      <span title={t.handle}>{t.handle && t.handle.length > 16 ? `${t.handle.slice(0,16)}...` : t.handle}</span>
                       {/* <span>
                         <img src={imgRadarSmall} alt="" />
                       </span> */}
