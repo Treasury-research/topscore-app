@@ -303,3 +303,8 @@ body {
 img{
 	max-width: 100%;
 }
+
+.ant-dropdown-menu{
+	background: #505050;
+    color: rgba(255,255,255,0.8);
+}

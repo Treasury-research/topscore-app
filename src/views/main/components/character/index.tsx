@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./index.scss";
 import api from "../../../../api";
 import Mastermind from "./../../../../static/img/dark-character/Mastermind.png";
 import Pioneer from "./../../../../static/img/dark-character/Pioneer.png";

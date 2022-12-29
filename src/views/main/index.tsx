@@ -965,7 +965,7 @@ export default function Main() {
                 }}
               />
             )}
-          <div>
+          <div className="charcter-main">
             <Character profileId={currentProfile.profileId} />
           </div>
         </div>

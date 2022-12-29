@@ -11,7 +11,7 @@
     overflow: hidden;
 
     >div {
-      margin: 20px 0 60px 0;
+      margin: 20px 0 0px 0;
     }
 
     >div:nth-child(1) {
@@ -41,6 +41,7 @@
 
     >div:nth-child(1) {
       overflow: hidden;
+      margin-top: 200px;
 
       >div:nth-child(1) {
         float: left;
@@ -74,6 +75,7 @@
       height: 500px;
       width: 100%;
       position: relative;
+      margin-bottom: 200px;
 
       .generate {
         position: absolute;
@@ -181,7 +183,7 @@
 
     .btn-group-1 {
       overflow: hidden;
-      margin: 80px 0 20px 0;
+      margin: 0px 0 20px 0;
 
       >div {
         overflow: hidden;
@@ -200,7 +202,7 @@
 
     .btn-group-2 {
       overflow: hidden;
-      margin: 80px 0 20px 0;
+      margin: 0px 0 20px 0;
 
       >div {
         overflow: hidden;
@@ -220,6 +222,7 @@
     .influence_curation {
       display: flex;
       font-family: "Exan";
+      margin-bottom: 300px;
 
       .influence-default-text {
         font-size: 20px;
@@ -559,4 +562,8 @@
       margin-right: 10px;
     }
   }
+}
+
+.charcter-main{
+  margin-bottom: 400px;
 }
