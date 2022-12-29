@@ -9,7 +9,6 @@ import useWeb3Context from "../../hooks/useWeb3Context";
 import Follow from "./components/Follow";
 import Wallet from "../../components/WalletBtn";
 import {
-  TwitterOutlined,
   DownOutlined,
   LeftOutlined,
   RightOutlined,
@@ -20,9 +19,8 @@ import Comment from "./components/comment";
 import Character from "./components/character";
 import HeaderBtn from "../../components/HeaderBtn";
 import FixedIcon from "./components/FixedIcon";
-import imgRadarSmall from "./../../static/img/radar-small.png";
-import S2 from "./../../static/img/s2.png";
 import ClaimModal from "./components/ClaimModal";
+import DownloadModal from "./components/DownloadModal";
 import ImgGenerate from "./../../static/img/generate-button.gif";
 import ImgHoverGenerate from "./../../static/img/hover-generate-button.gif";
 import log from "lib/log";
@@ -66,6 +64,7 @@ export default function Main() {
   const [rankInfo, setRankInfo] = useState<any>({});
   const [isSelf, setIsSelf] = useState<boolean>(false);
   const [showRadorGif, setShowRadorGif] = useState(false);
+  const [downloadModalVisible, setDownloadModalVisible] = useState(false);
 
   const history = useHistory();
   const params: any = useParams();
@@ -457,6 +456,7 @@ export default function Main() {
             {account && (
               <>
                 {isSelf ? (
+                  <>
                   <div
                     className="topscore-head-wallet-btn"
                     onClick={() => {
@@ -466,6 +466,18 @@ export default function Main() {
                   >
                     Share & Mint
                   </div>
+
+                  <div
+                    className="topscore-head-wallet-btn"
+                    onClick={() => {
+                      setDownloadModalVisible(true);
+                      log("download", account);
+                    }}
+                  >
+                    Download
+                  </div>
+                  </>
+                 
                 ) : (
                   <Follow
                     profileId={currentProfile.profileId}
@@ -984,6 +996,12 @@ export default function Main() {
         <ClaimModal
           profileId={currentProfile.profileId}
           onCancel={() => setIsModalOpen(false)}
+        />
+      )}
+        {downloadModalVisible && (
+        <DownloadModal
+          profileId={currentProfile.profileId}
+          onCancel={() => setDownloadModalVisible(false)}
         />
       )}
     </div>
