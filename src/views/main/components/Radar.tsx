@@ -107,6 +107,11 @@ const ChartLine = (props: any) => {
             }
         })
         chart.setOption(option);
+        window.addEventListener("resize", () => {
+            if (chart) {
+                chart.resize()
+            }
+        })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [optionsData, data]);
     return (
