@@ -349,6 +349,13 @@ export default function Main() {
   return (
     <div className="toscore">
       <Helmet>
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Your 2022 Wrapped on Lens" />
+        <meta name="twitter:description" content="TopScore - a KNN3-powered scoring system based on Lens Protocol to evaluate this campaign." />
+        <meta
+            property="twitter:image"
+            content={`https://lens-api.knn3.xyz/api/lens/generate/shareImg/${currentProfile.profileId}`}
+          />
         <meta property="og:title" content="Your 2022 Wrapped on Lens" />
         <meta property="og:description" content="TopScore - a KNN3-powered scoring system based on Lens Protocol to evaluate this campaign." />
         <meta
