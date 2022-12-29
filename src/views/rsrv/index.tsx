@@ -18,7 +18,7 @@ import RadarDefaultBtn from "./../../static/img/radarDefaultBtn.gif";
 import RadarHover from "./../../static/img/radarHover.gif";
 import { DownOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Radar from "./components/Radar";
-import { Dropdown, Space, Menu, Drawer, Pagination, Modal } from "antd";
+import { Dropdown, Space, Menu, Drawer, Pagination, Modal, message } from "antd";
 
 const typeList = ['Influence', 'Campaign', 'Engagement', 'Creation', 'Collection', 'Curation'];
 const rankList = [{
@@ -60,34 +60,38 @@ export default function Main() {
     setMenuOpen(false);
   };
 
-  const postReserve = async (address: string) => {
-    if (reserving) {
-      return
-    }
-    try {
-      setReserving(true)
-      await log("reserve", address)
-      setIsOpen(true);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setReserving(false)
-    }
-  }
+  // const postReserve = async (address: string) => {
+  //   if (reserving) {
+  //     return
+  //   }
+  //   try {
+  //     setReserving(true)
+  //     await log("reserve", address)
+  //     setIsOpen(true);
+  //   } catch (err) {
+  //     console.log(err);
+  //   } finally {
+  //     setReserving(false)
+  //   }
+  // }
 
   const doReserve = async () => {
-    if (!account) {
-      try {
-        const connectedAddress: string = await connectWallet();
-        if (connectedAddress) {
-          postReserve(connectedAddress);
-        }
-      } catch (err) {
-        console.log('rejected')
-      }
-    } else {
-      postReserve(account);
-    }
+    message.info('Revervation ended');
+    return
+
+    // if (!account) {
+    //   try {
+    //     message.info('Revervation ended');
+    //     // const connectedAddress: string = await connectWallet();
+    //     // if (connectedAddress) {
+    //     //   postReserve(connectedAddress);
+    //     // }
+    //   } catch (err) {
+    //     console.log('rejected')
+    //   }
+    // } else {
+    //   // postReserve(account);
+    // }
   }
 
   return (
