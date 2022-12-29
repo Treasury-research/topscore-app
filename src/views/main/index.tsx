@@ -61,6 +61,7 @@ export default function Main() {
   const [pub, setPub] = useState<any>({});
   const [activeTag1, setActiveTag1] = useState<number>(0);
   const [activeTag2, setActiveTag2] = useState<number>(0);
+  const [canLoadAvatar, setCanLoadAvatar] = useState<boolean>(true);
   const [rankInfo, setRankInfo] = useState<any>({});
   const [isSelf, setIsSelf] = useState<boolean>(false);
 
@@ -365,7 +366,8 @@ export default function Main() {
         <div className="toscore-main">
           <div>
             <div className="toscore-main-base-info">
-              <div className="net-head-img">K</div>
+              {(currentProfile.imageURI && canLoadAvatar) ? <img className="net-head-img" onError={()=>setCanLoadAvatar(false)} src={formatIPFS(currentProfile.imageURI)} /> :  
+              <div className="net-head-img">K</div>}
               <div>
                 <div>
                   <Dropdown
@@ -842,10 +844,9 @@ export default function Main() {
             }
           </div>
 
-
           {activeTag2 === 0 && pub.collect && Object.keys(pub.collect.publication).length > 0 && <Comment
             data={{
-              headImg: "",
+              headImg: canLoadAvatar ? formatIPFS(currentProfile.imageURI) : '',
               name: currentProfile.name,
               lensHandle: currentProfile.handle,
               msg: pub.collect.publication.metadata.description,
@@ -859,7 +860,7 @@ export default function Main() {
           
           {activeTag2 === 1 && pub.engagement && Object.keys(pub.engagement.publication).length > 0 && <Comment
             data={{
-              headImg: "",
+              headImg: canLoadAvatar ? formatIPFS(currentProfile.imageURI) : '',
               name: currentProfile.name,
               lensHandle: currentProfile.handle,
               msg: pub.engagement.publication.metadata.description,
