@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import "./index.scss";
 import { shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
@@ -19,5 +18,5 @@ export default function Wallet() {
         </div>
       )}
     </div>
-  )
+  );
 }
