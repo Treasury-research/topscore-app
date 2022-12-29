@@ -411,7 +411,7 @@ export default function Main() {
       <div className="toscore-content">
         <div className="toscore-main">
           <div>
-            {handlesList && handlesList.length > 0 ?<div className="toscore-main-base-info">
+            {handlesList && handlesList.length > 0 ? <div className="toscore-main-base-info">
               {currentProfile.imageURI && canLoadAvatar ? (
                 <img
                   className="net-head-img"
@@ -452,30 +452,30 @@ export default function Main() {
                 </div>
                 <div>@{currentProfile.handle}</div>
               </div>
-            </div> : <div className="empty-hint"> You don't have any profile yet.</div> }
-            
+            </div> : <div className="empty-hint"> You don't have any profile yet.</div>}
+
             {account && (
               <>
                 {isSelf ? (
                   <>
-                  <div
-                    className="topscore-head-wallet-btn"
-                    onClick={() => {
-                      setIsModalOpen(true);
-                      log("click_share_mint", account);
-                    }}
-                  >
-                    Share & Mint
-                  </div>
-                  <div
-                    className="topscore-head-wallet-btn downLoadBtn"
-                    onClick={() => {
-                      setDownloadModalVisible(true);
-                      log("download", account);
-                    }}
-                  >
-                    Download
-                  </div>
+                    <div
+                      className="topscore-head-wallet-btn"
+                      onClick={() => {
+                        setIsModalOpen(true);
+                        log("click_share_mint", account);
+                      }}
+                    >
+                      Share & Mint
+                    </div>
+                    <div
+                      className="topscore-head-wallet-btn downLoadBtn"
+                      onClick={() => {
+                        setDownloadModalVisible(true);
+                        log("download", account);
+                      }}
+                    >
+                      Download
+                    </div>
                   </>
                 ) : (
                   <>
@@ -556,14 +556,14 @@ export default function Main() {
                       <p>Collections</p>
                     </div>
                     <div>
-                      <p>{new BN(userInfo.collectBy).toFormat()}</p>
-                      <p>Collected</p>
+                      <p>{new BN(userInfo.publication).toFormat()}</p>
+                      <p>Publications</p>
                     </div>
                   </div>
                   <div>
                     <div>
-                      <p>{new BN(userInfo.publication).toFormat()}</p>
-                      <p>Publications</p>
+                      <p>{new BN(userInfo.collectBy).toFormat()}</p>
+                      <p>Collected</p>
                     </div>
                     <div className="diff-sty-info">
                       <p>
@@ -737,7 +737,7 @@ export default function Main() {
                       of content, resulting in{" "}
                       <span>{new BN(rankInfo.curationScore).toFormat()}</span>
                       Collects for the original authors. Your Curation score was
-                       {new BN(rankInfo.curationScore).toFormat()}, ranking you {new BN(rankInfo.curationRank).toFormat()}!
+                      {new BN(rankInfo.curationScore).toFormat()}, ranking you {new BN(rankInfo.curationRank).toFormat()}!
                     </p>
 
                     <p>Let's take the time to your achievement in 2022!</p>
@@ -749,8 +749,8 @@ export default function Main() {
                       you had <span>{new BN(userInfo.post).toFormat()}</span>{" "}
                       pieces of content and bringing{" "}
                       <span>{new BN(userInfo.collectBy).toFormat()}</span>{" "}
-                      Collects to the original authors.  Your Curation score was
-                       {new BN(rankInfo.curationScore).toFormat()}, ranking you {new BN(rankInfo.curationRank).toFormat()}!
+                      Collects to the original authors.  Your Curation score was{" "}
+                      <span>{new BN(rankInfo.curationScore).toFormat()}</span>, ranking you{" "}<span>{new BN(rankInfo.curationRank).toFormat()}</span>!
                     </p>
                     <p>
                       We celebrate your achievements and applaud you for your
@@ -1006,7 +1006,7 @@ export default function Main() {
           onCancel={() => setIsModalOpen(false)}
         />
       )}
-        {downloadModalVisible && (
+      {downloadModalVisible && (
         <DownloadModal
           profileId={currentProfile.profileId}
           onCancel={() => setDownloadModalVisible(false)}
