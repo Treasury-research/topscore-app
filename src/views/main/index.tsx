@@ -353,7 +353,7 @@ export default function Main() {
         <meta property="og:description" content="TopScore - a KNN3-powered scoring system based on Lens Protocol to evaluate this campaign." />
         <meta
           property="og:image"
-          content={`https://lens-api.knn3.xyz/api/lens/generate/shareImg/${currentProfile.profileId}"`}
+          content={`https://lens-api.knn3.xyz/api/lens/generate/shareImg/${currentProfile.profileId}`}
         />
         <meta property="og:locale'" content="en_US" />
         <meta property="og:type" content="website" />
@@ -900,7 +900,7 @@ export default function Main() {
         </div>
       </div>
 
-      {isModalOpen && <ClaimModal onCancel={() => setIsModalOpen(false)} />}
+      {isModalOpen && <ClaimModal profileId={currentProfile.profileId} onCancel={() => setIsModalOpen(false)} />}
     </div>
   );
 }

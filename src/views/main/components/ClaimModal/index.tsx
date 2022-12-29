@@ -9,7 +9,7 @@ import useERC721Contract from "../../../../contract/useErc721Contract";
 import { TwitterOutlined } from "@ant-design/icons";
 import IconLenster from "./../../../../static/img/g5.svg";
 
-export default function ClaimModal({ onCancel }: any) {
+export default function ClaimModal({ onCancel, profileId }: any) {
   const claimContract = useClaimContract();
   const erc721Contract = useERC721Contract();
   const [merkleProof, setMerkleProof] = useState<any>([]);
@@ -17,6 +17,7 @@ export default function ClaimModal({ onCancel }: any) {
   const [canClaim, setCanClaim] = useState(false);
   const [imageUri, setImageUri] = useState("");
   const [nftBalance, setNftBalance] = useState(0);
+  const [minting, setMinting] = useState(false);
   const { account } = useWeb3Context();
   const handleOk = () => {
     onCancel();
@@ -46,10 +47,13 @@ export default function ClaimModal({ onCancel }: any) {
 
   const doClaim = async () => {
     try {
+      setMinting(true);
       await claimContract.claim(merkleProof);
+      setMinting(false);
       checkBalance();
-      setCanClaim(false);
+      // setCanClaim(false);
     } catch (err) {
+      setMinting(false);
       console.log(err);
     }
   };
@@ -58,6 +62,7 @@ export default function ClaimModal({ onCancel }: any) {
     const res = await erc721Contract.balanceOf(config.contracts.nft);
     setNftBalance(res);
     if (res > 0) {
+      setChecking(false);
       const tokenId = await erc721Contract.getTokenId(config.contracts.nft);
       const res = await erc721Contract.getNftInfo(
         config.contracts.nft,
@@ -109,16 +114,18 @@ export default function ClaimModal({ onCancel }: any) {
         <div className="claim-img" />
       )}
       <div className="claim-bottom">
-        {checking ? (
+        {minting ? (
+          <div>Minting...</div>
+        ) : checking ? (
           <div>Checking...</div>
         ) : canClaim ? (
           <div onClick={doClaim}>Mint</div>
-        ) : imageUri ? (
+        ) : nftBalance > 0 ? (
           <div>Successfully minted</div>
         ) : (
           <div>You have not reserved</div>
         )}
-        {(canClaim || imageUri) && (
+        {(canClaim || imageUri || true) && (
           <div>
             <div>
               <LensterShareButton
@@ -131,8 +138,10 @@ export default function ClaimModal({ onCancel }: any) {
             </div>
             <div>
               <TwitterShareButton
-                url="https://topscore.knn3.xyz"
-                title="Hello world"
+                url={`https://topscore.knn3.xyz/user/${account}/${profileId}`}
+                related={["@knn3_network"]}
+                hashtags={["TopScore", "Lens", "Your2022WrappedonLens"]}
+                title={`My 2022 Wrapped on Lens: https://topscore.knn3.xyz/user/${account}/${profileId} So what are your #TopScore? What is your social personality? FreeMint #LensRainbowNFT！`}
               >
                 <TwitterOutlined className="twitter-icon" />
               </TwitterShareButton>
