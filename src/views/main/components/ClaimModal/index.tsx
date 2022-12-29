@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal } from "antd";
 import config from "../../../../config";
 import axios from "axios";
+import log from "lib/log";
 import { TwitterShareButton } from "react-share";
 import useWeb3Context from "../../../../hooks/useWeb3Context";
 import useClaimContract from "../../../../contract/useClaimContract";
@@ -138,7 +139,7 @@ export default function ClaimModal({ onCancel, profileId }: any) {
         )}
         {(canClaim || imageUri || true) && (
           <div>
-            <div>
+            <div onClick={() => log('share_lens', account || '')}>
               <LensterShareButton
                 text="Hello world"
                 url="https://topscore.knn3.xyz"
@@ -147,7 +148,7 @@ export default function ClaimModal({ onCancel, profileId }: any) {
                 <img src={IconLenster} />
               </LensterShareButton>
             </div>
-            <div>
+            <div onClick={() => log('share_twitter', account || '')}>
               <TwitterShareButton
                 url={`https://topscore.knn3.xyz/user/${account}/${profileId}`}
                 hashtags={["TopScore", "Lens", "Your2022WrappedonLens"]}

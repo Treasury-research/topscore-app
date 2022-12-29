@@ -4,7 +4,6 @@ import "./index.scss";
 import { useParams, useHistory } from "react-router-dom";
 import api from "../../api";
 import { formatIPFS } from "lib/tool";
-import { Helmet } from "react-helmet";
 import BN from "bignumber.js";
 import useWeb3Context from "../../hooks/useWeb3Context";
 import Follow from "./components/Follow";
@@ -26,6 +25,7 @@ import S2 from "./../../static/img/s2.png";
 import ClaimModal from "./components/ClaimModal";
 import ImgGenerate from "./../../static/img/generate-button.gif";
 import ImgHoverGenerate from "./../../static/img/hover-generate-button.gif";
+import log from "lib/log";
 
 const tag1 = ["Influence", "Curation"];
 
@@ -102,6 +102,7 @@ export default function Main() {
   const onClose = () => {
     setShowList(false);
     setRankPageNo(1);
+    log('close_ranklist', account || '')
   };
 
   const getRankList = async () => {
@@ -139,7 +140,7 @@ export default function Main() {
   };
 
   useEffect(() => {
-    if (JSON.stringify(rankInfo) !== '{}') {
+    if (JSON.stringify(rankInfo) !== "{}") {
       const {
         influReda,
         campaignReda,
@@ -271,6 +272,7 @@ export default function Main() {
   const showRank = (name: string) => {
     setActiveRankIndex(typeList.indexOf(name));
     setShowList(true);
+    log(`open_ranklist_${name}`, account || '')
   };
 
   const onRankChange = (val: number) => {
@@ -316,19 +318,33 @@ export default function Main() {
   }, [address, account]);
 
   const changeProfile = (profileId: number) => {
-    history.push(`/user/${address}/${profileId}`)
-  }
+    history.push(`/user/${address}/${profileId}`);
+  };
 
   useEffect(() => {
     if (!handlesList || handlesList.length === 0) {
       return;
     }
 
-    if (queryProfileId && handlesList[activeHandleIndex].profileId !== Number(queryProfileId)) {
-      console.log('before set???', handlesList.findIndex((item: any) => item.profileId === Number(queryProfileId)))
-      setActiveHandleIndex(handlesList.findIndex((item: any) => item.profileId === Number(queryProfileId)));
+    if (
+      queryProfileId &&
+      handlesList[activeHandleIndex].profileId !== Number(queryProfileId)
+    ) {
+      console.log(
+        "before set???",
+        handlesList.findIndex(
+          (item: any) => item.profileId === Number(queryProfileId)
+        )
+      );
+      setActiveHandleIndex(
+        handlesList.findIndex(
+          (item: any) => item.profileId === Number(queryProfileId)
+        )
+      );
     } else {
-      history.push(`/user/${address}/${handlesList[activeHandleIndex].profileId}`)
+      history.push(
+        `/user/${address}/${handlesList[activeHandleIndex].profileId}`
+      );
     }
 
     const profile = handlesList[activeHandleIndex];
@@ -357,8 +373,15 @@ export default function Main() {
         <div className="toscore-main">
           <div>
             <div className="toscore-main-base-info">
-              {(currentProfile.imageURI && canLoadAvatar) ? <img className="net-head-img" onError={()=>setCanLoadAvatar(false)} src={formatIPFS(currentProfile.imageURI)} /> :  
-              <div className="net-head-img">K</div>}
+              {currentProfile.imageURI && canLoadAvatar ? (
+                <img
+                  className="net-head-img"
+                  onError={() => setCanLoadAvatar(false)}
+                  src={formatIPFS(currentProfile.imageURI)}
+                />
+              ) : (
+                <div className="net-head-img">K</div>
+              )}
               <div>
                 <div>
                   <Dropdown
@@ -369,8 +392,9 @@ export default function Main() {
                             className="drop-menu"
                             key={i}
                             onClick={() => {
-                              setActiveHandleIndex(i)
+                              setActiveHandleIndex(i);
                               changeProfile(t.profileId);
+                              log("change_profile", account || "");
                             }}
                           >
                             {t.handle}
@@ -395,14 +419,14 @@ export default function Main() {
                 {isSelf ? (
                   <div
                     className="topscore-head-wallet-btn"
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => {
+                      setIsModalOpen(true);
+                      log("click_share_mint", account);
+                    }}
                   >
                     Share & Mint
                   </div>
                 ) : (
-                  // <div>
-                  //   123
-                  // </div>
                   <Follow
                     profileId={currentProfile.profileId}
                     handle={currentProfile.handle}
@@ -422,19 +446,25 @@ export default function Main() {
                 showList={(name: string) => showRank(name)}
               />
             </div>
-            {
-              !account &&
+            {!account && (
               <div className="generate">
-                {
-                  !showRadorGif &&
-                  <img src={ImgGenerate} alt="" onMouseEnter={() => setShowRadorGif(true)} />
-                }
-                {
-                  showRadorGif &&
-                  <img onMouseLeave={() => setShowRadorGif(false)} onClick={() => connectWallet()} src={ImgHoverGenerate} alt="" />
-                }
+                {!showRadorGif && (
+                  <img
+                    src={ImgGenerate}
+                    alt=""
+                    onMouseEnter={() => setShowRadorGif(true)}
+                  />
+                )}
+                {showRadorGif && (
+                  <img
+                    onMouseLeave={() => setShowRadorGif(false)}
+                    onClick={() => connectWallet()}
+                    src={ImgHoverGenerate}
+                    alt=""
+                  />
+                )}
               </div>
-            }
+            )}
             <div className="top-rador-info">
               <div className="rador-info">
                 <div>
@@ -444,7 +474,7 @@ export default function Main() {
                       <p>Rank</p>
                     </div>
                     <div>
-                      <p>{new BN(userInfo.score).toFormat()}</p>
+                      <p>{new BN(userInfo.score).toFixed(2)}</p>
                       <p>Score</p>
                     </div>
                   </div>
@@ -505,6 +535,7 @@ export default function Main() {
                   className="rightOut"
                   onClick={() => {
                     setShowList(false);
+                    log('close_ranklist', account || '')
                   }}
                 >
                   <RightOutlined />
@@ -541,8 +572,16 @@ export default function Main() {
                   {rankList.map((t: any, i) => (
                     <div className="rank-item" key={i}>
                       <span>{t.rank}</span>
-                      {t.imageURI ? <img className="avatar" src={formatIPFS(t.imageURI)} /> : <span>k</span>}
-                      <span title={t.handle}>{t.handle && t.handle.length > 16 ? `${t.handle.slice(0,16)}...` : t.handle}</span>
+                      {t.imageURI ? (
+                        <img className="avatar" src={formatIPFS(t.imageURI)} />
+                      ) : (
+                        <span>k</span>
+                      )}
+                      <span title={t.handle}>
+                        {t.handle && t.handle.length > 16
+                          ? `${t.handle.slice(0, 16)}...`
+                          : t.handle}
+                      </span>
                       {/* <span>
                         <img src={imgRadarSmall} alt="" />
                       </span> */}
@@ -576,26 +615,23 @@ export default function Main() {
             </div>
           </div>
           <div className="influence_curation">
-            {
-              activeTag1 === 0 && JSON.stringify(rankInfo) === '{}' &&
+            {activeTag1 === 0 && JSON.stringify(rankInfo) === "{}" && (
               <div className="influence-default-text">
                 <p>THE COMPANIONS</p>
-                <p>MAKE THE JOURNEY &nbsp;  NO LONGER &nbsp; LONELY.</p>
+                <p>MAKE THE JOURNEY &nbsp; NO LONGER &nbsp; LONELY.</p>
               </div>
-            }
+            )}
 
-            {
-              activeTag1 === 1 && JSON.stringify(rankInfo) === '{}' &&
+            {activeTag1 === 1 && JSON.stringify(rankInfo) === "{}" && (
               <div className="curation-default-text">
                 <p>YOU WILL MEET LIKE MINDED PEOPLE</p>
                 <p>ALONG</p>
                 <p>THE</p>
                 <p>WAY</p>
               </div>
-            }
+            )}
 
-            {
-              JSON.stringify(rankInfo) !== '{}' &&
+            {JSON.stringify(rankInfo) !== "{}" && (
               <div className="left-rador">
                 <Radar
                   data={rador2}
@@ -605,9 +641,9 @@ export default function Main() {
                   showList={(name: string) => console.log(name)}
                 />
               </div>
-            }
+            )}
 
-            {activeTag1 === 0 && JSON.stringify(rankInfo) !== '{}' && (
+            {activeTag1 === 0 && JSON.stringify(rankInfo) !== "{}" && (
               <div className="right-text">
                 <p>In 2022,</p>
                 <p>you had the power to capture hearts and minds,</p>
@@ -618,7 +654,7 @@ export default function Main() {
                 </p>
                 <p>
                   ranking you{" "}
-                  <span>{new BN(rankInfo.influRank).toFormat()}</span>{" "}in the
+                  <span>{new BN(rankInfo.influRank).toFormat()}</span> in the
                   game of social media,
                 </p>
 
@@ -629,14 +665,14 @@ export default function Main() {
                 )}
               </div>
             )}
-            {activeTag1 === 1 && JSON.stringify(rankInfo) !== '{}' && (
+            {activeTag1 === 1 && JSON.stringify(rankInfo) !== "{}" && (
               <div className="right-text">
                 {userInfo.mirror > 0 ? (
                   <>
                     <p>In the past year,</p>
                     <p>
                       you mirrored{" "}
-                      <span>{new BN(userInfo.mirror).toFormat()}</span>{" "}pieces
+                      <span>{new BN(userInfo.mirror).toFormat()}</span> pieces
                       of content, resulting in{" "}
                       <span>{new BN(rankInfo.curationScore).toFormat()}</span>
                       Collects for the original authors.
@@ -648,7 +684,7 @@ export default function Main() {
                   <>
                     <p>In 2022,</p>{" "}
                     <p>
-                      you had{" "}<span>{new BN(userInfo.post).toFormat()}</span>{" "}
+                      you had <span>{new BN(userInfo.post).toFormat()}</span>{" "}
                       pieces of content and bringing{" "}
                       <span>{new BN(userInfo.collectBy).toFormat()}</span>{" "}
                       Collects to the original authors.
@@ -676,8 +712,7 @@ export default function Main() {
             </div>
           </div>
           <div className="collect_pablication">
-            {
-              activeTag2 === 0 && JSON.stringify(rankInfo) === '{}' &&
+            {activeTag2 === 0 && JSON.stringify(rankInfo) === "{}" && (
               <div className="collect-default-text">
                 <div>
                   <p>PEOPLE</p>
@@ -690,19 +725,18 @@ export default function Main() {
                   <p>DONT.</p>
                 </div>
               </div>
-            }
+            )}
 
-            {
-              activeTag2 === 1 && JSON.stringify(rankInfo) === '{}' &&
+            {activeTag2 === 1 && JSON.stringify(rankInfo) === "{}" && (
               <div className="publication-default-text">
                 <p>THE FLAME OF WISDOM ALWAYS</p>
                 <p>BURSTS OUT IN</p>
                 <p>THE</p>
                 <p>DISCUSSION</p>
               </div>
-            }
+            )}
 
-            {activeTag2 === 0 && JSON.stringify(rankInfo) !== '{}' && (
+            {activeTag2 === 0 && JSON.stringify(rankInfo) !== "{}" && (
               <div className="left-text">
                 {userInfo.collectBy > 0 ? (
                   <>
@@ -710,9 +744,9 @@ export default function Main() {
                     <p>you achieved incredible success with your content! </p>
                     <p>
                       Your content has been collected{" "}
-                      <span>{new BN(userInfo.collectBy).toFormat()}</span>{" "}times,
-                      and you have collected{" "}
-                      <span>{new BN(userInfo.collect).toFormat()}</span>{" "}pieces
+                      <span>{new BN(userInfo.collectBy).toFormat()}</span>{" "}
+                      times, and you have collected{" "}
+                      <span>{new BN(userInfo.collect).toFormat()}</span> pieces
                       of valuable content.
                     </p>
                     <p>
@@ -737,7 +771,7 @@ export default function Main() {
                       Your content has been collected{" "}
                       <span>{new BN(userInfo.collectBy).toFormat()}</span>{" "}
                       times, and you have collected{" "}
-                      <span>{new BN(userInfo.collect).toFormat()}</span>{" "}pieces
+                      <span>{new BN(userInfo.collect).toFormat()}</span> pieces
                       of valuable content.
                     </p>
                     <p>
@@ -760,7 +794,7 @@ export default function Main() {
                 )}
               </div>
             )}
-            {activeTag2 === 1 && JSON.stringify(rankInfo) !== '{}' && (
+            {activeTag2 === 1 && JSON.stringify(rankInfo) !== "{}" && (
               <div className="left-text">
                 {true ? (
                   <>
@@ -768,11 +802,11 @@ export default function Main() {
                     <p>In 2022, </p>
                     <p>you made a splash on social media! </p>
                     <p>
-                      You posted{" "}<span>{new BN(userInfo.post).toFormat()}</span>{" "}
+                      You posted <span>{new BN(userInfo.post).toFormat()}</span>{" "}
                       times, made{" "}
                       <span>{new BN(userInfo.comment).toFormat()}</span>{" "}
                       Comments, and created{" "}
-                      <span>{new BN(userInfo.mirror).toFormat()}</span>{" "}Mirrors
+                      <span>{new BN(userInfo.mirror).toFormat()}</span> Mirrors
                       that really got people talking.{" "}
                     </p>
                     <p>
@@ -793,9 +827,7 @@ export default function Main() {
                       and your Engagement score was{" "}
                       <span>{new BN(rankInfo.engagementScore).toFixed(2)}</span>
                       , giving you a place in{" "}
-                      <span>
-                        {new BN(rankInfo.engagementRank).toFormat()}
-                      </span>!{" "}
+                      <span>{new BN(rankInfo.engagementRank).toFormat()}</span>!{" "}
                     </p>
                     <p>You really set the bar for social media success!</p>
                   </>
@@ -804,10 +836,10 @@ export default function Main() {
                     {/* 版本2(0 page rank <?) */}
                     <p>In 2022, </p>
                     <p>
-                      you posted{" "}<span>{new BN(userInfo.post).toFormat()}</span>{" "}
-                      Posts,{" "}<span>{new BN(userInfo.comment).toFormat()}</span>{" "}
+                      you posted <span>{new BN(userInfo.post).toFormat()}</span>{" "}
+                      Posts, <span>{new BN(userInfo.comment).toFormat()}</span>{" "}
                       Comments,{" "}
-                      <span>{new BN(userInfo.mirror).toFormat()}</span>{" "}Mirrors,{" "}
+                      <span>{new BN(userInfo.mirror).toFormat()}</span> Mirrors,{" "}
                     </p>
                     <p>
                       earned <span>_num_</span> Comments, were mirrored{" "}
@@ -833,8 +865,7 @@ export default function Main() {
                 )}
               </div>
             )}
-            {
-              JSON.stringify(rankInfo) !== '{}' &&
+            {JSON.stringify(rankInfo) !== "{}" && (
               <div className="right-rador">
                 <Radar
                   data={rador3}
@@ -844,36 +875,52 @@ export default function Main() {
                   showList={(name: string) => console.log(name)}
                 />
               </div>
-            }
+            )}
           </div>
 
-          {activeTag2 === 0 && pub.collect && Object.keys(pub.collect.publication).length > 0 && <Comment
-            data={{
-              headImg: canLoadAvatar ? formatIPFS(currentProfile.imageURI) : '',
-              name: currentProfile.name,
-              lensHandle: currentProfile.handle,
-              msg: pub.collect.publication.metadata.description,
-              commentImg: formatIPFS(pub.collect.publication.metadata.image),
-              iconNum1: pub.collect.commentCount,
-              iconNum2: pub.collect.mirrorCount,
-              iconNum3: pub.collect.collectCount,
-              // iconNum4: "10",
-            }}
-          />}
+          {activeTag2 === 0 &&
+            pub.collect &&
+            Object.keys(pub.collect.publication).length > 0 && (
+              <Comment
+                data={{
+                  headImg: canLoadAvatar
+                    ? formatIPFS(currentProfile.imageURI)
+                    : "",
+                  name: currentProfile.name,
+                  lensHandle: currentProfile.handle,
+                  msg: pub.collect.publication.metadata.description,
+                  commentImg: formatIPFS(
+                    pub.collect.publication.metadata.image
+                  ),
+                  iconNum1: pub.collect.commentCount,
+                  iconNum2: pub.collect.mirrorCount,
+                  iconNum3: pub.collect.collectCount,
+                  // iconNum4: "10",
+                }}
+              />
+            )}
 
-          {activeTag2 === 1 && pub.engagement && Object.keys(pub.engagement.publication).length > 0 && <Comment
-            data={{
-              headImg: canLoadAvatar ? formatIPFS(currentProfile.imageURI) : '',
-              name: currentProfile.name,
-              lensHandle: currentProfile.handle,
-              msg: pub.engagement.publication.metadata.description,
-              commentImg: formatIPFS(pub.engagement.publication.metadata.image),
-              iconNum1: pub.collect.commentCount,
-              iconNum2: pub.collect.mirrorCount,
-              iconNum3: pub.collect.collectCount,
-              // iconNum4: "10",
-            }}
-          />}
+          {activeTag2 === 1 &&
+            pub.engagement &&
+            Object.keys(pub.engagement.publication).length > 0 && (
+              <Comment
+                data={{
+                  headImg: canLoadAvatar
+                    ? formatIPFS(currentProfile.imageURI)
+                    : "",
+                  name: currentProfile.name,
+                  lensHandle: currentProfile.handle,
+                  msg: pub.engagement.publication.metadata.description,
+                  commentImg: formatIPFS(
+                    pub.engagement.publication.metadata.image
+                  ),
+                  iconNum1: pub.collect.commentCount,
+                  iconNum2: pub.collect.mirrorCount,
+                  iconNum3: pub.collect.collectCount,
+                  // iconNum4: "10",
+                }}
+              />
+            )}
           <div>
             <Character profileId={currentProfile.profileId} />
           </div>
@@ -882,13 +929,19 @@ export default function Main() {
           className="leftOut"
           onClick={() => {
             setShowList(true);
+            log('open_ranklist', account || '')
           }}
         >
           <LeftOutlined />
         </div>
       </div>
 
-      {isModalOpen && <ClaimModal profileId={currentProfile.profileId} onCancel={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <ClaimModal
+          profileId={currentProfile.profileId}
+          onCancel={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

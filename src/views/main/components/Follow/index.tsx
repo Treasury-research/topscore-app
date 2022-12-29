@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ApproveButton from "../../../../components/ApproveButton";
 import useWeb3Context from "../../../../hooks/useWeb3Context";
-import { switchChain } from "../../../../lib/tool";
 import useLenshubContract from "../../../../contract/useLenshubContract";
 import useErc20Contract from "../../../../contract/useErc20Contract";
+import log from "lib/log";
 import useErc721Contract, {
-  formatIPFS,
 } from "../../../../contract/useErc721Contract";
 import BN from "bignumber.js";
 import useFeeFollowContract from "../../../../contract/useFeeFollowContract";
@@ -33,6 +32,7 @@ export default function Lens({ profileId, handle }: any) {
         prev.push(res.events.Transfer.returnValues.tokenId);
         return [...prev];
       });
+      log('follow', account || '')
     }
   };
 
