@@ -448,11 +448,12 @@
     font-family: "Exan";
   }
 
-  >span:nth-child(2) {
+  .avatar, >span:nth-child(2) {
     background-color: rgb(255, 51, 0);
     display: inline-block;
     width: 30px;
     height: 30px;
+    border-radius: 100%;
     vertical-align: middle;
     line-height: 30px;
     text-align: center;

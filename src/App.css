@@ -299,3 +299,7 @@ body {
 	background: #505050;
 	box-shadow: rgba(0,0,0,.5) 0 2px 4px;
 }
+
+img{
+	max-width: 100%;
+}

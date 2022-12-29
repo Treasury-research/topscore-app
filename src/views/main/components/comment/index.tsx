@@ -52,12 +52,12 @@ const Comment = (props: any) => {
                     </span>
                     <span>{iconNum3}</span>
                 </div>
-                <div>
+                {/* <div>
                     <span>
                         <img src={IconG4} alt="" />
                     </span>
                     <span>{iconNum4}</span>
-                </div>
+                </div> */}
             </div>
         </div>
     );

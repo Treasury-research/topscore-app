@@ -47,4 +47,7 @@ export const formatIPFS = (val) => {
   } else {
     return val;
   }
+  // else if(val.indexOf("ipfs.infura.io") > -1){
+  //   return val.replace("https://ipfs.infura.io/ipfs", "https://lens.infura-ipfs.io/ipfs/");
+  // }
 };

@@ -16,6 +16,7 @@ export default function ClaimModal({ onCancel }: any) {
   const [checking, setChecking] = useState(true);
   const [canClaim, setCanClaim] = useState(false);
   const [imageUri, setImageUri] = useState("");
+  const [nftBalance, setNftBalance] = useState(0);
   const { account } = useWeb3Context();
   const handleOk = () => {
     onCancel();
@@ -55,6 +56,7 @@ export default function ClaimModal({ onCancel }: any) {
 
   const checkBalance = async () => {
     const res = await erc721Contract.balanceOf(config.contracts.nft);
+    setNftBalance(res);
     if (res > 0) {
       const tokenId = await erc721Contract.getTokenId(config.contracts.nft);
       const res = await erc721Contract.getNftInfo(
@@ -62,6 +64,9 @@ export default function ClaimModal({ onCancel }: any) {
         tokenId
       );
       setImageUri(res.imageUri);
+    } else {
+      // start check if eligiable
+      getMerkleProof();
     }
   };
 
@@ -80,8 +85,6 @@ export default function ClaimModal({ onCancel }: any) {
     if (!account) {
       return;
     }
-
-    getMerkleProof();
     checkBalance();
   }, [account]);
 
@@ -111,7 +114,7 @@ export default function ClaimModal({ onCancel }: any) {
         ) : canClaim ? (
           <div onClick={doClaim}>Mint</div>
         ) : imageUri ? (
-          <div>You have minted</div>
+          <div>Successfully minted</div>
         ) : (
           <div>You have not reserved</div>
         )}

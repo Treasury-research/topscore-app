@@ -3,6 +3,7 @@ import { Spin } from "antd";
 import "./index.scss";
 import { useParams, useHistory } from "react-router-dom";
 import api from "../../api";
+import { formatIPFS } from "lib/tool";
 import { Helmet } from "react-helmet";
 import BN from "bignumber.js";
 import useWeb3Context from "../../hooks/useWeb3Context";
@@ -55,6 +56,7 @@ export default function Main() {
   const [collection, setCollection] = useState<any>({});
   const [currentProfile, setCurrentProfile] = useState<any>({});
   const [activeHandleIndex, setActiveHandleIndex] = useState<number>(0);
+  const [activeRankIndex, setActiveRankIndex] = useState<number>(0);
   const [pub, setPub] = useState<any>({});
   const [activeTag1, setActiveTag1] = useState<number>(0);
   const [activeTag2, setActiveTag2] = useState<number>(0);
@@ -221,7 +223,7 @@ export default function Main() {
   };
 
   const showRank = (name: string) => {
-    setActiveHandleIndex(typeList.indexOf(name));
+    setActiveRankIndex(typeList.indexOf(name));
     setShowList(true);
   };
 
@@ -277,6 +279,7 @@ export default function Main() {
     }
 
     if (queryProfileId && handlesList[activeHandleIndex].profileId !== Number(queryProfileId)) {
+      console.log('before set???', handlesList.findIndex((item: any) => item.profileId === Number(queryProfileId)))
       setActiveHandleIndex(handlesList.findIndex((item: any) => item.profileId === Number(queryProfileId)));
     } else {
       history.push(`/user/${address}/${handlesList[activeHandleIndex].profileId}`)
@@ -466,7 +469,7 @@ export default function Main() {
                           className="drop-menu"
                           key={i}
                           onClick={() => {
-                            setActiveHandleIndex(i);
+                            setActiveRankIndex(i);
                             setRankType(t.toLowerCase());
                             setRankPageNo(1);
                           }}
@@ -480,7 +483,7 @@ export default function Main() {
                   <a onClick={(e) => e.preventDefault()}>
                     <Space className="space overall">
                       <span className="list-type">
-                        {typeList[activeHandleIndex]}
+                        {typeList[activeRankIndex]}
                       </span>
                       <DownOutlined />
                     </Space>
@@ -490,11 +493,11 @@ export default function Main() {
                   {rankList.map((t: any, i) => (
                     <div className="rank-item" key={i}>
                       <span>{t.rank}</span>
-                      <span>k</span>
-                      <span>{t.profileId}</span>
-                      <span>
+                      {t.imageURI ? <img className="avatar" src={formatIPFS(t.imageURI)} /> : <span>k</span>}
+                      <span>{t.handle}</span>
+                      {/* <span>
                         <img src={imgRadarSmall} alt="" />
-                      </span>
+                      </span> */}
                       <span>Score: {new BN(t.score).toFixed(2)}</span>
                     </div>
                   ))}
@@ -793,19 +796,35 @@ export default function Main() {
               </div>
             }
           </div>
-          <Comment
+
+
+          {activeTag2 === 0 && pub.collect && Object.keys(pub.collect.publication).length > 0 && <Comment
             data={{
               headImg: "",
-              name: "KNN3 Network",
-              lensHandle: "@knn3network.lens",
-              msg: "GM and CRAZY THURSDA",
-              commentImg: S2,
-              iconNum1: "10",
-              iconNum2: "10",
-              iconNum3: "10",
-              iconNum4: "10",
+              name: currentProfile.name,
+              lensHandle: currentProfile.handle,
+              msg: pub.collect.publication.metadata.description,
+              commentImg: formatIPFS(pub.collect.publication.metadata.image) ,
+              iconNum1: pub.collect.commentCount,
+              iconNum2: pub.collect.mirrorCount,
+              iconNum3: pub.collect.collectCount,
+              // iconNum4: "10",
             }}
-          />
+          />}
+          
+          {activeTag2 === 1 && pub.engagement && Object.keys(pub.engagement.publication).length > 0 && <Comment
+            data={{
+              headImg: "",
+              name: currentProfile.name,
+              lensHandle: currentProfile.handle,
+              msg: pub.engagement.publication.metadata.description,
+              commentImg: formatIPFS(pub.engagement.publication.metadata.image) ,
+              iconNum1: pub.collect.commentCount,
+              iconNum2: pub.collect.mirrorCount,
+              iconNum3: pub.collect.collectCount,
+              // iconNum4: "10",
+            }}
+          />}
           <div>
             <Character profileId={currentProfile.profileId} />
           </div>
