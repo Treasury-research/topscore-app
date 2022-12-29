@@ -105,6 +105,10 @@ const ChartLine = (props: any) => {
             if (param.targetType == "axisName") {
                 props.showList(param.name)
             }
+
+            if (param.seriesType && param.seriesType == "radar"){
+                props.showList('Overall')
+            }
         })
         chart.setOption(option);
         window.addEventListener("resize", () => {
@@ -116,7 +120,7 @@ const ChartLine = (props: any) => {
     }, [optionsData, data]);
     return (
         <div style={{ width: width, height: height, position: "relative" }}>
-            <div id={id} style={{ width: width, height: height, zIndex: '99' }}>
+            <div id={id} style={{ width: width, height: height, zIndex: '99'}}>
 
             </div>
             <img src={radorImg} alt="" style={{ position: "absolute", zIndex: '9', height: "80%", left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }} />
