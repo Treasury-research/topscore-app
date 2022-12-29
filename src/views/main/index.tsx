@@ -348,27 +348,6 @@ export default function Main() {
 
   return (
     <div className="toscore">
-      <Helmet>
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Your 2022 Wrapped on Lens" />
-        <meta name="twitter:description" content="TopScore - a KNN3-powered scoring system based on Lens Protocol to evaluate this campaign." />
-        <meta
-            property="twitter:image"
-            content="https://lens-api.knn3.xyz/api/lens/generate/shareImg/54613"
-            // content={`https://lens-api.knn3.xyz/api/lens/generate/shareImg/${currentProfile.profileId}`}
-          />
-        <meta property="og:title" content="Your 2022 Wrapped on Lens" />
-        <meta property="og:description" content="TopScore - a KNN3-powered scoring system based on Lens Protocol to evaluate this campaign." />
-        <meta
-          property="og:image"
-          content="https://lens-api.knn3.xyz/api/lens/generate/shareImg/54613"
-          // content={`https://lens-api.knn3.xyz/api/lens/generate/shareImg/${currentProfile.profileId}`}
-        />
-        <meta property="og:locale'" content="en_US" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://topscore.knn3.xyz" />
-        <meta property="og:site_name" content="Topscore" />
-      </Helmet>
       <FixedIcon />
       <div className="toscore-head">
         <HeaderBtn />

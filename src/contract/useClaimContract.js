@@ -14,7 +14,7 @@ export default function useClaimContract() {
 
     async claim(merkleProof) {
       const contract = new web3.eth.Contract(ClaimAbi, config.contracts.claim);
-      const func = contract.methods.claim(merkleProof);
+      const func = contract.methods.mint(merkleProof);
       return await sendTx(func);
     },
   };
