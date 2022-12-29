@@ -1,8 +1,9 @@
 .con {
   width: 70%;
-  padding: 10px 0 30px 20px;
+  padding: 20px 32px 20px 32px;
   margin: 24px 0 300px 0;
   background: rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
 
   .type {
     padding: 5px 14px;
@@ -41,7 +42,6 @@
   .head {
     overflow: hidden;
     margin-bottom: 20px;
-    margin-top: 30px;
 
     >div {
       float: left;
@@ -94,6 +94,7 @@
   .pro-data {
     overflow: hidden;
     margin-top: 30px;
+    margin-left: 44px;
 
     img {
       height: 26px;
