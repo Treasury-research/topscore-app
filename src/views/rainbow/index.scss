@@ -49,8 +49,13 @@
     font-family: 'Jura';
   }
 
-  .character-content {
+  .character-content-scroll{
     height: calc(100vh - 80px);
+    width: 100%;
+    overflow: auto;
+  }
+  .character-content {
+    height: 100%;
     width: 1000px;
     position: relative;
     margin: 0 auto;

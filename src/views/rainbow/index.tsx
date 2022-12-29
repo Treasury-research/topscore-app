@@ -39,6 +39,7 @@ export default function Character() {
         <HeaderBtn />
         <Wallet />
       </div>
+      <div className="character-content-scroll">
       <div className="character-content">
         <div className="character-content-left">
           <div>
@@ -155,6 +156,7 @@ export default function Character() {
           }
         </div>
 
+      </div>
       </div>
     </div>
   );
