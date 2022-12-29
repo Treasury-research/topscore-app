@@ -65,7 +65,7 @@ const ChartLine = (props: any) => {
             },
             series: [{
                 type: 'radar',
-                name: 'Stat',
+                name: 'Stats',
                 tooltip: {
                     show: showTooltip,
                     trigger: 'item'

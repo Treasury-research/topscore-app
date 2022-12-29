@@ -466,7 +466,6 @@ export default function Main() {
                   >
                     Share & Mint
                   </div>
-
                   <div
                     className="topscore-head-wallet-btn"
                     onClick={() => {
@@ -477,12 +476,18 @@ export default function Main() {
                     Download
                   </div>
                   </>
-                 
                 ) : (
-                  <Follow
-                    profileId={currentProfile.profileId}
-                    handle={currentProfile.handle}
-                  />
+                  <>
+                    <div
+                      className="topscore-head-wallet-btn"
+                    >
+                      Check Mine
+                    </div>
+                    <Follow
+                      profileId={currentProfile.profileId}
+                      handle={currentProfile.handle}
+                    />
+                  </>
                 )}
               </>
             )}
