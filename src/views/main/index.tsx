@@ -647,7 +647,7 @@ export default function Main() {
               <div className="right-text">
                 <p>In 2022,</p>
                 <p>you had the power to capture hearts and minds,</p>
-                <p>growing your followers by _num_ and</p>
+                <p>growing your followers by <span>{new BN(userInfo.follower).toFormat()}</span> and</p>
                 <p>
                   achieving an influence score of{" "}
                   <span>{new BN(rankInfo.influScore).toFixed(2)}</span>,
@@ -675,7 +675,8 @@ export default function Main() {
                       <span>{new BN(userInfo.mirror).toFormat()}</span> pieces
                       of content, resulting in{" "}
                       <span>{new BN(rankInfo.curationScore).toFormat()}</span>
-                      Collects for the original authors.
+                      Collects for the original authors. Your Curation score was
+                       {new BN(rankInfo.curationScore).toFormat()}, ranking you {new BN(rankInfo.curationRank).toFormat()}!
                     </p>
 
                     <p>Let's take the time to your achievement in 2022!</p>
