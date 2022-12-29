@@ -24,6 +24,8 @@ import FixedIcon from "./components/FixedIcon";
 import imgRadarSmall from "./../../static/img/radar-small.png";
 import S2 from "./../../static/img/s2.png";
 import ClaimModal from "./components/ClaimModal";
+import ImgGenerate from "./../../static/img/generate-button.gif";
+import ImgHoverGenerate from "./../../static/img/hover-generate-button.gif";
 
 const tag1 = ["Influence", "Curation"];
 
@@ -63,6 +65,7 @@ export default function Main() {
   const [activeTag2, setActiveTag2] = useState<number>(0);
   const [rankInfo, setRankInfo] = useState<any>({});
   const [isSelf, setIsSelf] = useState<boolean>(false);
+  const [showRadorGif, setShowRadorGif] = useState(false);
 
   const history = useHistory();
   const params: any = useParams();
@@ -356,7 +359,7 @@ export default function Main() {
         <meta property="og:url" content="https://topscore.knn3.xyz" />
         <meta property="og:site_name" content="Topscore" />
       </Helmet>
-      <FixedIcon/>
+      <FixedIcon />
       <div className="toscore-head">
         <HeaderBtn />
         <Wallet />
@@ -429,7 +432,19 @@ export default function Main() {
                 showList={(name: string) => showRank(name)}
               />
             </div>
-
+            {
+              !account &&
+              <div className="generate">
+                {
+                  !showRadorGif &&
+                  <img src={ImgGenerate} alt="" onMouseEnter={() => setShowRadorGif(true)} />
+                }
+                {
+                  showRadorGif &&
+                  <img onMouseLeave={() => setShowRadorGif(false)} onClick={() => connectWallet()} src={ImgHoverGenerate} alt="" />
+                }
+              </div>
+            }
             <div className="top-rador-info">
               <div className="rador-info">
                 <div>
@@ -613,7 +628,7 @@ export default function Main() {
                 </p>
                 <p>
                   ranking you{" "}
-                  <span>{new BN(rankInfo.influRank).toFormat()}</span> in the
+                  <span>{new BN(rankInfo.influRank).toFormat()}</span>{" "}in the
                   game of social media,
                 </p>
 
@@ -631,7 +646,7 @@ export default function Main() {
                     <p>In the past year,</p>
                     <p>
                       you mirrored{" "}
-                      <span>{new BN(userInfo.mirror).toFormat()}</span> pieces
+                      <span>{new BN(userInfo.mirror).toFormat()}</span>{" "}pieces
                       of content, resulting in{" "}
                       <span>{new BN(rankInfo.curationScore).toFormat()}</span>
                       Collects for the original authors.
@@ -643,9 +658,9 @@ export default function Main() {
                   <>
                     <p>In 2022,</p>{" "}
                     <p>
-                      you had <span>{new BN(userInfo.post).toFormat()}</span>{" "}
+                      you had{" "}<span>{new BN(userInfo.post).toFormat()}</span>{" "}
                       pieces of content and bringing{" "}
-                      <span>{new BN(userInfo.collectBy).toFormat()}</span>
+                      <span>{new BN(userInfo.collectBy).toFormat()}</span>{" "}
                       Collects to the original authors.
                     </p>
                     <p>
@@ -705,9 +720,9 @@ export default function Main() {
                     <p>you achieved incredible success with your content! </p>
                     <p>
                       Your content has been collected{" "}
-                      <span>{new BN(userInfo.collectBy).toFormat()}</span>times,
+                      <span>{new BN(userInfo.collectBy).toFormat()}</span>{" "}times,
                       and you have collected{" "}
-                      <span>{new BN(userInfo.collect).toFormat()}</span> pieces
+                      <span>{new BN(userInfo.collect).toFormat()}</span>{" "}pieces
                       of valuable content.
                     </p>
                     <p>
@@ -732,7 +747,7 @@ export default function Main() {
                       Your content has been collected{" "}
                       <span>{new BN(userInfo.collectBy).toFormat()}</span>{" "}
                       times, and you have collected{" "}
-                      <span>{new BN(userInfo.collect).toFormat()}</span> pieces
+                      <span>{new BN(userInfo.collect).toFormat()}</span>{" "}pieces
                       of valuable content.
                     </p>
                     <p>
@@ -763,11 +778,11 @@ export default function Main() {
                     <p>In 2022, </p>
                     <p>you made a splash on social media! </p>
                     <p>
-                      You posted <span>{new BN(userInfo.post).toFormat()}</span>{" "}
+                      You posted{" "}<span>{new BN(userInfo.post).toFormat()}</span>{" "}
                       times, made{" "}
                       <span>{new BN(userInfo.comment).toFormat()}</span>{" "}
-                      Comments, and created
-                      <span>{new BN(userInfo.mirror).toFormat()}</span> Mirrors
+                      Comments, and created{" "}
+                      <span>{new BN(userInfo.mirror).toFormat()}</span>{" "}Mirrors
                       that really got people talking.{" "}
                     </p>
                     <p>
@@ -787,7 +802,7 @@ export default function Main() {
                     <p>
                       and your Engagement score was{" "}
                       <span>{new BN(rankInfo.engagementScore).toFixed(2)}</span>
-                      , giving you a place in
+                      , giving you a place in{" "}
                       <span>
                         {new BN(rankInfo.engagementRank).toFormat()}
                       </span>!{" "}
@@ -799,10 +814,10 @@ export default function Main() {
                     {/* 版本2(0 page rank <?) */}
                     <p>In 2022, </p>
                     <p>
-                      you posted <span>{new BN(userInfo.post).toFormat()}</span>{" "}
-                      Posts, <span>{new BN(userInfo.comment).toFormat()}</span>{" "}
+                      you posted{" "}<span>{new BN(userInfo.post).toFormat()}</span>{" "}
+                      Posts,{" "}<span>{new BN(userInfo.comment).toFormat()}</span>{" "}
                       Comments,{" "}
-                      <span>{new BN(userInfo.mirror).toFormat()}</span> Mirrors,{" "}
+                      <span>{new BN(userInfo.mirror).toFormat()}</span>{" "}Mirrors,{" "}
                     </p>
                     <p>
                       earned <span>_num_</span> Comments, were mirrored{" "}
@@ -849,21 +864,21 @@ export default function Main() {
               name: currentProfile.name,
               lensHandle: currentProfile.handle,
               msg: pub.collect.publication.metadata.description,
-              commentImg: formatIPFS(pub.collect.publication.metadata.image) ,
+              commentImg: formatIPFS(pub.collect.publication.metadata.image),
               iconNum1: pub.collect.commentCount,
               iconNum2: pub.collect.mirrorCount,
               iconNum3: pub.collect.collectCount,
               // iconNum4: "10",
             }}
           />}
-          
+
           {activeTag2 === 1 && pub.engagement && Object.keys(pub.engagement.publication).length > 0 && <Comment
             data={{
               headImg: "",
               name: currentProfile.name,
               lensHandle: currentProfile.handle,
               msg: pub.engagement.publication.metadata.description,
-              commentImg: formatIPFS(pub.engagement.publication.metadata.image) ,
+              commentImg: formatIPFS(pub.engagement.publication.metadata.image),
               iconNum1: pub.collect.commentCount,
               iconNum2: pub.collect.mirrorCount,
               iconNum3: pub.collect.collectCount,
