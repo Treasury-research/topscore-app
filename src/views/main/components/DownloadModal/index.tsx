@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useWeb3Context from "../../../../hooks/useWeb3Context";
 import { Modal } from "antd";
+import "./index.scss";
 import axios from "axios";
 import IconLenster from "./../../../../static/img/g5.svg";
 import { TwitterOutlined } from "@ant-design/icons";
@@ -67,16 +68,19 @@ export default function DownloadModal({ onCancel, profileId }: any) {
       width={1000}
     >
       <img className="claim-img" src={downloadURL} />
-      <div className="claim-bottom">
-        <a
-          onClick={doDownload}
-          download="my_2022_wrapped"
-          target="_blank"
-          className="download-btn"
-        >
-          <div className="download-modal-btn">
-            {downloading ? 'Downloading...' : 'Download'}</div>
-        </a>
+      <div className="claim-download-bottom">
+        <div>
+          <a
+            onClick={doDownload}
+            download="my_2022_wrapped"
+            target="_blank"
+            className="download-btn"
+          >
+            <div className="download-modal-btn">
+              {downloading ? 'Downloading...' : 'Download'}</div>
+          </a>
+        </div>
+
         <div>
           <div>
             <LensterShareButton
