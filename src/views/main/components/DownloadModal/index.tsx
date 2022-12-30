@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from "react";
 import useWeb3Context from "../../../../hooks/useWeb3Context";
 import { Modal } from "antd";
+import axios from "axios";
 import IconLenster from "./../../../../static/img/g5.svg";
 import { TwitterOutlined } from "@ant-design/icons";
 
 export default function DownloadModal({ onCancel, profileId }: any) {
   const { account } = useWeb3Context();
+  const [downloading, setDownloading] = useState(false);
   const downloadURL = `https://lens-api.knn3.xyz/api/lens/generate/shareImg/${profileId}`;
 
   const handleOk = () => {
     onCancel();
   };
 
-  const doDownload = () => {
-    var a = document.createElement('a');
-a.href = downloadURL;
-a.download = "favicon.png";
-document.body.appendChild(a);
-a.click();
-document.body.removeChild(a);
-  }
+  const doDownload = async () => {
+    setDownloading(true)
+    const res = await fetch(downloadURL);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    setDownloading(false);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "2022_wrapped.png";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
 
   const handleCancel = () => {
     onCancel();
@@ -29,7 +36,9 @@ document.body.removeChild(a);
     return (
       <a
         target="_blank"
-        href={`https://lenster.xyz/?text=${encodeURIComponent(title)}&url=${url}&hashtags=${hashtags}&preview=true`}
+        href={`https://lenster.xyz/?text=${encodeURIComponent(
+          title
+        )}&url=${url}&hashtags=${hashtags}&preview=true`}
       >
         {children}
       </a>
@@ -40,7 +49,9 @@ document.body.removeChild(a);
     return (
       <a
         target="_blank"
-        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&hashtags=${hashtags}&preview=true`}
+        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+          title
+        )}&hashtags=${hashtags}&preview=true`}
       >
         {children}
       </a>
@@ -57,8 +68,14 @@ document.body.removeChild(a);
     >
       <img className="claim-img" src={downloadURL} />
       <div className="claim-bottom">
-        <a onClick={doDownload} download="my_2022_wrapped" target="_blank" className="download-btn">
-          <div className="download-modal-btn">Download</div>
+        <a
+          onClick={doDownload}
+          download="my_2022_wrapped"
+          target="_blank"
+          className="download-btn"
+        >
+          <div className="download-modal-btn">
+            {downloading ? 'Downloading...' : 'Download'}</div>
         </a>
         <div>
           <div>
