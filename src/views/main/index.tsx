@@ -46,7 +46,7 @@ export default function Main() {
   const [rankList, setRankList] = useState<[]>([]);
   const [rankTotal, setRankTotal] = useState<number>(0);
   const [rankPageNo, setRankPageNo] = useState<number>(1);
-  const [rankType, setRankType] = useState<string>("influence");
+  const [rankType, setRankType] = useState<string>("overall");
   const [rankLoading, setRankLoading] = useState<boolean>(false);
   const [influence, setInfluence] = useState<any>({});
   const [curation, setCuration] = useState<any>({});
@@ -102,7 +102,8 @@ export default function Main() {
 
   const getRankList = async () => {
     setRankLoading(true);
-    const res: any = await api.get(`/lens/${rankType}/rank/list`, {
+    const toQuery = rankType === 'overall' ? 'score': rankType
+    const res: any = await api.get(`/lens/${toQuery}/rank/list`, {
       params: {
         limit: defaultPageLimit,
         offset: (rankPageNo - 1) * defaultPageLimit,
