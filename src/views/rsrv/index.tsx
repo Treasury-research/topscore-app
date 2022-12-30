@@ -196,7 +196,7 @@ export default function Main() {
                 {
                   isHoverRadar &&
                   <div onMouseLeave={() => setIsHoverRadar(false)}>
-                    <img src={ImgHoverGenerate} alt="" onClick={doReserve} />
+                    <img src={ImgHoverGenerate} alt="" onClick={doGenerate} />
                   </div>
                 }
               </div>
