@@ -14,8 +14,10 @@ import ImgLens from './../../static/img/lens.png'
 import ImgAlmost from './../../static/img/almost.png'
 import ImgYour from './../../static/img/your.png'
 import ImgMobile from './../../static/img/mobile-tc.png'
-import RadarDefaultBtn from "./../../static/img/radarDefaultBtn.gif";
-import RadarHover from "./../../static/img/radarHover.gif";
+// import RadarDefaultBtn from "./../../static/img/radarDefaultBtn.gif";
+// import RadarHover from "./../../static/img/radarHover.gif";
+import ImgGenerate from "./../../static/img/generate-button.gif";
+import ImgHoverGenerate from "./../../static/img/hover-generate-button.gif";
 import { DownOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Radar from "./components/Radar";
 import { Dropdown, Space, Menu, Drawer, Pagination, Modal, message } from "antd";
@@ -163,13 +165,13 @@ export default function Main() {
                 {
                   !isHoverRadar &&
                   <div onMouseEnter={() => setIsHoverRadar(true)}>
-                    <img src={RadarDefaultBtn} alt="" />
+                    <img src={ImgGenerate} alt="" />
                   </div>
                 }
                 {
                   isHoverRadar &&
                   <div onMouseLeave={() => setIsHoverRadar(false)}>
-                    <img src={RadarHover} alt="" onClick={doReserve} />
+                    <img src={ImgHoverGenerate} alt="" onClick={doReserve} />
                   </div>
                 }
               </div>
