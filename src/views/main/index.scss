@@ -226,7 +226,7 @@
 
       .influence-default-text {
         font-size: 20px;
-        margin-top: 20px;
+        margin-top: 60px;
 
         >p:nth-child(1) {
           margin-bottom: 10px;
@@ -239,7 +239,7 @@
 
       .curation-default-text {
         font-size: 20px;
-        margin-top: 20px;
+        margin-top: 60px;
 
         >p {
           margin-bottom: 10px;
@@ -288,7 +288,7 @@
       .collect-default-text {
         font-size: 20px;
         width: 100%;
-        margin-top: 20px;
+        margin-top: 60px;
 
         >div {
           width: calc(50% - 10px);
@@ -316,7 +316,7 @@
 
       .publication-default-text {
         font-size: 20px;
-        margin-top: 20px;
+        margin-top: 60px;
 
         >p {
           margin-bottom: 10px;
@@ -531,8 +531,8 @@
 
 .claim-bottom {
   overflow: hidden;
-  margin-top: 20px;
-
+  width: fit-content;
+  margin: 20px auto 0 auto;
   >div:nth-child(1) {
     float: left;
     background: rgba(255, 51, 0, 0.3);
@@ -544,36 +544,37 @@
     color: rgba(255, 255, 255, .8);
   }
 
-  >div:nth-child(2) {
-    float: right;
-    overflow: hidden;
+  // >div:nth-child(2) {
+  //   float: right;
+  //   overflow: hidden;
 
-    >div {
-      float: left;
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      line-height: 40px;
-      text-align: center;
-      cursor: pointer;
-    }
+  //   >div {
+  //     float: left;
+  //     height: 40px;
+  //     width: 40px;
+  //     border-radius: 50%;
+  //     background: rgba(255, 255, 255, 0.1);
+  //     line-height: 40px;
+  //     text-align: center;
+  //     cursor: pointer;
+  //   }
 
-    .twitter-icon {
-      color: rgb(40, 168, 223);
-      font-size: 24px;
-      line-height: 46px;
-    }
+  //   .twitter-icon {
+  //     color: rgb(40, 168, 223);
+  //     font-size: 24px;
+  //     line-height: 46px;
+  //   }
 
-    >div:nth-child(1) {
-      font-size: 20px;
-      margin-right: 10px;
-    }
-  }
+  //   >div:nth-child(1) {
+  //     font-size: 20px;
+  //     margin-right: 10px;
+  //   }
+  // }
 }
 
 .charcter-main{
   margin-bottom: 400px;
+  margin-top: 300px;
 }
 
 .downLoadBtn{
