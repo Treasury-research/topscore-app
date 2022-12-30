@@ -405,7 +405,11 @@ export default function Main() {
     <div className="toscore">
       <FixedIcon />
       <div className="toscore-head">
-        <HeaderBtn />
+        <HeaderBtn 
+        type={'main'}
+        profileId={currentProfile.profileId}
+        setDownloadModalVisible={() => setDownloadModalVisible(true)}
+        />
         <Wallet />
       </div>
       <div className="toscore-content">
@@ -473,26 +477,9 @@ export default function Main() {
                     >
                       Mint
                     </div>
-                    {currentProfile.profileId && (
-                      <div
-                        className="topscore-head-wallet-btn downLoadBtn"
-                        onClick={() => {
-                          setDownloadModalVisible(true);
-                          log("download", account);
-                        }}
-                      >
-                        Download & Share
-                      </div>
-                    )}
                   </>
                 ) : (
                   <>
-                    <div
-                      onClick={goProfile}
-                      className="topscore-head-wallet-btn downLoadBtn"
-                    >
-                      Check Mine
-                    </div>
                     <Follow
                       profileId={currentProfile.profileId}
                       handle={currentProfile.handle}
