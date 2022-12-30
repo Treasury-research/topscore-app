@@ -126,14 +126,14 @@ export default function ClaimModal({ onCancel, profileId }: any) {
         <div className="claim-img" />
       )}
       <div className="claim-bottom">
-        {minting ? (
+        {nftBalance > 0 ? (
+          <div>Successfully minted</div>
+        ) : minting ? (
           <div>Minting...</div>
         ) : checking ? (
           <div>Checking...</div>
         ) : canClaim ? (
           <div onClick={doClaim}>Mint</div>
-        ) : nftBalance > 0 ? (
-          <div>Successfully minted</div>
         ) : (
           <div>You have not reserved</div>
         )}
