@@ -1,0 +1,35 @@
+.claim-download-bottom {
+  overflow: hidden;
+  width: 100%;
+  margin: 20px 0;
+  >div:nth-child(1) {
+    float: left;
+  }
+
+  >div:nth-child(2) {
+    float: right;
+    overflow: hidden;
+
+    >div {
+      float: left;
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      line-height: 40px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .twitter-icon {
+      color: rgb(40, 168, 223);
+      font-size: 24px;
+      line-height: 46px;
+    }
+
+    >div:nth-child(1) {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+  }
+}
