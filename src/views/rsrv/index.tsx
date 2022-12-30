@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./index.scss";
-import log from "../../lib/log";
 import api from "../../api";
-import { shortenAddr } from "../../lib/tool";
 import useWeb3Context from "../../hooks/useWeb3Context";
 import Wallet from "../../components/WalletBtn";
 import BotText from "./../../static/img/botText.gif";
@@ -18,6 +16,7 @@ import RadarDefaultBtn from "./../../static/img/radarDefaultBtn.gif";
 import RadarHover from "./../../static/img/radarHover.gif";
 import { DownOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Radar from "./components/Radar";
+import { useHistory } from "react-router-dom";
 import { Dropdown, Space, Menu, Drawer, Pagination, Modal, message } from "antd";
 
 const typeList = ['Influence', 'Campaign', 'Engagement', 'Creation', 'Collection', 'Curation'];
@@ -53,6 +52,7 @@ export default function Main() {
   const [reserving, setReserving] = useState(false);
   const [activeName, setActiveName] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
+  const history = useHistory();
 
   const onClose = () => {
     setShowList(false);
@@ -92,6 +92,31 @@ export default function Main() {
     // } else {
     //   // postReserve(account);
     // }
+  }
+
+  const postGenerate = async (address: string) => {
+    const res:any = await api.get(`/lens/handles/${address}`);
+    if (res.length > 0) {
+      history.push(`/user/${account}`);
+    } else {
+      message.info("You must have a Lens Protocol Profile");
+      history.push(`/user/0x09c85610154a276a71eb8a887e73c16072029b20`);
+    }
+  }
+
+  const doGenerate = async () => {
+    if (!account) {
+      try {
+        const connectedAddress: string = await connectWallet();
+        if (connectedAddress) {
+          postGenerate(connectedAddress);
+        }
+      } catch (err) {
+        console.log('rejected')
+      }
+    } else {
+      postGenerate(account);
+    }
   }
 
   return (
