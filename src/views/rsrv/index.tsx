@@ -98,8 +98,8 @@ export default function Main() {
 
   const postGenerate = async (address: string) => {
     const res:any = await api.get(`/lens/handles/${address}`);
-    if (res.length > 0) {
-      history.push(`/user/${account}`);
+    if (res.data.length > 0) {
+      history.push(`/user/${address}`);
     } else {
       message.info("You must have a Lens Protocol Profile");
       history.push(`/user/0x09c85610154a276a71eb8a887e73c16072029b20`);

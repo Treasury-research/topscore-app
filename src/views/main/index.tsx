@@ -8,11 +8,7 @@ import BN from "bignumber.js";
 import useWeb3Context from "../../hooks/useWeb3Context";
 import Follow from "./components/Follow";
 import Wallet from "../../components/WalletBtn";
-import {
-  DownOutlined,
-  LeftOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
+import { DownOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Dropdown, Space, Menu, Modal, Drawer, Pagination } from "antd";
 import Radar from "./components/Radar";
 import Comment from "./components/comment";
@@ -44,12 +40,13 @@ export default function Main() {
   const { account, connectWallet } = useWeb3Context();
   const [showList, setShowList] = useState(false);
   const [handlesList, setHandlesList] = useState<any>([]);
+  const [loadingHandlesList, setLoadingHandlesList] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState<any>({});
   const [rankList, setRankList] = useState<[]>([]);
   const [rankTotal, setRankTotal] = useState<number>(0);
   const [rankPageNo, setRankPageNo] = useState<number>(1);
-  const [rankType, setRankType] = useState<string>("influence");
+  const [rankType, setRankType] = useState<string>("overall");
   const [rankLoading, setRankLoading] = useState<boolean>(false);
   const [influence, setInfluence] = useState<any>({});
   const [curation, setCuration] = useState<any>({});
@@ -100,12 +97,13 @@ export default function Main() {
   const onClose = () => {
     setShowList(false);
     setRankPageNo(1);
-    log('close_ranklist', account || '')
+    log("close_ranklist", account || "");
   };
 
   const getRankList = async () => {
     setRankLoading(true);
-    const res: any = await api.get(`/lens/${rankType}/rank/list`, {
+    const toQuery = rankType === 'overall' ? 'score': rankType
+    const res: any = await api.get(`/lens/${toQuery}/rank/list`, {
       params: {
         limit: defaultPageLimit,
         offset: (rankPageNo - 1) * defaultPageLimit,
@@ -117,10 +115,15 @@ export default function Main() {
   };
 
   const getLensHandle = async () => {
-    const res: any = await api.get(`/lens/handles/${address}`);
-    setHandlesList(res.data);
-    if(res.data.length === 0){
-      setCurrentProfile({})
+    setLoadingHandlesList(true);
+    try {
+      const res: any = await api.get(`/lens/handles/${address}`);
+      setHandlesList(res.data);
+      if (res.data.length === 0) {
+        setCurrentProfile({});
+      }
+    } finally {
+      setLoadingHandlesList(false);
     }
   };
 
@@ -314,7 +317,7 @@ export default function Main() {
   const showRank = (name: string) => {
     setActiveRankIndex(typeList.indexOf(name));
     setShowList(true);
-    log(`open_ranklist_${name}`, account || '')
+    log(`open_ranklist_${name}`, account || "");
   };
 
   const onRankChange = (val: number) => {
@@ -408,48 +411,54 @@ export default function Main() {
       <div className="toscore-content">
         <div className="toscore-main">
           <div>
-            {handlesList && handlesList.length > 0 ? <div className="toscore-main-base-info">
-              {currentProfile.imageURI && canLoadAvatar ? (
-                <img
-                  className="net-head-img"
-                  onError={() => setCanLoadAvatar(false)}
-                  src={formatIPFS(currentProfile.imageURI)}
-                />
-              ) : (
-                <div className="net-head-img">K</div>
-              )}
-              <div>
+            {handlesList && handlesList.length > 0 ? (
+              <div className="toscore-main-base-info">
+                {currentProfile.imageURI && canLoadAvatar ? (
+                  <img
+                    className="net-head-img"
+                    onError={() => setCanLoadAvatar(false)}
+                    src={formatIPFS(currentProfile.imageURI)}
+                  />
+                ) : (
+                  <div className="net-head-img">K</div>
+                )}
                 <div>
-                  <Dropdown
-                    overlay={
-                      <Menu>
-                        {handlesList.map((t: any, i: number) => (
-                          <div
-                            className="drop-menu"
-                            key={i}
-                            onClick={() => {
-                              setActiveHandleIndex(i);
-                              changeProfile(t.profileId);
-                              log("change_profile", account || "");
-                            }}
-                          >
-                            {t.handle}
-                          </div>
-                        ))}
-                      </Menu>
-                    }
-                  >
-                    <a onClick={(e) => e.preventDefault()}>
-                      <Space className="space">
-                        {currentProfile.name || currentProfile.handle}
-                        <DownOutlined />
-                      </Space>
-                    </a>
-                  </Dropdown>
+                  <div>
+                    <Dropdown
+                      overlay={
+                        <Menu>
+                          {handlesList.map((t: any, i: number) => (
+                            <div
+                              className="drop-menu"
+                              key={i}
+                              onClick={() => {
+                                setActiveHandleIndex(i);
+                                changeProfile(t.profileId);
+                                log("change_profile", account || "");
+                              }}
+                            >
+                              {t.handle}
+                            </div>
+                          ))}
+                        </Menu>
+                      }
+                    >
+                      <a onClick={(e) => e.preventDefault()}>
+                        <Space className="space">
+                          {currentProfile.name || currentProfile.handle}
+                          <DownOutlined />
+                        </Space>
+                      </a>
+                    </Dropdown>
+                  </div>
+                  <div>@{currentProfile.handle}</div>
                 </div>
-                <div>@{currentProfile.handle}</div>
               </div>
-            </div> : <div className="empty-hint"> You don't have any profile yet.</div>}
+            ) : loadingHandlesList ? (
+              <div className="empty-hint"> Loading...</div>
+            ) : (
+              <div className="empty-hint"> You don't have any profile yet.</div>
+            )}
 
             {account && (
               <>
@@ -464,16 +473,17 @@ export default function Main() {
                     >
                       Share & Mint
                     </div>
-                    {currentProfile.profileId &&  <div
-                      className="topscore-head-wallet-btn downLoadBtn"
-                      onClick={() => {
-                        setDownloadModalVisible(true);
-                        log("download", account);
-                      }}
-                    >
-                      Download
-                    </div>}
-                   
+                    {currentProfile.profileId && (
+                      <div
+                        className="topscore-head-wallet-btn downLoadBtn"
+                        onClick={() => {
+                          setDownloadModalVisible(true);
+                          log("download", account);
+                        }}
+                      >
+                        Download
+                      </div>
+                    )}
                   </>
                 ) : (
                   <>
@@ -593,7 +603,7 @@ export default function Main() {
                   className="rightOut"
                   onClick={() => {
                     setShowList(false);
-                    log('close_ranklist', account || '')
+                    log("close_ranklist", account || "");
                   }}
                 >
                   <RightOutlined />
@@ -706,7 +716,10 @@ export default function Main() {
               <div className="right-text">
                 <p>In 2022,</p>
                 <p>you had the power to capture hearts and minds,</p>
-                <p>growing your followers by <span>{new BN(userInfo.follower).toFormat()}</span> and</p>
+                <p>
+                  growing your followers by{" "}
+                  <span>{new BN(userInfo.follower).toFormat()}</span> and
+                </p>
                 <p>
                   achieving an influence score of{" "}
                   <span>{new BN(rankInfo.influScore).toFixed(2)}</span>,
@@ -735,7 +748,8 @@ export default function Main() {
                       of content, resulting in{" "}
                       <span>{new BN(rankInfo.curationScore).toFormat()}</span>
                       Collects for the original authors. Your Curation score was
-                      {new BN(rankInfo.curationScore).toFormat()}, ranking you {new BN(rankInfo.curationRank).toFormat()}!
+                      {new BN(rankInfo.curationScore).toFormat()}, ranking you{" "}
+                      {new BN(rankInfo.curationRank).toFormat()}!
                     </p>
 
                     <p>Let's take the time to your achievement in 2022!</p>
@@ -747,8 +761,10 @@ export default function Main() {
                       you had <span>{new BN(userInfo.post).toFormat()}</span>{" "}
                       pieces of content and bringing{" "}
                       <span>{new BN(userInfo.collectBy).toFormat()}</span>{" "}
-                      Collects to the original authors.  Your Curation score was{" "}
-                      <span>{new BN(rankInfo.curationScore).toFormat()}</span>, ranking you{" "}<span>{new BN(rankInfo.curationRank).toFormat()}</span>!
+                      Collects to the original authors. Your Curation score was{" "}
+                      <span>{new BN(rankInfo.curationScore).toFormat()}</span>,
+                      ranking you{" "}
+                      <span>{new BN(rankInfo.curationRank).toFormat()}</span>!
                     </p>
                     <p>
                       We celebrate your achievements and applaud you for your
@@ -991,7 +1007,7 @@ export default function Main() {
           className="leftOut"
           onClick={() => {
             setShowList(true);
-            log('open_ranklist', account || '')
+            log("open_ranklist", account || "");
           }}
         >
           <LeftOutlined />
