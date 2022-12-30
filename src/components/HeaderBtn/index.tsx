@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import {message} from 'antd'
 import Icon from "./../../static/img/topIcon.png";
 import useWeb3Context from "../../hooks/useWeb3Context";
 import api from "../../api";
@@ -7,7 +8,7 @@ import api from "../../api";
 const HeaderBtn = (props: any) => {
   const [handlesList, setHandlesList] = useState<any>([]);
 
-  const { account, connectWallet } = useWeb3Context();
+  const { account } = useWeb3Context();
 
   const history = useHistory();
 
@@ -15,6 +16,7 @@ const HeaderBtn = (props: any) => {
     if (handlesList.length > 0) {
       history.push(`/user/${account}`);
     } else {
+      message.info("You must have a Lens Protocol Profile");
       history.push(`/user/0x09c85610154a276a71eb8a887e73c16072029b20`);
     }
   };

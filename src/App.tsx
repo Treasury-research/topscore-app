@@ -18,12 +18,12 @@ function App() {
       <Web3ContextProvider>
         <Router>
           <Switch>
+            <Route path="/" exact component={Rsrv} />
             <Route path="/home" component={Home} />
             <Route path="/main" component={Main} />
             <Route path={["/user/:address/:queryProfileId", "/user/:address"]} component={Main} />
-            <Route path="/rsrv" component={Rsrv} />
             <Route path="/rainbow" component={Rainbow} />
-            <Redirect to="/rsrv" />
+            <Redirect path="/rsrv" to="/" />
           </Switch>
         </Router>
       </Web3ContextProvider>
