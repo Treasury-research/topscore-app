@@ -22,7 +22,7 @@ export default function DownloadModal({ onCancel, profileId }: any) {
     setDownloading(false);
     var a = document.createElement("a");
     a.href = url;
-    a.download = "2022_wrapped.png";
+    a.download = "your_2022_wrapped_on_lens.png";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
