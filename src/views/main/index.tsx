@@ -471,7 +471,7 @@ export default function Main() {
                         log("click_share_mint", account);
                       }}
                     >
-                      Share & Mint
+                      Mint
                     </div>
                     {currentProfile.profileId && (
                       <div
@@ -481,7 +481,7 @@ export default function Main() {
                           log("download", account);
                         }}
                       >
-                        Download
+                        Download & Share
                       </div>
                     )}
                   </>
@@ -746,10 +746,10 @@ export default function Main() {
                       you mirrored{" "}
                       <span>{new BN(userInfo.mirror).toFormat()}</span> pieces
                       of content, resulting in{" "}
-                      <span>{new BN(rankInfo.curationScore).toFormat()}</span>
-                      Collects for the original authors. Your Curation score was
-                      {new BN(rankInfo.curationScore).toFormat()}, ranking you{" "}
-                      {new BN(rankInfo.curationRank).toFormat()}!
+                      <span>{new BN(rankInfo.curationScore).toFormat()}</span>{" "}
+                      Collects for the original authors. Your Curation score was{" "}
+                      <span>{new BN(rankInfo.curationScore).toFormat()}</span>, ranking you{" "}
+                      <span>{new BN(rankInfo.curationRank).toFormat()}</span>!
                     </p>
 
                     <p>Let's take the time to your achievement in 2022!</p>
@@ -823,7 +823,7 @@ export default function Main() {
                       Your content has been collected{" "}
                       <span>{new BN(userInfo.collectBy).toFormat()}</span>{" "}
                       times, and you have collected{" "}
-                      <span>{new BN(userInfo.collect).toFormat()}</span> pieces
+                      <span>{new BN(userInfo.collect).toFormat()}</span>{" "}pieces
                       of valuable content.
                     </p>
                     <p>

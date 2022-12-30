@@ -137,7 +137,7 @@ export default function ClaimModal({ onCancel, profileId }: any) {
         ) : (
           <div>You have not reserved</div>
         )}
-        {(canClaim || imageUri || true) && (
+        {/* {(canClaim || imageUri || true) && (
           <div>
             <div onClick={() => log("share_lens", account || "")}>
               <LensterShareButton
@@ -158,7 +158,7 @@ export default function ClaimModal({ onCancel, profileId }: any) {
               </TwitterShareButton2>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </Modal>
   );
