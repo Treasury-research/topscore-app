@@ -142,21 +142,21 @@ export default function Main() {
                     <div>
                       <div>
                         <p>?</p>
-                        <p>???</p>
+                        <p>Rank</p>
                       </div>
                       <div>
                         <p>?</p>
-                        <p>???</p>
+                        <p>Following</p>
                       </div>
                     </div>
                     <div>
                       <div>
                         <p>?</p>
-                        <p>???</p>
+                        <p>Score</p>
                       </div>
                       <div>
                         <p>?</p>
-                        <p>???</p>
+                        <p>Followers</p>
                       </div>
                     </div>
                   </div>
@@ -164,22 +164,22 @@ export default function Main() {
                     <div>
                       <div>
                         <p>?</p>
-                        <p>???</p>
+                        <p>Collections</p>
                       </div>
                       <div>
                         <p>?</p>
-                        <p>???</p>
+                        <p>Publications</p>
                       </div>
                     </div>
                     <div>
                       <div>
                         <p>?</p>
-                        <p>???</p>
+                        <p>Collected</p>
                       </div>
                       <div className="diff-sty-info">
-                        <p><span>?</span><span>???</span></p>
-                        <p><span>?</span><span>???</span></p>
-                        <p><span>?</span><span>???</span></p>
+                        <p><span>?</span><span>Posts</span></p>
+                        <p><span>?</span><span>Comments</span></p>
+                        <p><span>?</span><span>Mirrors</span></p>
                       </div>
                     </div>
                   </div>
@@ -223,7 +223,7 @@ export default function Main() {
                   >
                     <a onClick={(e) =>  setMenuOpen(true)}>
                       <Space className="space overall">
-                        <span className="list-type">{activeName || '???'}</span>
+                        <span className="list-type">{activeName || 'Overall'}</span>
                         <DownOutlined />
                       </Space>
                     </a>
