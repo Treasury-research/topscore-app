@@ -119,6 +119,9 @@ export default function Main() {
   const getLensHandle = async () => {
     const res: any = await api.get(`/lens/handles/${address}`);
     setHandlesList(res.data);
+    if(res.data.length === 0){
+      setCurrentProfile({})
+    }
   };
 
   const getIndicators = async (profileId: string) => {
@@ -369,12 +372,6 @@ export default function Main() {
       queryProfileId &&
       handlesList[activeHandleIndex].profileId !== Number(queryProfileId)
     ) {
-      console.log(
-        "before set???",
-        handlesList.findIndex(
-          (item: any) => item.profileId === Number(queryProfileId)
-        )
-      );
       setActiveHandleIndex(
         handlesList.findIndex(
           (item: any) => item.profileId === Number(queryProfileId)
@@ -467,7 +464,7 @@ export default function Main() {
                     >
                       Share & Mint
                     </div>
-                    <div
+                    {currentProfile.profileId &&  <div
                       className="topscore-head-wallet-btn downLoadBtn"
                       onClick={() => {
                         setDownloadModalVisible(true);
@@ -475,7 +472,8 @@ export default function Main() {
                       }}
                     >
                       Download
-                    </div>
+                    </div>}
+                   
                   </>
                 ) : (
                   <>

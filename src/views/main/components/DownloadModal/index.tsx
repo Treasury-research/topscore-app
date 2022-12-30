@@ -12,6 +12,15 @@ export default function DownloadModal({ onCancel, profileId }: any) {
     onCancel();
   };
 
+  const doDownload = () => {
+    var a = document.createElement('a');
+a.href = downloadURL;
+a.download = "favicon.png";
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+  }
+
   const handleCancel = () => {
     onCancel();
   };
@@ -48,7 +57,7 @@ export default function DownloadModal({ onCancel, profileId }: any) {
     >
       <img className="claim-img" src={downloadURL} />
       <div className="claim-bottom">
-        <a href={downloadURL} download="my_2022_wrapped.png" target="_blank" className="download-btn">
+        <a onClick={doDownload} download="my_2022_wrapped" target="_blank" className="download-btn">
           <div className="download-modal-btn">Download</div>
         </a>
         <div>
