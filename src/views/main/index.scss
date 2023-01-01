@@ -12,18 +12,22 @@
 
     >div {
       margin: 20px 0 0px 0;
+      overflow: hidden;
     }
 
     >div:nth-child(1) {
       float: left;
       margin-left: 100px;
       overflow: hidden;
-
+      width: calc(100% - 320px);
       >div {
         float: left;
         margin-right: 20px;
 
       }
+    }
+    >div:nth-child(2) {
+      width: fit-content;
     }
   }
 
@@ -578,9 +582,7 @@
 }
 
 .downLoadBtn{
-  position: absolute;
-  right: 120px;
-  top: 20px;
+  float: right !important;
   background: #232429 !important;
 }
 
