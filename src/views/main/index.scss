@@ -535,7 +535,6 @@
 
 .claim-bottom {
   overflow: hidden;
-  width: fit-content;
   margin: 20px auto 0 auto;
   >div:nth-child(1) {
     float: left;
@@ -548,32 +547,32 @@
     color: rgba(255, 255, 255, .8);
   }
 
-  // >div:nth-child(2) {
-  //   float: right;
-  //   overflow: hidden;
+  >.claim-share-btnGroup {
+    float: right;
+    overflow: hidden;
 
-  //   >div {
-  //     float: left;
-  //     height: 40px;
-  //     width: 40px;
-  //     border-radius: 50%;
-  //     background: rgba(255, 255, 255, 0.1);
-  //     line-height: 40px;
-  //     text-align: center;
-  //     cursor: pointer;
-  //   }
+    >div {
+      float: left;
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      line-height: 40px;
+      text-align: center;
+      cursor: pointer;
+    }
 
-  //   .twitter-icon {
-  //     color: rgb(40, 168, 223);
-  //     font-size: 24px;
-  //     line-height: 46px;
-  //   }
+    .twitter-icon {
+      color: rgb(40, 168, 223);
+      font-size: 24px;
+      line-height: 46px;
+    }
 
-  //   >div:nth-child(1) {
-  //     font-size: 20px;
-  //     margin-right: 10px;
-  //   }
-  // }
+    >div:nth-child(1) {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+  }
 }
 
 .charcter-main{

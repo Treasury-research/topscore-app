@@ -138,7 +138,7 @@ export default function ClaimModal({ onCancel, profileId }: any) {
           <div>You have not reserved</div>
         )}
         {(canClaim || imageUri || true) && (
-          <div>
+          <div className="claim-share-btnGroup">
             <div onClick={() => log("share_lens", account || "")}>
               <LensterShareButton
                 title={`My 2022 Wrapped on Lens: https://topscore.knn3.xyz/user/${account}/${profileId} So what are your TopScore? What is your social personality? FreeMint LensRainbowNFT！@Knn3Network`}
