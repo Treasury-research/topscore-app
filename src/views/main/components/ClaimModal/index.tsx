@@ -80,7 +80,9 @@ export default function ClaimModal({ onCancel, profileId }: any) {
     return (
       <a
         target="_blank"
-        href={`https://lenster.xyz/?text=${encodeURIComponent(title)}&url=${url}&hashtags=${hashtags}&preview=true`}
+        href={`https://lenster.xyz/?text=${encodeURIComponent(
+          title
+        )}&url=${url}&hashtags=${hashtags}&preview=true`}
       >
         {children}
       </a>
@@ -91,7 +93,9 @@ export default function ClaimModal({ onCancel, profileId }: any) {
     return (
       <a
         target="_blank"
-        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&hashtags=${hashtags}&preview=true`}
+        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+          title
+        )}&hashtags=${hashtags}&preview=true`}
       >
         {children}
       </a>
@@ -126,17 +130,7 @@ export default function ClaimModal({ onCancel, profileId }: any) {
         <div className="claim-img" />
       )}
       <div className="claim-bottom">
-        {nftBalance > 0 ? (
-          <div>Successfully minted</div>
-        ) : minting ? (
-          <div>Minting...</div>
-        ) : checking ? (
-          <div>Checking...</div>
-        ) : canClaim ? (
-          <div onClick={doClaim}>Mint</div>
-        ) : (
-          <div>You have not reserved</div>
-        )}
+        <div>Mint Ended</div>
         {(canClaim || imageUri || true) && (
           <div className="claim-share-btnGroup">
             <div onClick={() => log("share_lens", account || "")}>
